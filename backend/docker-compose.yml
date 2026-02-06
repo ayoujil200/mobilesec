@@ -65,7 +65,9 @@ services:
       - mongodb-data:/data/db
       - ./mongo-init:/docker-entrypoint-initdb.d:ro
     networks:
-      - security-network
+      security-network:
+        aliases:
+          - mongo
     restart: unless-stopped
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
@@ -84,7 +86,7 @@ services:
       - "8081:8081"
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPAStyfSWORD=securityplatform2024
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=securityplatform2024
       - ME_CONFIG_MONGODB_URL=mongodb://admin:securityplatform2024@mongodb:27017/
       - ME_CONFIG_BASICAUTH_USERNAME=admin
       - ME_CONFIG_BASICAUTH_PASSWORD=admin123
@@ -343,7 +345,7 @@ services:
       - HOST=0.0.0.0
       - PORT=8000
       - DEBUG=false
-      - OPENROUTER_API_KEY=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
+      - OPENROUTER_API_KEY=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
       - OPENROUTER_MODEL=meta-llama/llama-3.2-3b-instruct:free
       - OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
       - RULES_PATH=/app/rules/masvs
@@ -379,7 +381,6 @@ services:
     environment:
       - KAFKA_BROKERS=kafka:9092
       - MONGODB_URI=mongodb://admin:securityplatform2024@mongodb:27017/security_platform?authSource=admin
-      - security-network
     networks:
       - security-network
     restart: unless-stopped
@@ -410,6 +411,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
