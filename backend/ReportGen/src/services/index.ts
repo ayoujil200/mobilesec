@@ -12,6 +12,7 @@ Handlebars.registerHelper('escapeCode', (code: any) => {
 
 import { Report, ReportOptions } from '../models';
 import logger from '../utils/logger';
+import { masvsService } from './masvs.service';
 
 export const aggregatorService = {
   aggregateResults: (results: Record<string, any[]>) => {
@@ -31,23 +32,175 @@ export const deduplicatorService = {
   deduplicate: (arr: any[]) => arr // naive — no-op
 };
 
+type Severity = 'critical' | 'high' | 'medium' | 'low' | 'info';
+
+type Finding = {
+  severity?: string | null;
+  category?: string | null;
+};
+
+type Metrics = {
+  total: number;
+  bySeverity: Record<Severity, number>;
+  byCategory: Record<string, number>;
+  securityScore: number;
+};
+
 export const metricsService = {
-  calculateMetrics: (arr: any[]) => {
-    const total = arr?.length || 0;
-    const bySeverity: Record<string, number> = { critical: 0, high: 0, medium: 0, low: 0, info: 0 };
-    for (const it of (arr || [])) {
-      const s = (it?.severity || 'info').toString().toLowerCase();
-      if (!bySeverity[s]) bySeverity[s] = 0;
-      bySeverity[s]++;
+  calculateMetrics: (arr: Finding[] = []): Metrics => {
+    const total = Array.isArray(arr) ? arr.length : 0;
+
+    const bySeverity: Record<Severity, number> = {
+      critical: 0,
+      high: 0,
+      medium: 0,
+      low: 0,
+      info: 0
+    };
+
+    const byCategory: Record<string, number> = {};
+
+    for (const it of arr) {
+      const rawSeverity = (it?.severity || 'info').toString().trim().toLowerCase();
+
+      const severity: Severity =
+        rawSeverity === 'critical' ||
+        rawSeverity === 'high' ||
+        rawSeverity === 'medium' ||
+        rawSeverity === 'low' ||
+        rawSeverity === 'info'
+          ? rawSeverity
+          : 'info';
+
+      bySeverity[severity]++;
+
+      const category = (it?.category || 'Uncategorized').toString().trim();
+      byCategory[category] = (byCategory[category] || 0) + 1;
     }
+
+    const critical = bySeverity.critical;
+    const high = bySeverity.high;
+    const medium = bySeverity.medium;
+    const low = bySeverity.low;
+
+    // Realistic scoring model:
+    // - Mixes how severe findings are (severityWeight)
+    //   with how many there are (volumeFactor).
+    // - A few lows barely move the score.
+    // - Many highs/criticals drive the score down, but not always to 0.
+    let securityScore = 100;
+
+    if (total > 0) {
+      const weightedSeveritySum =
+        critical * 4 +
+        high * 3 +
+        medium * 2 +
+        low * 1;
+
+      const severityWeight = weightedSeveritySum / Math.max(1, total);
+      const volumeFactor = Math.log10(total + 1); // grows slowly with total findings
+
+      const riskRaw = severityWeight * volumeFactor * 10;
+
+      securityScore = Math.max(0, Math.min(100, Math.round(100 - riskRaw)));
+    }
+
     return {
       total,
       bySeverity,
-      byCategory: {},
-      securityScore: 100
+      byCategory,
+      securityScore
     };
   },
-  generatePriorityRecommendations: (_arr: any[], _metrics: any) => []
+
+  calculateRiskLevel: (metrics: Metrics | null | undefined): 'Critical' | 'High' | 'Medium' | 'Low' => {
+    if (!metrics) return 'Medium';
+
+    const total = metrics.total || 0;
+    const bySeverity = metrics.bySeverity || {
+      critical: 0,
+      high: 0,
+      medium: 0,
+      low: 0,
+      info: 0
+    };
+
+    const score = typeof metrics.securityScore === 'number' ? metrics.securityScore : 100;
+
+    const critical = bySeverity.critical || 0;
+    const high = bySeverity.high || 0;
+    const medium = bySeverity.medium || 0;
+
+    if (total === 0) {
+      return 'Low';
+    }
+
+    if (critical > 0 || score <= 15) {
+      return 'Critical';
+    }
+
+    if (high >= 20 || score <= 35) {
+      return 'High';
+    }
+
+    if (high > 0 || medium >= 10 || score <= 70) {
+      return 'Medium';
+    }
+
+    return 'Low';
+  },
+
+  generatePriorityRecommendations: (arr: Finding[] = [], metrics?: Metrics) => {
+    const calculatedMetrics = metrics || metricsService.calculateMetrics(arr);
+    const bySeverity = calculatedMetrics.bySeverity;
+    const byCategory = calculatedMetrics.byCategory;
+
+    const recommendations: string[] = [];
+
+    if (bySeverity.critical > 0) {
+      recommendations.push(
+        'Resolve all critical findings immediately, as they represent the highest security risk.'
+      );
+    }
+
+    if (bySeverity.high > 0) {
+      recommendations.push(
+        'Prioritize remediation of high-severity findings, especially those affecting sensitive data, authentication, cryptography, or network communication.'
+      );
+    }
+
+    if ((byCategory['Secrets'] || 0) > 0 || (byCategory['Hardcoded Secrets'] || 0) > 0) {
+      recommendations.push(
+        'Remove hardcoded secrets from the application and rotate any exposed credentials or API keys.'
+      );
+    }
+
+    if ((byCategory['Cryptography'] || 0) > 0 || (byCategory['Weak Cryptography'] || 0) > 0) {
+      recommendations.push(
+        'Review cryptographic implementations and replace weak or deprecated algorithms and insecure key management practices.'
+      );
+    }
+
+    if ((byCategory['Network'] || 0) > 0 || (byCategory['Insecure Network'] || 0) > 0) {
+      recommendations.push(
+        'Harden network security by enforcing HTTPS, validating certificates correctly, and preventing unsafe data transmission.'
+      );
+    }
+
+    if ((byCategory['Configuration'] || 0) > 0 || (byCategory['Insecure Configuration'] || 0) > 0) {
+      recommendations.push(
+        'Review application configuration to disable insecure debug settings, exported components, and unnecessary permissions.'
+      );
+    }
+
+    if (recommendations.length === 0) {
+      recommendations.push(
+        'Maintain current security controls and continue periodic security reviews and regression testing.'
+      );
+    }
+
+    return recommendations;
+  }
 };
 
 export const jsonExporterService = {
@@ -193,13 +346,18 @@ export const pdfGeneratorService = {
         };
       }
 
+      // Run MASVS heuristics to enrich findings and per-service summaries
+      try {
+        masvsService.analyze(report, normalizedServices);
+      } catch (e) { logger.debug('MASVS analysis failed', { error: String(e) }); }
+
       const data = {
         projectName: report.projectName || report.reportId,
         generatedAt: report.generatedAt || new Date().toISOString(),
         metrics: report.metrics || {},
         vulnerabilities: report.vulnerabilities || [],
         services: normalizedServices,
-        riskLevel: (report.metrics && report.metrics.securityScore && report.metrics.securityScore < 50) ? 'High' : 'Medium',
+        riskLevel: metricsService.calculateRiskLevel(report.metrics || {}),
         cssUrl: cssPath ? `file://${cssPath}` : undefined,
       };
 
@@ -226,7 +384,31 @@ export const pdfGeneratorService = {
       logger.debug('Navigating to HTML snapshot', { absHtmlPath });
       await page.goto(`file://${absHtmlPath}`, { waitUntil: 'networkidle0' });
 
-      await page.pdf({ path: out, format: 'A4', printBackground: true });
+      // Header/footer templates for Puppeteer - inline style to ensure consistent rendering
+      const headerTemplate = `
+        <div style="width:100%; font-family: Inter, Arial, sans-serif; font-size:10px; color:#6b7280; padding:6px 12px;">
+          <div style="float:left; text-align:left;">${(data.projectName || '')}</div>
+          <div style="float:right; text-align:right;">Generated: ${(data.generatedAt || '')}</div>
+        </div>
+      `;
+
+      const footerTemplate = `
+        <div style="width:100%; font-family: Inter, Arial, sans-serif; font-size:10px; color:#6b7280; padding:6px 12px; text-align:center;">
+          Page <span class="pageNumber"></span> / <span class="totalPages"></span>
+        </div>
+      `;
+
+      // Render PDF with header/footer and safe margins for print
+      await page.pdf({
+        path: out,
+        format: 'A4',
+        printBackground: true,
+        displayHeaderFooter: true,
+        headerTemplate,
+        footerTemplate,
+        margin: { top: '70px', bottom: '70px', left: '18mm', right: '18mm' }
+      });
+
       await browser.close();
 
       logger.info('Wrote PDF via Puppeteer', { out });

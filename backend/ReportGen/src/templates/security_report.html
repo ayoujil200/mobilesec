@@ -1,78 +1,1031 @@
 <!doctype html>
-<html>
-
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Report Security{{#if projectName}} - {{projectName}}{{/if}}</title>
-  <link rel="stylesheet" href="{{cssUrl}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Security Assessment Report{{#if projectName}} | {{projectName}}{{/if}}</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --text: #0f172a;
+      --muted: #475569;
+      --subtle: #64748b;
+      --border: #dbe4ee;
+      --border-strong: #c8d4e3;
+      --primary: #16324f;
+      --primary-2: #1f4b73;
+      --primary-soft: #eaf2f9;
+      --critical: #b42318;
+      --critical-bg: #fef3f2;
+      --high: #d97706;
+      --high-bg: #fff7ed;
+      --medium: #ca8a04;
+      --medium-bg: #fefce8;
+      --low: #1d4ed8;
+      --low-bg: #eff6ff;
+      --info: #475569;
+      --info-bg: #f8fafc;
+      --success: #047857;
+      --success-bg: #ecfdf5;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 11px;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      padding: 24px;
+    }
+
+    .report-shell {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .page {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      color: #fff;
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar .brand {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .topbar .classification {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      white-space: nowrap;
+    }
+
+    .content {
+      padding: 28px;
+    }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 0.95fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .eyebrow {
+      color: var(--primary-2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 31px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .hero-text {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .meta-card, .panel, .kpi-card, .finding-card, .service-card, .appendix-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .meta-card {
+      padding: 14px 16px;
+      background: var(--surface-alt);
+    }
+
+    .meta-card .label,
+    .mini-label,
+    .section-kicker,
+    .table-note,
+    .small,
+    .footer,
+    .muted {
+      color: var(--subtle);
+    }
+
+    .meta-card .label {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .meta-card .value {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .score-panel {
+      padding: 20px;
+      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .score-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .score-top h2 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    .risk-pill,
+    .pill,
+    .badge,
+    .sev {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      text-transform: capitalize;
+    }
+
+    .risk-pill { font-size: 10.5px; }
+
+    .critical, .sev-critical { color: var(--critical); background: var(--critical-bg); border-color: #f7d5d2; }
+    .high, .sev-high { color: var(--high); background: var(--high-bg); border-color: #fed7aa; }
+    .medium, .sev-medium { color: var(--medium); background: var(--medium-bg); border-color: #fde68a; }
+    .low, .sev-low { color: var(--low); background: var(--low-bg); border-color: #bfdbfe; }
+    .info, .sev-info { color: var(--info); background: var(--info-bg); border-color: #e2e8f0; }
+    .success { color: var(--success); background: var(--success-bg); border-color: #bbf7d0; }
+
+    .score-value-row {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .score-value {
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.04em;
+    }
+
+    .score-caption {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background: #e8eef5;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #d7e1ec;
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #16324f 0%, #2f6ea6 100%);
+    }
+
+    .severity-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section {
+      margin-top: 28px;
+      page-break-inside: avoid;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2,
+    .section-head h3 {
+      margin: 4px 0 0;
+      color: var(--primary);
+    }
+
+    .section-head h2 { font-size: 20px; }
+    .section-head h3 { font-size: 16px; }
+
+    .section-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 75ch;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .kpi-card {
+      padding: 16px;
+      background: linear-gradient(180deg, var(--surface) 0%, #fbfdff 100%);
+      min-height: 116px;
+    }
+
+    .kpi-card .value {
+      display: block;
+      margin-top: 12px;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .kpi-card .label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--subtle);
+    }
+
+    .kpi-card .note {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .panel {
+      padding: 18px;
+      background: var(--surface-alt);
+    }
+
+    .panel h3 {
+      margin: 0 0 10px;
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    .narrative {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11.5px;
+    }
+
+    .action-list,
+    .toc-list,
+    .recommendation-list,
+    .appendix-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .action-list li,
+    .toc-list li,
+    .recommendation-list li,
+    .appendix-list li {
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+
+    .toc-list li span {
+      color: var(--muted);
+    }
+
+    .finding-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .finding-card {
+      padding: 18px;
+      page-break-inside: avoid;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .finding-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--border-strong);
+    }
+
+    .finding-card.severity-critical::before { background: var(--critical); }
+    .finding-card.severity-high::before { background: var(--high); }
+    .finding-card.severity-medium::before { background: var(--medium); }
+    .finding-card.severity-low::before { background: var(--low); }
+    .finding-card.severity-info::before { background: var(--info); }
+
+    .finding-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .finding-title {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .finding-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 0;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .finding-description {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .finding-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .finding-box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      padding: 12px 14px;
+    }
+
+    .finding-box h4 {
+      margin: 0 0 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--subtle);
+    }
+
+    .finding-box p {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .service-card {
+      padding: 18px;
+      page-break-inside: avoid;
+    }
+
+    .service-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .service-header h3 {
+      margin: 0;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .service-sub {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10.5px;
+    }
+
+    .service-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: flex-end;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    thead th {
+      background: #f7fafc;
+      color: var(--subtle);
+      text-align: left;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--text);
+      word-wrap: break-word;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fcfdff;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .col-id { width: 7%; }
+    .col-severity { width: 13%; }
+    .col-title { width: 22%; }
+    .col-description { width: 38%; }
+    .col-location { width: 20%; }
+
+    .recommendation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .recommendation-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--surface-alt);
+      min-height: 190px;
+    }
+
+    .recommendation-card h3 {
+      margin: 10px 0 8px;
+      font-size: 15px;
+      color: var(--primary);
+    }
+
+    .recommendation-card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+
+    .appendix-card {
+      padding: 18px;
+      margin-top: 14px;
+      background: #fbfdff;
+    }
+
+    .appendix-card h3 {
+      margin: 0 0 10px;
+      color: var(--primary);
+      font-size: 15px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 14px;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 14px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 10px;
+      line-height: 1.55;
+      border: 1px solid #1e293b;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+    }
+
+    .footer strong { color: var(--text); }
+
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+
+      .report-shell {
+        max-width: none;
+      }
+
+      .page {
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .content {
+        padding: 18mm 16mm 16mm;
+      }
+
+      .topbar {
+        padding: 12mm 16mm;
+      }
+
+      .section,
+      .service-card,
+      .finding-card,
+      .recommendation-card,
+      .appendix-card,
+      table,
+      tbody,
+      tr,
+      td,
+      th {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      thead { display: table-header-group; }
+      tfoot { display: table-footer-group; }
+    }
+
+    @media (max-width: 900px) {
+      .cover-grid,
+      .two-col,
+      .finding-columns,
+      .recommendation-grid,
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-header,
+      .section-head,
+      .score-top,
+      .score-value-row,
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .service-badges {
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <div class="cover">
-    <h1>{{#if projectName}}{{projectName}}{{else}}Report Security{{/if}}</h1>
-    <p class="meta">Generated: {{generatedAt}}</p>
-    <p class="score">Security Score: <strong>{{metrics.securityScore}}</strong></p>
-  </div>
+  <div class="report-shell">
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">{{#if platformName}}{{platformName}}{{else}}Security Platform{{/if}}</div>
+        <div class="classification">Confidential • Internal Security Assessment</div>
+      </header>
 
-  <section class="summary">
-    <h2>Executive Summary</h2>
-    <p class="section-sub">Risk Level: <strong>{{riskLevel}}</strong></p>
-    <p>{{metrics.total}} findings — Critical: {{metrics.bySeverity.critical}} / High: {{metrics.bySeverity.high}} /
-      Medium: {{metrics.bySeverity.medium}} / Low: {{metrics.bySeverity.low}} / Info: {{metrics.bySeverity.info}}</p>
-  </section>
+      <main class="content">
+        <section class="cover-grid">
+          <div>
+            <div class="eyebrow">Application Security Assessment Report</div>
+            <h1>{{#if projectName}}{{projectName}}{{else}}Target Application{{/if}}</h1>
+            <p class="hero-text">
+              This report summarizes the current security posture of the assessed application, highlights the most important risks,
+              and provides a structured remediation view for engineering and security stakeholders.
+            </p>
 
-  <section class="section">
-    <h2 class="section-title">Results by Service</h2>
-    <p class="section-sub">Each service below shows the findings imported from that microservice.</p>
+            <div class="meta-grid">
+              <div class="meta-card">
+                <span class="label">Assessment Date</span>
+                <span class="value">{{generatedAt}}</span>
+              </div>
+              <div class="meta-card">
+                <span class="label">Risk Level</span>
+                <span class="value">{{riskLevel}}</span>
+              </div>
+              <div class="meta-card">
+                <span class="label">Project</span>
+                <span class="value">{{#if projectName}}{{projectName}}{{else}}N/A{{/if}}</span>
+              </div>
+              <div class="meta-card">
+                <span class="label">Services Assessed</span>
+                <span class="value">{{#if services}}Available{{else}}0{{/if}}</span>
+              </div>
+            </div>
+          </div>
 
-    {{#if services}}
-    {{#each services}}
-    <div class="service-block">
-      <h3 class="section-title">{{@key}}</h3>
-      {{#if this.findings}}
-      <table>
-        <thead>
-          <tr>
-            <th>Severity</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>File</th>
-            <th>Line</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each this.findings}}
-          <tr>
-            <td><span class="sev sev-{{severity}}">{{severity}}</span></td>
-            <td>{{title}}</td>
-            <td>{{description}}</td>
-            <td>{{file}}</td>
-            <td class="right">{{line}}</td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
-      {{else}}
-      <p class="muted small">No findings reported by this service.</p>
-      {{/if}}
+          <aside class="score-panel panel">
+            <div class="score-top">
+              <div>
+                <div class="mini-label">Security Posture</div>
+                <h2>Overall Risk Snapshot</h2>
+              </div>
+              <span class="risk-pill info">{{riskLevel}}</span>
+            </div>
 
-      {{#if this.rawString}}
-      <div class="service-raw">
-        <h4>Raw service output</h4>
-        <pre>{{{escapeCode this.rawString}}}</pre>
-      </div>
-      {{/if}}
+            <div class="score-value-row">
+              <div>
+                <div class="score-value">{{metrics.securityScore}}</div>
+                <div class="score-caption">Security score out of 100</div>
+              </div>
+              <span class="pill success">{{metrics.total}} total findings</span>
+            </div>
+
+            <div class="progress-track" aria-label="Security score progress">
+              <div class="progress-bar" style="width: {{metrics.securityScore}}%;"></div>
+            </div>
+
+            <div class="severity-strip">
+              <span class="pill critical">Critical {{metrics.bySeverity.critical}}</span>
+              <span class="pill high">High {{metrics.bySeverity.high}}</span>
+              <span class="pill medium">Medium {{metrics.bySeverity.medium}}</span>
+              <span class="pill low">Low {{metrics.bySeverity.low}}</span>
+              <span class="pill info">Info {{metrics.bySeverity.info}}</span>
+            </div>
+
+            <p class="narrative">
+              The score reflects weighted security findings aggregated from the enabled analysis services. Focus first on critical and high-severity
+              issues because they have the highest potential impact on confidentiality, integrity, and operational resilience.
+            </p>
+          </aside>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker mini-label">01</div>
+              <h2>Executive Summary</h2>
+            </div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <span class="label">Total Findings</span>
+              <span class="value">{{metrics.total}}</span>
+              <span class="note">Combined observations across all services</span>
+            </div>
+            <div class="kpi-card">
+              <span class="label">Critical + High</span>
+              <span class="value">{{metrics.bySeverity.critical}} + {{metrics.bySeverity.high}}</span>
+              <span class="note">Highest-priority remediation scope</span>
+            </div>
+            <div class="kpi-card">
+              <span class="label">Security Score</span>
+              <span class="value">{{metrics.securityScore}}</span>
+              <span class="note">Weighted posture indicator</span>
+            </div>
+            <div class="kpi-card">
+              <span class="label">Risk Level</span>
+              <span class="value">{{riskLevel}}</span>
+              <span class="note">Executive risk classification</span>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="panel">
+              <h3>Assessment Narrative</h3>
+              <p class="narrative">
+                The assessment aggregates service-level findings into a single remediation-oriented view. The report is designed to help security teams,
+                engineering leads, and decision-makers quickly understand exposure levels, identify the most impacted areas, and prioritize corrective actions.
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Immediate Actions</h3>
+              <ol class="action-list">
+                <li>Address critical and high-severity findings before the next production deployment.</li>
+                <li>Review findings affecting exposed components, secrets, and insecure communication paths first.</li>
+                <li>Track remediation ownership by service to reduce repeated risk across the platform.</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker mini-label">02</div>
+              <h2>Report Structure</h2>
+            </div>
+          </div>
+          <div class="panel">
+            <ol class="toc-list">
+              <li><strong>Executive Summary</strong> <span>— consolidated posture, key metrics, and high-level priorities</span></li>
+              <li><strong>Priority Findings</strong> <span>— top issues requiring the fastest remediation</span></li>
+              <li><strong>Detailed Findings by Service</strong> <span>— full technical findings grouped by analysis service</span></li>
+              <li><strong>Remediation Roadmap</strong> <span>— suggested order of response and hardening activities</span></li>
+              <li><strong>Technical Appendix</strong> <span>— raw payloads and supporting service output</span></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="section page-break">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker mini-label">03</div>
+              <h2>Priority Findings</h2>
+            </div>
+            <p class="section-text">Top items below are intended for fast triage and management visibility.</p>
+          </div>
+
+          <div class="finding-grid">
+            {{#if vulnerabilities}}
+              {{#each vulnerabilities}}
+              <article class="finding-card severity-{{severity}}">
+                <div class="finding-head">
+                  <div>
+                    <h3 class="finding-title">{{title}}</h3>
+                    <div class="finding-meta">
+                      <span class="sev sev-{{severity}}">{{severity}}</span>
+                      {{#if service}}<span class="meta-chip">Service: {{service}}</span>{{/if}}
+                      {{#if file}}<span class="meta-chip">File: {{file}}{{#if line}}:{{line}}{{/if}}</span>{{/if}}
+                    </div>
+                  </div>
+                </div>
+
+                <p class="finding-description">{{description}}</p>
+
+                <div class="finding-columns">
+                  <div class="finding-box">
+                    <h4>Security Impact</h4>
+                    <p>
+                      {{#if impact}}
+                        {{impact}}
+                      {{else}}
+                        This issue should be reviewed for potential impact on application confidentiality, integrity, or operational trust.
+                      {{/if}}
+                    </p>
+                  </div>
+                  <div class="finding-box">
+                    <h4>Remediation Guidance</h4>
+                    <p>
+                      {{#if recommendation}}
+                        {{recommendation}}
+                      {{else}}
+                        Validate the affected implementation, remove the insecure pattern, and apply the platform-approved remediation standard.
+                      {{/if}}
+                    </p>
+                  </div>
+                </div>
+              </article>
+              {{/each}}
+            {{else}}
+              <div class="panel">
+                <h3>No prioritized vulnerability list available</h3>
+                <p class="narrative">No explicit priority findings were provided in the current dataset. Review the service-level findings in the next section.</p>
+              </div>
+            {{/if}}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker mini-label">04</div>
+              <h2>Detailed Findings by Service</h2>
+            </div>
+            <p class="section-text">Technical results grouped by service for operational remediation and audit review.</p>
+          </div>
+
+          {{#if services}}
+          <div class="service-grid">
+            {{#each services}}
+            <section class="service-card">
+              <div class="service-header">
+                <div>
+                  <h3>{{@key}}</h3>
+                  <div class="service-sub">{{this.counts.total}} total findings reported by this service</div>
+                </div>
+                <div class="service-badges">
+                  <span class="badge critical">Critical {{this.counts.bySeverity.critical}}</span>
+                  <span class="badge high">High {{this.counts.bySeverity.high}}</span>
+                  <span class="badge medium">Medium {{this.counts.bySeverity.medium}}</span>
+                  <span class="badge low">Low {{this.counts.bySeverity.low}}</span>
+                  <span class="badge info">Info {{this.counts.bySeverity.info}}</span>
+                </div>
+              </div>
+
+              {{#if this.findings}}
+              <table>
+                <thead>
+                  <tr>
+                    <th class="col-id">#</th>
+                    <th class="col-severity">Severity</th>
+                    <th class="col-title">Finding</th>
+                    <th class="col-description">Description</th>
+                    <th class="col-location">File / Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each this.findings}}
+                  <tr>
+                    <td class="small">{{@index}}</td>
+                    <td><span class="sev sev-{{severity}}">{{severity}}</span></td>
+                    <td><strong>{{title}}</strong></td>
+                    <td>{{description}}</td>
+                    <td>
+                      {{#if file}}{{file}}{{else}}N/A{{/if}}
+                      {{#if line}}:{{line}}{{/if}}
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+              {{else}}
+              <div class="panel">
+                <p class="narrative">No findings were reported by this service.</p>
+              </div>
+              {{/if}}
+            </section>
+            {{/each}}
+          </div>
+          {{else}}
+          <div class="panel">
+            <p class="narrative">No per-service results are available in the current report payload.</p>
+          </div>
+          {{/if}}
+        </section>
+
+        <section class="section page-break">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker mini-label">05</div>
+              <h2>Remediation Roadmap</h2>
+            </div>
+            <p class="section-text">Suggested response sequence for production hardening and issue closure.</p>
+          </div>
+
+          <div class="recommendation-grid">
+            <article class="recommendation-card">
+              <span class="pill critical">Immediate</span>
+              <h3>Contain high-risk exposure</h3>
+              <p>Resolve critical and high-severity findings, especially issues related to exposed secrets, insecure configuration, exported components, or unprotected attack paths.</p>
+              <ol class="recommendation-list">
+                <li>Patch production-blocking issues first.</li>
+                <li>Verify fixes through targeted rescans.</li>
+                <li>Document accepted risk where remediation is deferred.</li>
+              </ol>
+            </article>
+
+            <article class="recommendation-card">
+              <span class="pill medium">Short Term</span>
+              <h3>Strengthen platform defaults</h3>
+              <p>Use the current finding set to improve secure build, runtime, and review baselines across teams.</p>
+              <ol class="recommendation-list">
+                <li>Harden manifest, networking, and credential management standards.</li>
+                <li>Reduce recurring issue patterns by service ownership.</li>
+                <li>Update secure development checklists.</li>
+              </ol>
+            </article>
+
+            <article class="recommendation-card">
+              <span class="pill info">Program Level</span>
+              <h3>Operationalize continuous assurance</h3>
+              <p>Use rescans and ownership tracking to turn one-time findings into a repeatable remediation workflow.</p>
+              <ol class="recommendation-list">
+                <li>Track trends by service and severity.</li>
+                <li>Measure time-to-remediation for top issues.</li>
+                <li>Schedule recurring review for production releases.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker mini-label">06</div>
+              <h2>Technical Appendix</h2>
+            </div>
+            <p class="section-text">Verbose service output is separated here to preserve readability in the main report body.</p>
+          </div>
+
+          {{#if services}}
+            {{#each services}}
+              {{#if this.rawString}}
+              <section class="appendix-card">
+                <h3>{{@key}} — Raw Service Payload</h3>
+                <pre>{{{escapeCode this.rawString}}}</pre>
+              </section>
+              {{/if}}
+            {{/each}}
+          {{else}}
+            <div class="panel">
+              <p class="narrative">No raw payloads are available for this report.</p>
+            </div>
+          {{/if}}
+        </section>
+
+        <footer class="footer">
+          <div>
+            <strong>{{#if platformName}}{{platformName}}{{else}}Security Platform{{/if}}</strong>
+            <span class="muted"> • Assessment generated on {{generatedAt}}</span>
+          </div>
+          <div>Page <span class="pageNumber"></span> / <span class="totalPages"></span></div>
+        </footer>
+      </main>
     </div>
-    {{/each}}
-    {{else}}
-    <p class="muted small">No per-service results available.</p>
-    {{/if}}
-  </section>
-
-  <footer>
-    <div class="footer-right">Page <span class="pageNumber"></span> / <span class="totalPages"></span></div>
-  </footer>
+  </div>
 </body>
-
 </html>

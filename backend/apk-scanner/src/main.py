@@ -420,57 +420,79 @@ def calculate_security_score(results):
     """
     score = 100
     issues = []
-    
-    # Pénalités
+
+    # 1) Problèmes de configuration manifeste
     if results.get('debuggable'):
-        score -= 25
-        issues.append('Application is debuggable (-25)')
-    
+        penalty = 20
+        score -= penalty
+        issues.append('Application is debuggable in manifest (-20)')
+
     if results.get('cleartext_allowed'):
-        score -= 15
-        issues.append('Cleartext traffic allowed (-15)')
-    
-    # Permissions
-    perm_risk = results.get('permissions_analysis', {}).get('risk_score', 0)
-    penalty = min(perm_risk // 5, 20)
-    score -= penalty
-    if penalty > 0:
-        issues.append(f'Permissions risk score: {perm_risk} (-{penalty})')
-    
-    # Endpoints non sécurisés
+        penalty = 20
+        score -= penalty
+        issues.append('Cleartext traffic allowed in manifest (-20)')
+
+    # 2) Permissions (score et criticité)
+    perm_analysis = results.get('permissions_analysis', {})
+    perm_risk = perm_analysis.get('risk_score', 0) or 0
+    perm_level = perm_analysis.get('risk_level', 'MINIMAL') or 'MINIMAL'
+    critical_perms = perm_analysis.get('critical_count', 0) or 0
+
+    perm_penalty = 0
+    if perm_risk > 0:
+        if perm_risk >= 80:
+            perm_penalty += 25
+        elif perm_risk >= 50:
+            perm_penalty += 18
+        elif perm_risk >= 20:
+            perm_penalty += 10
+        else:
+            perm_penalty += 5
+
+    if critical_perms > 0:
+        perm_penalty += min(critical_perms * 2, 10)
+
+    perm_penalty = min(perm_penalty, 35)
+    if perm_penalty > 0:
+        score -= perm_penalty
+        issues.append(
+            f"Permissions risk score: {perm_risk} (level {perm_level}, {critical_perms} critical) (-{perm_penalty})"
+        )
+
+    # 3) Endpoints réseau non sécurisés (HTTP)
     insecure_count = len(results.get('insecure_endpoints', []))
     if insecure_count > 0:
-        penalty = min(insecure_count * 2, 15)
+        penalty = min(5 + insecure_count * 2, 25)
         score -= penalty
-        issues.append(f'{insecure_count} insecure endpoints (-{penalty})')
-    
-    # Secrets codés en dur
+        issues.append(f'{insecure_count} insecure endpoints detected (-{penalty})')
+
+    # 4) Secrets codés en dur
     secrets_count = len(results.get('potential_secrets', []))
     if secrets_count > 0:
-        penalty = min(secrets_count * 3, 20)
+        penalty = min(secrets_count * 7, 35)
         score -= penalty
         issues.append(f'{secrets_count} potential hardcoded secrets (-{penalty})')
-    
-    # Composants exportés
+
+    # 5) Composants exportés
     exported_count = len(results.get('exported_components', []))
-    if exported_count > 5:
-        penalty = min((exported_count - 5) * 1, 10)
+    if exported_count > 0:
+        penalty = min(5 + exported_count, 30)
         score -= penalty
-        issues.append(f'{exported_count} exported components (-{penalty})')
-    
-    score = max(0, score)
-    
-    # Déterminer la note
-    if score >= 80:
+        issues.append(f'{exported_count} exported components in manifest (-{penalty})')
+
+    score = max(0, min(100, score))
+
+    # Déterminer la note (alignée avec NetworkInspector)
+    if score >= 90:
         grade = 'A'
         level = 'EXCELLENT'
-    elif score >= 60:
+    elif score >= 75:
         grade = 'B'
         level = 'GOOD'
-    elif score >= 40:
+    elif score >= 60:
         grade = 'C'
         level = 'FAIR'
-    elif score >= 20:
+    elif score >= 40:
         grade = 'D'
         level = 'POOR'
     else:

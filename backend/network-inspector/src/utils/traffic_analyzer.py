@@ -308,12 +308,25 @@ class TrafficAnalyzer:
             score -= penalty
             deductions.append(f'{plaintext_count} plaintext requests (-{penalty})')
         
-        # Pénalités pour les problèmes TLS
-        tls_issues = analysis['tls_analysis']['total_issues']
+        # Pénalités pour les problèmes TLS (pondérées par sévérité)
+        tls_info = analysis['tls_analysis']
+        tls_issues = tls_info.get('total_issues', 0) or 0
         if tls_issues > 0:
-            penalty = min(tls_issues * 1, 20)
+            severity_breakdown = tls_info.get('severity_breakdown', {}) or {}
+            high_tls = severity_breakdown.get('HIGH', 0) or 0
+            medium_tls = severity_breakdown.get('MEDIUM', 0) or 0
+            low_tls = severity_breakdown.get('LOW', 0) or 0
+
+            # Score de risque TLS pondéré par sévérité
+            weighted_tls = (high_tls * 3) + (medium_tls * 2) + low_tls
+            if weighted_tls <= 0:
+                weighted_tls = tls_issues
+
+            penalty = min(weighted_tls, 25)
             score -= penalty
-            deductions.append(f'{tls_issues} TLS issues (-{penalty})')
+            deductions.append(
+                f"{tls_issues} TLS issues (H:{high_tls} M:{medium_tls} L:{low_tls}) (-{penalty})"
+            )
         
         # Pénalités pour les fuites de données
         critical_leaks = analysis['data_leaks_analysis']['critical_leaks_count']

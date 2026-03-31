@@ -174,21 +174,27 @@ def simulate_traffic(app_name, package_name, version, permission_stats):
 
 
 def calculate_risk_score(permission_stats, traffic_summary):
-    """Calculer le score de risque basé sur les permissions et le trafic"""
+    """Calculer le score de risque basé sur les permissions et le trafic."""
     base_risk = 5
-    
-    # Permissions
+
+    advertising_count = len(permission_stats.get('advertising', []))
+    sensitive_count = len(permission_stats.get('sensitive', []))
+    network_count = len(permission_stats.get('network', []))
+
+    plaintext_traffic_count = traffic_summary.get('plaintext_traffic_count', 0)
+    sensitive_leaks_count = traffic_summary.get('sensitive_leaks_count', 0)
+    tls_issues_count = traffic_summary.get('tls_issues_count', 0)
+
     risk = base_risk
-    risk += len(permission_stats['advertising']) * 3
-    risk += len(permission_stats['sensitive']) * 5
-    risk += len(permission_stats['network']) * 2
-    
-    # Trafic
-    risk += traffic_summary['plaintext_traffic_count'] * 2
-    risk += traffic_summary['sensitive_leaks_count'] * 4
-    risk += traffic_summary['tls_issues_count'] * 3
-    
-    return min(risk, 100)
+    risk += math.log1p(advertising_count) * 8
+    risk += math.log1p(sensitive_count) * 18
+    risk += math.log1p(network_count) * 6
+
+    risk += math.log1p(plaintext_traffic_count) * 10
+    risk += math.log1p(sensitive_leaks_count) * 16
+    risk += math.log1p(tls_issues_count) * 12
+
+    return max(0, min(round(risk), 100))
 
 
 def generate_complete_report(apk_data, app_basic_info, permission_stats, traffic_data, analysis, risk_score):
