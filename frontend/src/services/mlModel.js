@@ -49,7 +49,32 @@ const mlModelService = {
             console.error('ML service health check failed:', error);
             throw error;
         }
-    }
+    },
+
+    /**
+     * URL for streaming model training logs with Server-Sent Events.
+     * @param {'mongodb'|'bootstrap'|'controlled'} source - Training dataset source
+     * @returns {string}
+     */
+    getTrainingStreamUrl: (source = 'mongodb') => {
+        const allowedSources = new Set(['mongodb', 'bootstrap', 'controlled']);
+        const safeSource = allowedSources.has(source) ? source : 'mongodb';
+        return `${API_URL}/api/v1/train/stream?source=${safeSource}`;
+    },
+
+    /**
+     * Generates paper table values and LaTeX snippets from current artifacts.
+     * @returns {Promise<Object>}
+     */
+    getPaperTables: async () => {
+        try {
+            const response = await axios.get(`${API_URL}/api/v1/paper/tables`);
+            return response.data;
+        } catch (error) {
+            console.error('Error generating paper tables:', error);
+            throw error;
+        }
+    },
 };
 
 export default mlModelService;
