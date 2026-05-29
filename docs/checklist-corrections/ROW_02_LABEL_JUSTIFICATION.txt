@@ -1,0 +1,12 @@
+Checklist row 02 - Justify LightGBM labels
+Status: corrected evidence exposure; existing label generation retained.
+
+Where:
+- backend/ml-model/src/data/data_extractor.py
+- backend/ml-model/src/evaluation/paper_tables.py
+- frontend/src/pages/Dashboard.jsx
+
+Correction:
+Labels already record label_source, label_confidence, label_review_status and
+label_evidence. The generated tables now summarize provenance and reviewed
+confidence so the labeling method can be reported rather than implied.

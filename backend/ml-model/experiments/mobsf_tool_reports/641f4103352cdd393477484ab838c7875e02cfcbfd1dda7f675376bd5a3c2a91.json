@@ -1,0 +1,916 @@
+{
+  "version": "v4.5.0",
+  "title": "Static Analysis",
+  "file_name": "StartActivityForResult1.apk",
+  "app_name": "WriteFile",
+  "app_type": "apk",
+  "size": "0.24MB",
+  "md5": "188693a57f3820a8ba19a75f3dffa04e",
+  "sha1": "479578bcba41aaf376e96c8ff87a9866feaa6825",
+  "sha256": "641f4103352cdd393477484ab838c7875e02cfcbfd1dda7f675376bd5a3c2a91",
+  "package_name": "org.cert.WriteFile",
+  "main_activity": "org.cert.WriteFile.MainActivity",
+  "exported_activities": "[]",
+  "browsable_activities": {},
+  "activities": [
+    "org.cert.WriteFile.MainActivity"
+  ],
+  "receivers": [],
+  "providers": [],
+  "services": [],
+  "libraries": [],
+  "target_sdk": "16",
+  "max_sdk": "",
+  "min_sdk": "8",
+  "version_name": "1.0",
+  "version_code": "1",
+  "icon_path": "188693a57f3820a8ba19a75f3dffa04e-icon.png",
+  "permissions": {
+    "android.permission.ACCESS_FINE_LOCATION": {
+      "status": "dangerous",
+      "info": "fine (GPS) location",
+      "description": "Access fine location sources, such as the Global Positioning System on the phone, where available. Malicious applications can use this to determine where you are and may consume additional battery power."
+    }
+  },
+  "malware_permissions": {
+    "top_malware_permissions": [
+      "android.permission.ACCESS_FINE_LOCATION"
+    ],
+    "other_abused_permissions": [],
+    "total_malware_permissions": 25,
+    "total_other_permissions": 44
+  },
+  "certificate_analysis": {
+    "certificate_info": "Binary is not signed\nMissing certificate\nv1 signature: False\nv2 signature: False\nv3 signature: False\nv4 signature: False",
+    "certificate_findings": [
+      [
+        "high",
+        "Code signing certificate not found",
+        "Missing Code Signing certificate"
+      ]
+    ],
+    "certificate_summary": {
+      "high": 1,
+      "warning": 0,
+      "info": 0
+    }
+  },
+  "manifest_analysis": {
+    "manifest_findings": [
+      {
+        "rule": "vulnerable_os_version",
+        "title": "App can be installed on a vulnerable unpatched Android version 2.2-2.2.3, [minSdk=8]",
+        "severity": "high",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "name": "App can be installed on a vulnerable unpatched Android version 2.2-2.2.3, [minSdk=8]",
+        "component": [
+          "2.2-2.2.3",
+          "8"
+        ]
+      },
+      {
+        "rule": "app_allowbackup",
+        "title": "Application Data can be Backed up [android:allowBackup=true]",
+        "severity": "warning",
+        "description": "This flag allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "name": "Application Data can be Backed up [android:allowBackup=true]",
+        "component": []
+      }
+    ],
+    "manifest_summary": {
+      "high": 1,
+      "warning": 1,
+      "info": 0,
+      "suppressed": 0
+    }
+  },
+  "network_security": {
+    "network_findings": [],
+    "network_summary": {}
+  },
+  "binary_analysis": [],
+  "file_analysis": [],
+  "android_api": {
+    "api_get_system_service": {
+      "files": {
+        "org/cert/WriteFile/Button1Listener.java": "28"
+      },
+      "metadata": {
+        "description": "Get System Service",
+        "severity": "info"
+      }
+    },
+    "api_start_activity": {
+      "files": {
+        "org/cert/WriteFile/Button1Listener.java": "24"
+      },
+      "metadata": {
+        "description": "Starting Activity",
+        "severity": "info"
+      }
+    },
+    "api_ipc": {
+      "files": {
+        "org/cert/WriteFile/Button1Listener.java": "3,19,19,23",
+        "org/cert/WriteFile/MainActivity.java": "4,28"
+      },
+      "metadata": {
+        "description": "Inter Process Communication",
+        "severity": "info"
+      }
+    },
+    "api_gps": {
+      "files": {
+        "org/cert/WriteFile/Button1Listener.java": "4,5,29"
+      },
+      "metadata": {
+        "description": "GPS Location",
+        "severity": "info"
+      }
+    },
+    "api_local_file_io": {
+      "files": {
+        "org/cert/WriteFile/MainActivity.java": "8,9,34"
+      },
+      "metadata": {
+        "description": "Local File I/O Operations",
+        "severity": "info"
+      }
+    }
+  },
+  "code_analysis": {
+    "findings": {
+      "android_logging": {
+        "files": {
+          "org/cert/WriteFile/Button1Listener.java": "23",
+          "org/cert/WriteFile/MainActivity.java": "37,44,49"
+        },
+        "metadata": {
+          "cvss": 7.5,
+          "cwe": "CWE-532: Insertion of Sensitive Information into Log File",
+          "owasp-mobile": "",
+          "masvs": "MSTG-STORAGE-3",
+          "ref": "https://github.com/MobSF/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#logs",
+          "description": "The App logs information. Sensitive information should never be logged.",
+          "severity": "info"
+        }
+      }
+    },
+    "summary": {
+      "high": 0,
+      "warning": 0,
+      "info": 1,
+      "secure": 0,
+      "suppressed": 0
+    }
+  },
+  "niap_analysis": {},
+  "permission_mapping": {
+    "android.permission.ACCESS_FINE_LOCATION": {
+      "org/cert/WriteFile/Button1Listener.java": "5,29"
+    }
+  },
+  "urls": [],
+  "domains": {},
+  "emails": [],
+  "strings": {
+    "strings_apk_res": [
+      "\"app_name\" : \"WriteFile\"",
+      "\"hello_world\" : \"Component: org.cert.WriteFile.MainActivity\"",
+      "\"action_settings\" : \"Settings\""
+    ],
+    "strings_so": [],
+    "strings_code": [
+      "saveAllState: adding fragment #",
+      "class",
+      "mData=",
+      "accessibility",
+      "CAPABILITY_CAN_RETRIEVE_WINDOW_CONTENT",
+      "SHOW",
+      "sinkFile.txt",
+      "Data recieved",
+      "key == null",
+      "mRetainInstance=",
+      "fragment",
+      "PagerTabStrip",
+      "moveto ACTIVITY_CREATED: ",
+      "android.intent.extra.EMAIL",
+      "FragmentPager.SavedState{",
+      "android.support.content.wakelockid",
+      "setActionProvider: item does not implement SupportMenuItem; ignoring",
+      "mCursor=",
+      "arrowScroll tried to find focus based on non-child current focused view ",
+      "Longitude: ",
+      "mCancellingTask=",
+      "No activity",
+      "Content view not yet created",
+      "android",
+      "content",
+      "LocalBroadcastManager",
+      "Can't change container ID of fragment ",
+      "Already added!",
+      "android:target_req_state",
+      "Unable to instantiate fragment ",
+      "Child ",
+      "android.intent.extra.SUBJECT",
+      "Missing android.support.FILE_PROVIDER_PATHS meta-data",
+      "files-path",
+      "Pending Loader ",
+      "unknown reason",
+      "Retaining in ",
+      "HIDE",
+      "destroyLoader in ",
+      "No intents added to TaskStackBuilder; cannot startActivities",
+      "Failure saving state: active ",
+      "mRetaining=",
+      "ACTION_NEXT_AT_MOVEMENT_GRANULARITY",
+      "ViewDragHelper",
+      "Pending Actions:",
+      "mState=",
+      "mUpdateThrottle=",
+      "Couldn't create ",
+      "Can't change tag of fragment ",
+      "mActivity=",
+      "Freeing fragment index ",
+      "mFragmentManager=",
+      "mParentFragment=",
+      "type",
+      "Called doStop when not started: ",
+      "Receiver{",
+      "movefrom STARTED: ",
+      "layout_inflater",
+      "Cannot execute task: the task is already running.",
+      "FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY",
+      "mSortOrder=",
+      "mSavedViewState=",
+      "initLoader in ",
+      "FragmentManager misc state:",
+      "No tab content FrameLayout found for id ",
+      "OP_REPLACE: adding=",
+      "root-path",
+      "Can't retain fragements that are nested in other fragments",
+      "Adding available back stack index ",
+      "Couldn't fetch getDisplayList method; dimming won't work right.",
+      "Instantiated fragment ",
+      "Loader Manager:",
+      "Activity result no fragment exists for index: 0x",
+      "Required method instantiateItem was not overridden",
+      "ACTION_CLEAR_SELECTION",
+      "Pre-Eclair does not support multiple pointers",
+      "window",
+      "Action list: ",
+      "View ",
+      "Activity state:",
+      "Recursive entry to executePendingTransactions",
+      "mInnerView=",
+      "key == null || value == null",
+      "ActionBarDrawerToggleHoneycomb",
+      "mUri=",
+      "NULL",
+      "Fragments Created Menus:",
+      "restoreAllState: active #",
+      "Activity has been destroyed",
+      "Fragment ",
+      "Required method destroyItem was not overridden",
+      "Adding back stack index ",
+      "moveto CREATED: ",
+      "android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE",
+      "ACTION_CUT",
+      "remove from detach: ",
+      "mStarted=",
+      "add: ",
+      "mFragmentId=#",
+      "mTransition=#",
+      "Starting in ",
+      "Callbacks must add text or a content description in populateNodeForVirtualViewId()",
+      "Matching against filter ",
+      "android.intent.extra.KEY_EVENT",
+      "Not on back stack",
+      "Your content must have a ListView whose id attribute is 'android.R.id.list'",
+      "Fragment already added: ",
+      "Instantiate ",
+      "null",
+      "View may not be null",
+      "IntentReader",
+      "Object returned from onCreateLoader must not be a non-static inner member class: ",
+      "mCreated=",
+      "FLAG_REQUEST_TOUCH_EXPLORATION_MODE",
+      "Name must not be empty",
+      "Called doRetain when not started: ",
+      "android:switcher:",
+      "mPopEnterAnim=#",
+      "ACTION_CLICK",
+      "getScript",
+      "Called while creating a loader",
+      "ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY",
+      "Couldn't rename file ",
+      "mNextAnim=",
+      "mHaveData=",
+      "FragmentTabHost.SavedState{",
+      "Setting back stack index ",
+      "this should only be called when the cursor is valid",
+      "Cannot execute task: the task has already been executed (a task can be executed only once)",
+      "retainNonConfig: keeping retained ",
+      "Failed to find configured root that contains ",
+      "power",
+      "restoreAllState: re-attaching retained ",
+      "Could not retrieve icon for calling activity",
+      "No external inserts",
+      "Unknown cmd: ",
+      "LoaderInfo{",
+      "mResumed=",
+      "enterAnim=#",
+      "Attempting to unregister the wrong listener",
+      "failWrite: Got exception:",
+      "setHomeActionContentDescription",
+      "FragmentActivity",
+      "android.intent.extra.TEXT",
+      "Added Fragments:",
+      "android.intent.extra.HTML_TEXT",
+      "ATTACH",
+      "Invalid mode: ",
+      "Destroying Inactive in ",
+      "ACTION_CLEAR_FOCUS",
+      "mAdded=",
+      "attach: ",
+      "mLoadersStarted=",
+      "drawChild: child view ",
+      "Run: ",
+      "No listener register",
+      "android:cancelable",
+      "android.hardware.display.category.PRESENTATION",
+      "popFromBackStack: ",
+      "setChildrenDrawingOrderEnabled",
+      "FEEDBACK_AUDIBLE",
+      "Could not retrieve label for calling application",
+      "ModernAsyncTask #",
+      "android.intent.extra.BCC",
+      "No external updates",
+      "saveAllState: adding back stack #",
+      "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE",
+      "PagerTitleStrip",
+      "Removed:",
+      "FEEDBACK_VISUAL",
+      "NavUtils",
+      "Failure saving state: ",
+      "LEFT",
+      "ACTION_SCROLL_FORWARD",
+      "No intents added to TaskStackBuilder; cannot getPendingIntent",
+      "show: ",
+      "ACTION_COPY",
+      "bad arguments",
+      "Fragement no longer exists for key ",
+      "DEFAULT",
+      "DrawerLayout",
+      "getDisplayList",
+      "In WriteFile: ",
+      "CAPABILITY_CAN_REQUEST_ENHANCED_WEB_ACCESSIBILITY",
+      "android:fragment:",
+      "No tab known for tag ",
+      "onLoadComplete: ",
+      "Unable to find configured root for ",
+      "ACTION_ACCESSIBILITY_FOCUS",
+      "Can't find setChildrenDrawingOrderEnabled",
+      "mSelection=",
+      "Couldn't create directory ",
+      "ACTION_SCROLL_BACKWARD",
+      "There is already a listener registered",
+      "cache-path",
+      "Bad id: ",
+      "Callbacks must add text or a content description in populateEventForVirtualViewId()",
+      "category",
+      "Callbacks must not add ACTION_ACCESSIBILITY_FOCUS in populateNodeForVirtualViewId()",
+      "restoreAllState: avail #",
+      "getParentActivityIntent: bad parentActivityName '",
+      "TaskStackBuilder",
+      "Height must not be UNSPECIFIED",
+      "data",
+      "Back Stack Indices:",
+      "android.intent.extra.CC",
+      "Provider must grant uri permissions",
+      "Local FragmentActivity ",
+      "Active Loaders:",
+      "Can't be used with a custom content view",
+      "couldn't move cursor to position ",
+      "Allocated fragment index ",
+      "This transaction is already being added to the back stack",
+      "mAvailBackStackIndices: ",
+      "OnGestureListener must not be null",
+      "android.intent.extra.STREAM",
+      "mArguments=",
+      "DrawerLayout must be measured with MeasureSpec.EXACTLY.",
+      "mStateAfterAnimating=",
+      "ACTION_ARGUMENT_HTML_ELEMENT_STRING",
+      "finishWrite: Got exception:",
+      "Loader Manager ",
+      "LruCache[maxSize=%d,hits=%d,misses=%d,hitRate=%d%%]",
+      "ACTION_SET_SELECTION",
+      "Popping back stack state: ",
+      "android.support.v4.app.EXTRA_CALLING_PACKAGE",
+      "Error changing children drawing order",
+      "onCreateView: id=0x",
+      "Can only use lower 16 bits for requestCode",
+      "Sending implicit Intent with MIME data type text/plain: Current Location ",
+      "FEEDBACK_GENERIC",
+      "mSavedFragmentState=",
+      "path",
+      "external-path",
+      "mHidden=",
+      "TransportController",
+      "mContentChanged=",
+      "SlidingPaneLayout",
+      "Callbacks must set parent bounds in populateNodeForVirtualViewId()",
+      "The application's PagerAdapter changed the adapter's contents without calling PagerAdapter#notifyDataSetChanged! Expected adapter item count: ",
+      "ACTION_ARGUMENT_EXTEND_SELECTION_BOOLEAN",
+      "Bad ComponentName while traversing activity parent metadata",
+      "This FragmentTransaction is not allowed to be added to the back stack.",
+      "Bump nesting of ",
+      "Must use non-zero containerViewId",
+      "saveAllState: no fragments!",
+      "mBreadCrumbTitleRes=#",
+      "Unknown message ",
+      "android:theme",
+      "Requested offscreen page limit ",
+      "RIGHT",
+      "name",
+      "ICUCompatIcs",
+      "mView=",
+      "android.support.FILE_PROVIDER_PATHS",
+      "Freeing back stack index ",
+      "Couldn't fetch mRecreateDisplayList field; dimming will be slow.",
+      "Couldn't set home-as-up indicator via JB-MR2 API",
+      "Hebr",
+      "No drawer view found with absolute gravity ",
+      "FragmentManager",
+      "display",
+      "android:user_visible_hint",
+      "mId=",
+      "movefrom STOPPED: ",
+      "maxSize <= 0",
+      "android.intent.action.SEND_MULTIPLE",
+      "Callbacks must not add ACTION_CLEAR_ACCESSIBILITY_FOCUS in populateNodeForVirtualViewId()",
+      "PagerTitleStrip must be a direct child of a ViewPager.",
+      "Resolved path jumped beyond configured root",
+      "restartLoader in ",
+      "android.intent.extra.changed_package_list",
+      "Couldn't set content description via JB-MR2 API",
+      "mSelectionArgs=",
+      "onPageScrolled did not call superclass implementation",
+      "commit already called",
+      "Could not find menu item with id ",
+      "CAPABILITY_CAN_FILTER_KEY_EVENTS",
+      "Error refreshing display list state",
+      "Back in WriteFile: ",
+      "LoaderManager",
+      "onLoaderReset",
+      "add from attach: ",
+      "Cannot flingCapturedView outside of a call to Callback#onViewReleased",
+      "Child drawer has absolute gravity ",
+      "Active Fragments in ",
+      "Couldn't set home-as-up indicator",
+      "FLAG_REPORT_VIEW_IDS",
+      "BackStackEntry{",
+      "mProjection=",
+      "Operations:",
+      "Failed to resolve canonical path for ",
+      "Must be called from main thread of process",
+      "location",
+      "android:style",
+      "mTarget=",
+      "FEEDBACK_SPOKEN",
+      "MenuItemCompat",
+      "audio",
+      "No fake drag in progress. Call beginFakeDrag first.",
+      "wake:",
+      "moveto RESUMED: ",
+      "Activity ",
+      "android:backStackId",
+      "android.intent.action.SEND",
+      "Parent view may not be null",
+      "Failed to parse android.support.FILE_PROVIDER_PATHS meta-data",
+      "Finished Retaining in ",
+      "ACTION_CLEAR_ACCESSIBILITY_FOCUS",
+      "states",
+      "Re-attaching retained fragment ",
+      "Phase2_3: ",
+      "restoreAllState: added #",
+      "Arab",
+      "Provider must not be exported",
+      "Negative size: ",
+      "mTask=",
+      "Already attached",
+      "Could not retrieve icon for calling application",
+      "FLAG_REQUEST_FILTER_KEY_EVENTS",
+      "mCallbacks=",
+      "android.support.PARENT_ACTIVITY",
+      "movefrom ACTIVITY_CREATED: ",
+      "application/octet-stream",
+      "Must measure with an exact width",
+      "Callback may not be null",
+      "Activity result fragment index out of range: 0x",
+      "Called doStart when already started: ",
+      "REPLACE",
+      "An error occured while executing doInBackground()",
+      "REMOVE",
+      "AsyncTaskLoader",
+      "addLikelySubtags",
+      "Bump nesting in ",
+      "cmd=",
+      "onMeasure: More than two child views are not supported.",
+      "mContainer=",
+      "ACTION_ARGUMENT_SELECTION_START_INT",
+      "ViewPager",
+      "Saved state of ",
+      "UNKNOWN",
+      "Must call setup() that takes a Context and FragmentManager",
+      "mAnimatingAway=",
+      "onLoadFinished",
+      "mLoader=",
+      "No active wake lock id #",
+      "No data recieved",
+      "FEEDBACK_HAPTIC",
+      "FLAG_INCLUDE_NOT_IMPORTANT_VIEWS",
+      "Removed: ",
+      "Cannot add pager decor view during layout",
+      "No view found for id 0x",
+      "setHomeAsUpIndicator",
+      "hide: ",
+      "AsyncTask",
+      "popEnterAnim=#",
+      "ACTION_PASTE",
+      "setVisibilityListener: Setting a new ActionProvider.VisibilityListener when one is already set. Are you reusing this ",
+      "DialogFragment can not be attached to a container view",
+      "movefrom CREATED: ",
+      "Failed dumping state",
+      "android:target_state",
+      "Can not perform this action after onSaveInstanceState",
+      "android.intent.extra.changed_uid_list",
+      "android.support.v4.app.EXTRA_CALLING_ACTIVITY",
+      "android.intent.category.LAUNCHER",
+      "android:savedDialogState",
+      "android:showsDialog",
+      "Width must have an exact value or MATCH_PARENT",
+      "CAPABILITY_CAN_REQUEST_TOUCH_EXPLORATION",
+      "Can not perform this action inside of ",
+      "FragmentStatePagerAdapter",
+      "here",
+      "ACTION_ARGUMENT_SELECTION_END_INT",
+      "secret",
+      "AtomicFile",
+      "SingleLineAllCapsTransform",
+      "action",
+      "Couldn't get last known location info",
+      "ACTION_LONG_CLICK",
+      "networkInfo",
+      "View Hierarchy:",
+      "ACTION_FOCUS",
+      "FragmentManager{",
+      "android:support:fragments",
+      "text/plain",
+      "ACTION_SELECT",
+      "JellyBeanMR2",
+      "LoaderManager{",
+      "remove: ",
+      "libcore.icu.ICU",
+      "Back Stack:",
+      "Stopping in ",
+      "ACTION_PREVIOUS_HTML_ELEMENT",
+      "movefrom RESUMED: ",
+      "Bad fragment at key ",
+      "detach: ",
+      "WakefulBroadcastReceiver",
+      "addToBackStack() called after commit()",
+      "mName=",
+      "android:view_state",
+      "Inactive Loaders:",
+      "Fragment already active",
+      "ActionProvider(support)",
+      "Cannot settleCapturedViewAt outside of a call to Callback#onViewReleased",
+      "mRecreateDisplayList",
+      "Context must not be null",
+      "Commit: ",
+      "ACTION_NEXT_HTML_ELEMENT",
+      "restoreAllState: back stack #",
+      "DETACH",
+      "mAbandoned=",
+      "search",
+      "Content has view with id attribute 'android.R.id.list' that is not a ListView class",
+      "FragmentPagerAdapter",
+      "Resolving type ",
+      "ACTION_UNKNOWN",
+      "Stream items available: ",
+      "android.intent.action.MAIN",
+      "mBreadCrumbShortTitleRes=#",
+      "captureChildView: parameter must be a descendant of the ViewDragHelper's tracked parent view (",
+      "ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT",
+      "No instantiated fragment for index #",
+      "Fragment does not have a view",
+      "getActionProvider: item does not implement SupportMenuItem; returning null",
+      "moveto STARTED: ",
+      "mEnterAnim=#",
+      "Destroying Active in "
+    ]
+  },
+  "firebase_urls": [],
+  "files": [
+    "res/layout/activity_main.xml",
+    "res/menu/main.xml",
+    "AndroidManifest.xml",
+    "resources.arsc",
+    "res/drawable-hdpi/ic_launcher.png",
+    "res/drawable-mdpi/ic_launcher.png",
+    "res/drawable-xhdpi/ic_launcher.png",
+    "res/drawable-xxhdpi/ic_launcher.png",
+    "classes.dex"
+  ],
+  "exported_count": {
+    "exported_activities": 0,
+    "exported_services": 0,
+    "exported_receivers": 0,
+    "exported_providers": 0
+  },
+  "apkid": {
+    "classes.dex": {
+      "compiler": [
+        "dx (possible dexmerge)"
+      ],
+      "manipulator": [
+        "dexmerge"
+      ]
+    }
+  },
+  "behaviour": {
+    "00115": {
+      "files": {
+        "org/cert/WriteFile/Button1Listener.java": "29,31,4,5,5"
+      },
+      "metadata": {
+        "label": [
+          "collection",
+          "location"
+        ],
+        "description": "Get last known location of the device",
+        "severity": "info"
+      }
+    },
+    "00091": {
+      "files": {
+        "org/cert/WriteFile/MainActivity.java": "31,32,31,32,4,5"
+      },
+      "metadata": {
+        "label": [
+          "collection"
+        ],
+        "description": "Retrieve data from broadcast",
+        "severity": "info"
+      }
+    }
+  },
+  "trackers": {
+    "detected_trackers": 0,
+    "total_trackers": 432,
+    "trackers": []
+  },
+  "playstore_details": {
+    "error": true
+  },
+  "secrets": [],
+  "logs": [
+    {
+      "timestamp": "2026-05-20 21:41:44",
+      "status": "Generating Hashes",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:44",
+      "status": "Extracting APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:44",
+      "status": "Unzipping",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:45",
+      "status": "Parsing APK with androguard",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:45",
+      "status": "Extracting APK features using aapt/aapt2",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:45",
+      "status": "Getting Hardcoded Certificates/Keystores",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:45",
+      "status": "Parsing AndroidManifest.xml",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:45",
+      "status": "Extracting Manifest Data",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:45",
+      "status": "Manifest Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:45",
+      "status": "Performing Static Analysis on: WriteFile (org.cert.WriteFile)",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:47",
+      "status": "Fetching Details from Play Store: org.cert.WriteFile",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:48",
+      "status": "Checking for Malware Permissions",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:48",
+      "status": "Fetching icon path",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:48",
+      "status": "Library Binary Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:48",
+      "status": "Reading Code Signing Certificate",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:48",
+      "status": "Running APKiD 3.0.0",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:49",
+      "status": "Detecting Trackers",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:49",
+      "status": "Decompiling APK to Java with JADX",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:51",
+      "status": "Converting DEX to Smali",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:51",
+      "status": "Code Analysis Started on - java_source",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:51",
+      "status": "Android SBOM Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:51",
+      "status": "Android SAST Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:51",
+      "status": "Android API Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Android API Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Android Permission Mapping Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Android Permission Mapping Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Android Behaviour Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Android Behaviour Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Extracting Emails and URLs from Source Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Email and URL Extraction Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Extracting String data from APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Extracting String data from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:52",
+      "status": "Extracting String values and entropies from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:53",
+      "status": "Performing Malware check on extracted domains",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:41:53",
+      "status": "Saving to Database",
+      "exception": null
+    }
+  ],
+  "sbom": {
+    "sbom_versioned": [],
+    "sbom_packages": [
+      "org.cert.WriteFile"
+    ]
+  },
+  "average_cvss": null,
+  "appsec": {
+    "high": [
+      {
+        "title": "Missing Code Signing certificate",
+        "description": "Code signing certificate not found",
+        "section": "certificate"
+      },
+      {
+        "title": "App can be installed on a vulnerable unpatched Android version 2.2-2.2.3, [minSdk=8]",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "section": "manifest"
+      }
+    ],
+    "warning": [
+      {
+        "title": "Application Data can be Backed up [android:allowBackup=true]",
+        "description": "This flag allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "section": "manifest"
+      }
+    ],
+    "info": [
+      {
+        "title": "The App logs information. Sensitive information should never be logged.",
+        "description": "The App logs information. Sensitive information should never be logged.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#logs\n\nFiles:\norg/cert/WriteFile/Button1Listener.java, line(s) 23\norg/cert/WriteFile/MainActivity.java, line(s) 37,44,49",
+        "section": "code"
+      }
+    ],
+    "secure": [
+      {
+        "title": "This application has no privacy trackers",
+        "description": "This application does not include any user or device trackers. Unable to find trackers during static analysis.",
+        "section": "trackers"
+      }
+    ],
+    "hotspot": [
+      {
+        "title": "Found 1 critical permission(s)",
+        "description": "Ensure that these permissions are required by the application.\n\nandroid.permission.ACCESS_FINE_LOCATION (dangerous): fine (GPS) location - Access fine location sources, such as the Global Positioning System on the phone, where available. Malicious applications can use this to determine where you are and may consume additional battery power.",
+        "section": "permissions"
+      }
+    ],
+    "total_trackers": 432,
+    "trackers": 0,
+    "security_score": 42,
+    "app_name": "WriteFile",
+    "file_name": "StartActivityForResult1.apk",
+    "hash": "188693a57f3820a8ba19a75f3dffa04e",
+    "version_name": "1.0"
+  },
+  "virus_total": null,
+  "base_url": "file:///home/mobsf/Mobile-Security-Framework-MobSF/mobsf",
+  "dwd_dir": "file:///home/mobsf/.MobSF/downloads/",
+  "host_os": "nix",
+  "timestamp": "2026-05-20T21:41:44.975Z"
+}

@@ -1,0 +1,11 @@
+Checklist row 26 - PDF report success contradiction
+Status: corrected measurement path; rerun required for the rate.
+
+Where:
+- scripts/run-benchmark-evaluation.js
+- backend/ml-model/src/evaluation/paper_tables.py
+
+Correction:
+The old benchmark read report fields from APK Scanner, which does not generate
+PDF output in that response. It now invokes ReportGen PDF/JSON/SARIF endpoints
+and reports the measured response success for each format.

@@ -2,16 +2,139 @@
 FastAPI Routes for ML Model Service
 """
 
-from fastapi import APIRouter, HTTPException, status
+import asyncio
+import os
+import shutil
+import sys
+
+from fastapi import APIRouter, HTTPException, Query, status
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from typing import Dict, List, Optional
 import logging
 
+from ..evaluation.paper_tables import generate_paper_tables
 from ..model.predictor import predictor
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
+training_lock = asyncio.Lock()
+
+
+def _sse_line(message: str, event: str = "log") -> str:
+    safe_message = str(message).replace("\r", "")
+    return "".join(f"data: {line}\n" for line in safe_message.split("\n")) + f"event: {event}\n\n"
+
+
+async def _stream_process(command: List[str]):
+    process = await asyncio.create_subprocess_exec(
+        *command,
+        cwd="/app",
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.STDOUT,
+        env={**os.environ, "PYTHONUNBUFFERED": "1"},
+    )
+
+    assert process.stdout is not None
+    while True:
+        line = await process.stdout.readline()
+        if not line:
+            break
+        yield _sse_line(line.decode("utf-8", errors="replace").rstrip())
+
+    return_code = await process.wait()
+    if return_code != 0:
+        raise RuntimeError(f"Command failed with exit code {return_code}: {' '.join(command)}")
+
+
+async def _run_training_pipeline(source: str):
+    if training_lock.locked():
+        yield _sse_line("Training is already running. Wait for it to finish before starting another run.", "error")
+        return
+
+    async with training_lock:
+        try:
+            os.makedirs("/app/data", exist_ok=True)
+            os.makedirs("/app/models", exist_ok=True)
+
+            yield _sse_line(f"Starting ML training pipeline. source={source}", "start")
+            training_dataset = "data/security_scan_dataset.csv"
+
+            if source == "mongodb":
+                yield _sse_line("Extracting training rows from MongoDB...")
+                async for line in _stream_process([sys.executable, "-m", "src.data.data_extractor"]):
+                    yield line
+
+                extracted_path = "/app/data/extracted_data.csv"
+                dataset_path = "/app/data/security_scan_dataset.csv"
+                if not os.path.exists(extracted_path):
+                    raise RuntimeError("MongoDB extraction did not create /app/data/extracted_data.csv")
+
+                shutil.copyfile(extracted_path, dataset_path)
+                yield _sse_line("Copied extracted MongoDB dataset to /app/data/security_scan_dataset.csv")
+                training_dataset = "data/extracted_data.csv"
+            elif source == "extracted":
+                extracted_path = "/app/data/extracted_data.csv"
+                if not os.path.exists(extracted_path):
+                    raise RuntimeError(
+                        "Existing extracted dataset not found at /app/data/extracted_data.csv. "
+                        "Run source=mongodb first to create it."
+                    )
+                yield _sse_line("Using existing extracted MongoDB dataset at /app/data/extracted_data.csv")
+                training_dataset = "data/extracted_data.csv"
+            elif source == "bootstrap":
+                yield _sse_line("Creating balanced development dataset...")
+                async for line in _stream_process([
+                    sys.executable,
+                    "-m",
+                    "src.data.bootstrap_dataset",
+                    "--output",
+                    "data/security_scan_dataset.csv",
+                ]):
+                    yield line
+            elif source == "controlled":
+                labels_path = "/app/data/controlled_ground_truth_labels.csv"
+                uploads_path = "/app/data/controlled_upload_results.json"
+                if not os.path.exists(labels_path):
+                    raise RuntimeError(
+                        "Controlled labels file not found at /app/data/controlled_ground_truth_labels.csv. "
+                        "Generate/upload the controlled APK dataset first."
+                    )
+                if not os.path.exists(uploads_path):
+                    raise RuntimeError(
+                        "Controlled upload results file not found at /app/data/controlled_upload_results.json. "
+                        "Upload the controlled APKs first."
+                    )
+
+                yield _sse_line("Building trusted controlled training dataset from ground-truth labels...")
+                async for line in _stream_process([
+                    sys.executable,
+                    "-m",
+                    "src.data.build_controlled_dataset",
+                    "--labels",
+                    labels_path,
+                    "--uploads",
+                    uploads_path,
+                    "--output",
+                    "data/security_scan_dataset.csv",
+                ]):
+                    yield line
+            else:
+                raise RuntimeError(
+                    "Invalid source. Use source=mongodb, source=extracted, source=bootstrap, or source=controlled."
+                )
+
+            yield _sse_line(f"Training LightGBM model from {training_dataset}...")
+            async for line in _stream_process([sys.executable, "-m", "src.model.trainer", training_dataset]):
+                yield line
+
+            predictor.is_loaded = False
+            predictor.load_model()
+            yield _sse_line("Training finished and model reloaded successfully.", "done")
+        except Exception as exc:
+            logger.exception("Training pipeline failed")
+            yield _sse_line(f"Training failed: {exc}", "error")
 
 
 # Request/Response Models
@@ -140,6 +263,46 @@ async def get_model_info():
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to get model info: {str(e)}"
+        )
+
+
+@router.get("/train/stream", status_code=status.HTTP_200_OK)
+async def train_model_stream(
+    source: str = Query("mongodb", pattern="^(mongodb|extracted|bootstrap|controlled)$")
+):
+    """
+    Stream model training logs.
+
+    The endpoint only runs fixed internal training commands. It does not accept
+    arbitrary shell input from the browser.
+    """
+    return StreamingResponse(
+        _run_training_pipeline(source),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
+@router.get("/paper/tables", status_code=status.HTTP_200_OK)
+async def get_paper_tables():
+    """
+    Generate paper-ready table values from current MobileSec artifacts.
+
+    Values are computed from MongoDB scan results, the training CSV, and
+    training_metrics.json. Metrics requiring ground truth or external tools are
+    reported as null/N/A with warnings.
+    """
+    try:
+        return generate_paper_tables()
+    except Exception as e:
+        logger.error(f"Failed to generate paper tables: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate paper tables: {str(e)}"
         )
 
 

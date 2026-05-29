@@ -1,0 +1,11 @@
+Checklist row 15 - Justify the security score
+Status: corrected limitation and validation path; external justification still required.
+
+Where:
+- docs/security-score-validation.md
+- backend/ml-model/src/evaluation/paper_tables.py
+
+Correction:
+Documented that the current weights are heuristics and must not be presented as
+validated. The existing sensitivity table is retained as evidence; independent
+validation is handled by the row 16 workflow.

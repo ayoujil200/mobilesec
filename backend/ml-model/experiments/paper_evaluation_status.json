@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-05-25T20:16:57.844Z",
+  "experiments_dir": "C:\\Users\\HP\\Desktop\\phd\\mobilesec\\backend\\ml-model\\experiments",
+  "backup_dir": "C:\\Users\\HP\\Desktop\\phd\\mobilesec\\backend\\ml-model\\experiments\\backups\\2026-05-25T19-34-45-112Z",
+  "actions": [
+    "Backed up existing CSVs to C:\\Users\\HP\\Desktop\\phd\\mobilesec\\backend\\ml-model\\experiments\\backups\\2026-05-25T19-34-45-112Z",
+    "Ran MobileSec benchmark scan.",
+    "Derived or corrected 0 benchmark expected label(s)."
+  ],
+  "messages": [],
+  "ready_for_final_journal_tables": true
+}

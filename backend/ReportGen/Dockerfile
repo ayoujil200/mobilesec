@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 # ReportGen Dockerfile (Debian-based for Puppeteer compatibility)
 # Builder stage (with dev deps to compile TypeScript)
 FROM node:18-bullseye-slim AS builder
@@ -12,29 +13,40 @@ RUN npm run build
 # Runtime stage
 FROM node:18-bullseye-slim
 
-# Install dependencies required by Chromium/Puppeteer
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  ca-certificates \
-  fonts-liberation \
-  libasound2 \
-  libatk1.0-0 \
-  libcups2 \
-  libdbus-1-3 \
-  libgdk-pixbuf2.0-0 \
-  libgtk-3-0 \
-  libx11-xcb1 \
-  libxcomposite1 \
-  libxdamage1 \
-  libxrandr2 \
-  libxss1 \
-  libnss3 \
-  libgbm1 \
-  libpangocairo-1.0-0 \
-  fonts-noto-color-emoji \
-  wget \
-  gnupg \
-  ca-certificates \
-  --no-install-recommends && rm -rf /var/lib/apt/lists/*
+# Install dependencies required by Chromium/Puppeteer. Debian mirrors can drop
+# large installs on slow links, so retry the install without discarding downloads.
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+  set -eux; \
+  apt_opts='-o Acquire::Retries=8 -o Acquire::http::Timeout=120 -o Acquire::https::Timeout=120 -o Acquire::http::No-Cache=True'; \
+  apt-get $apt_opts update; \
+  for attempt in 1 2 3 4 5; do \
+    apt-get $apt_opts install -y --no-install-recommends \
+      ca-certificates \
+      fonts-liberation \
+      libasound2 \
+      libatk1.0-0 \
+      libcups2 \
+      libdbus-1-3 \
+      libgdk-pixbuf2.0-0 \
+      libgtk-3-0 \
+      libx11-xcb1 \
+      libxcomposite1 \
+      libxdamage1 \
+      libxrandr2 \
+      libxss1 \
+      libnss3 \
+      libgbm1 \
+      libpangocairo-1.0-0 \
+      fonts-noto-color-emoji \
+      wget \
+      gnupg \
+      && break; \
+    if [ "$attempt" = 5 ]; then exit 1; fi; \
+    apt-get $apt_opts update; \
+    sleep 15; \
+  done; \
+  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

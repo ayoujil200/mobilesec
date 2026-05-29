@@ -1,0 +1,235 @@
+MobileSec SoftwareX manuscript: exact edit placement by reviewer row
+Source inspected: C:\Users\HP\Downloads\softwareX__fixed_after_reviewed_.zip -> main.tex
+Date: 2026-05-25
+
+Use this guide together with OVERLEAF_MAIN_TEX_INSERTIONS.tex. Line numbers
+refer to the submitted main.tex before new insertions; after the first paste,
+use the quoted anchor text to locate the subsequent position.
+
+CRITICAL CORRECTIONS ALREADY NEEDED IN THE CURRENT SOURCE
+- Lines 640--672 currently assert measured MobSF/APKDeepLens results. These
+  values are not supported by the verified MobileSec run and should be
+  removed unless separately documented external-tool runs are available.
+- Lines 685--697 contain superseded MobileSec measurements, including 0.0%
+  PDF and SARIF export success. Replace the complete table with the verified
+  table in Block 10.
+- Lines 239--241 and 478--504 present a LightGBM evaluation different from
+  the currently generated values. Replace them with Blocks 01 and 03.
+
+ROW 01 - Detail the LightGBM model
+Status in manuscript: revise and expand.
+Exact location: replace main.tex lines 237--243 in
+\subsection{Machine Learning-Based Vulnerability Prioritization}.
+Paste: Block 01.
+Purpose: define the learning task, 24 feature inputs, operational output
+classes, training split strategy and model hyperparameters.
+
+ROW 02 - Justify the LightGBM labels
+Status in manuscript: revise.
+Exact location: included in replacement of lines 237--243; it is the second
+paragraph of Block 01.
+Paste: Block 01.
+Required wording discipline: present the classes as operational remediation
+categories linked to analyzer evidence and remediation logic; do not call
+them OWASP labels or expert-validated risk labels.
+
+ROW 03 - Report complete ML metrics
+Status in manuscript: replace superseded metrics.
+Exact location: replace main.tex lines 476--504, the entire subsection
+\subsection{LightGBM prioritisation evaluation}, from the heading through the
+interpretive paragraph before "For developers and security analysts".
+Paste: Block 03.
+Verified values included: accuracy 0.6250, macro-precision 0.7815,
+macro-recall 0.6250, macro-F1 0.6284 and AUC 0.9468.
+
+ROW 04 - Include concrete model errors
+Status in manuscript: add.
+Exact location: immediately after the Table in Block 03 and before the
+paragraph starting "For developers and security analysts".
+Paste: Block 04.
+
+ROW 05 - Compare with MobSF, BeVigil and Yaazhini/Vooki
+Status in manuscript: qualitative comparison is acceptable; quantitative
+claim requires external measurements.
+Exact location:
+1. Retain main.tex lines 510--634 as a capability-based comparison, but
+   replace line 634 with Block 05A.
+2. Replace lines 636--672 entirely with Block 05B.
+Paste: Blocks 05A and 05B.
+Do not retain numerical MobSF or APKDeepLens rows unless the corresponding
+execution files can be supplied.
+
+ROW 06 - Same datasets and metrics for external tools
+Status in manuscript: limitation to state until the external runs exist.
+Exact location: same replacement of lines 636--672.
+Paste: Block 05B.
+The text specifies the required protocol: identical 283 APKs, runtime,
+precision, recall, F1 and export success measured under comparable settings.
+
+ROW 07 - Clarify DroidBench and Ghera scope
+Status in manuscript: revise benchmark introduction.
+Exact location: replace line 638 and insert immediately before the verified
+benchmark table replacing lines 674--701.
+Paste: first paragraph of Block 10.
+
+ROW 08 - Avoid unsupported accuracy claims for archived APK records
+Status in manuscript: replace wording and remove third numerical column.
+Exact location: replace lines 674--705 together with Table content.
+Paste: Block 10.
+Result: only DroidBench and Ghera carry accuracy metrics; the scan archive is
+described separately as lacking reference labels.
+
+ROW 09 - Per-category accuracy
+Status in manuscript: limitation required; do not add numeric claims.
+Exact location: immediately after the table in Block 10.
+Paste: final paragraph of Block 10.
+
+ROW 10 - Runtime, CPU, RAM and scalability measurement
+Status in manuscript: replace with final verified values.
+Exact location: replace lines 676--701.
+Paste: Block 10 table.
+Verified values include scan time, CPU, RAM, throughput, concurrency,
+export bytes, export time and report/SARIF success for all 283 APKs.
+
+ROW 11 - Reproducibility
+Status in manuscript: add.
+Exact location: insert after the benchmark and cross-tool discussion and
+before main.tex line 707, \section{Conclusions}.
+Paste: Block 11.
+
+ROW 12 - Test commands
+Status in manuscript: add concise reproducibility statement.
+Exact location: within Block 11, after the first paragraph.
+Paste: retain the verbatim benchmark command in Block 11.
+
+ROW 13 - Example APK sources and scripts
+Status in manuscript: add.
+Exact location: within Block 11, immediately after the command.
+Paste: retain the final paragraph of Block 11 referring to DroidBench and
+Ghera paths and distribution terms.
+
+ROW 14 - Developer documentation
+Status in manuscript: update metadata and mention documentation.
+Exact location:
+1. Replace metadata Table row C8 value at main.tex line 149 with the
+   repository developer-guide link in Block 14.
+2. Retain the documentation sentence in Block 11.
+Paste: Blocks 11 and 14.
+
+ROW 15 - Justify security score penalties
+Status in manuscript: add interpretation limitation.
+Exact location: insert after main.tex line 459, after the grade thresholds
+and before the report figure.
+Paste: Block 15.
+
+ROW 16 - Validate security score weights
+Status in manuscript: report sensitivity only; expert validation remains
+future evidence.
+Exact location: immediately after the explanatory paragraph in Block 15.
+Paste: Block 15 table and closing sentence.
+
+ROW 17 - Evaluate FixSuggest
+Status in manuscript: add limitation.
+Exact location: insert after main.tex line 383, immediately after the
+paragraph ending "reduce the need for manual analysis."
+Paste: Block 17.
+
+ROW 18 - Avoid unsupported MobSF guidance claim
+Status in manuscript: replace comparative conclusion.
+Exact location: replace main.tex line 634.
+Paste: Block 05A.
+
+ROW 19 - Moderate strong claims
+Status in manuscript: replace four claims.
+Exact locations:
+1. In line 103 replace "supports scalable deployment and reproducible
+   experimentation" using Block 19A.
+2. Replace line 203 using Block 19B.
+3. Replace line 474 using Block 19C.
+4. Replace line 713 using Block 19D.
+
+ROW 20 - Discuss microservice costs
+Status in manuscript: add.
+Exact location: insert after main.tex line 233 and before
+\subsection{Machine Learning-Based Vulnerability Prioritization}.
+Paste: first paragraph of Block 20.
+
+ROW 21 - Discuss Kafka complexity
+Status in manuscript: add.
+Exact location: same insertion after line 233.
+Paste: second paragraph of Block 20.
+
+ROW 22 - Inter-service failure handling
+Status in manuscript: add accurate implemented behavior.
+Exact location: same insertion after line 233.
+Paste: third paragraph of Block 20.
+Do not state that a dead-letter queue is available.
+
+ROW 23 - Microservice versus monolith evaluation
+Status in manuscript: limitation required.
+Exact location: same insertion after line 233, final paragraph of Block 20.
+Paste: Block 20.
+
+ROW 24 - Parallel-processing evidence
+Status in manuscript: remove unverified advantage and state measured outcome.
+Exact locations:
+1. Replace line 203 with Block 19B.
+2. Replace line 348 with Block 24A.
+3. Replace line 474 with Block 19C.
+4. Add the final paragraph of Block 20.
+Meaning: concurrency-4 trials did not yield complete consistent analyzer
+outputs; the published benchmark therefore reports concurrency=1 only.
+
+ROW 25 - SARIF support contradiction
+Status in manuscript: replace old table value with verified evidence.
+Exact locations:
+1. Retain functionality item line 267.
+2. Replace lines 676--701 with Block 10, where SARIF success is 100.0% for
+   both DroidBench and Ghera (283/283 in total).
+
+ROW 26 - PDF report success
+Status in manuscript: add measured verification.
+Exact locations:
+1. Insert Block 26 after main.tex line 391 in Section 3.3.
+2. Replace lines 676--701 with Block 10, where PDF success is 100.0%.
+
+ROW 27 - Separate benchmark evidence from archived scan records
+Status in manuscript: replace.
+Exact locations:
+1. Replace lines 674--705 with Block 10.
+2. Replace line 719 with Block 27.
+
+ROW 28 - Figure and table readability
+Status in manuscript: editorial Overleaf action.
+Exact locations:
+- Figure 1: lines 196--201. Use the most legible source file and enlarge to
+  \includegraphics[width=\linewidth]{figures/Archi.png}.
+- Figures 2--5: lines 353--358, 365--370, 375--380 and 461--466. Verify
+  readable text at final PDF scale; replace screenshots if text is blurred.
+- Qualitative comparison table: lines 521--624. Keep xltabular but shorten
+  prose cells where possible; it already spans pages and should remain
+  readable at normal text size.
+- Remove \textcolor{blue}{...} wrappers from final accepted manuscript edits.
+
+ROW 29 - Explicit conclusion limitations
+Status in manuscript: add.
+Exact location: insert after main.tex line 722 and before the future-work
+paragraph at line 725.
+Paste: Block 29.
+
+ROW 30 - Response-to-reviewers document
+Status in manuscript: not an article-body insertion.
+Exact location: create a separate response letter in Overleaf and reference
+the revised sections and table labels listed in this guide. The underlying
+evidence is the completed 283-APK benchmark and the revised manuscript text.
+
+RECOMMENDED EDIT ORDER IN OVERLEAF
+1. Replace the incorrect benchmark and external-tool text: rows 05--10,
+   25--27.
+2. Replace ML description and evaluation text: rows 01--04.
+3. Add architecture/failure/scalability limitations: rows 19--24.
+4. Add security-score and FixSuggest limitations: rows 15--17.
+5. Add reproducibility/documentation and conclusion limitation text:
+   rows 11--14 and 29.
+6. Improve figures and remove revision coloring before submission: row 28.
+

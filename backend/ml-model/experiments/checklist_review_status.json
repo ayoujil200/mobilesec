@@ -1,0 +1,245 @@
+{
+  "generated_on": "2026-05-25",
+  "rows": [
+    {
+      "row": 1,
+      "reviewer_request": "Detail the LightGBM model.",
+      "status": "Corrected",
+      "implementation": "Generated tables expose model features, hyperparameters and training settings.",
+      "evidence_file": "docs/checklist-corrections/ROW_01_LIGHTGBM_DETAILS.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 2,
+      "reviewer_request": "Justify labels used for LightGBM.",
+      "status": "Corrected",
+      "implementation": "Label source, evidence, confidence and review status are reported through table outputs.",
+      "evidence_file": "docs/checklist-corrections/ROW_02_LABEL_JUSTIFICATION.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 3,
+      "reviewer_request": "Report complete ML evaluation metrics.",
+      "status": "Corrected",
+      "implementation": "Generated model rows include precision, recall, F1, AUC where available and confusion matrices.",
+      "evidence_file": "docs/checklist-corrections/ROW_03_MODEL_METRICS.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 4,
+      "reviewer_request": "Show concrete model errors.",
+      "status": "Corrected",
+      "implementation": "Generated values include saved hold-out misclassification examples.",
+      "evidence_file": "docs/checklist-corrections/ROW_04_MISCLASSIFICATIONS.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 5,
+      "reviewer_request": "Compare against MobSF, BeVigil and Yaazhini/Vooki.",
+      "status": "Requires evidence",
+      "implementation": "Tool-comparison schema supports external tool rows without inventing values.",
+      "evidence_file": "docs/checklist-corrections/ROW_05_EXTERNAL_TOOLS.txt",
+      "remaining_action": "Import measured external-tool results."
+    },
+    {
+      "row": 6,
+      "reviewer_request": "Use the same dataset and metrics for tool comparison.",
+      "status": "Requires evidence",
+      "implementation": "Import schema supports TP, FP, FN, precision, recall and F1 on shared datasets.",
+      "evidence_file": "docs/checklist-corrections/ROW_06_SAME_DATASET_METRICS.txt",
+      "remaining_action": "Execute external tools on the benchmark APK set."
+    },
+    {
+      "row": 7,
+      "reviewer_request": "Clarify DroidBench and Ghera benchmark scope.",
+      "status": "Corrected",
+      "implementation": "Reproducibility documentation defines benchmark purpose and interpretation.",
+      "evidence_file": "docs/checklist-corrections/ROW_07_BENCHMARK_SCOPE.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 8,
+      "reviewer_request": "Provide accuracy evidence for real APKs.",
+      "status": "Requires manual evidence",
+      "implementation": "Historical records are labeled as no-ground-truth and excluded from accuracy claims.",
+      "evidence_file": "docs/checklist-corrections/ROW_08_REAL_APK_GROUND_TRUTH.txt",
+      "remaining_action": "Curate real-APK ground truth before reporting accuracy."
+    },
+    {
+      "row": 9,
+      "reviewer_request": "Report per-category detection metrics.",
+      "status": "Requires evidence",
+      "implementation": "Generated values calculate per-category metrics when category ground truth is supplied.",
+      "evidence_file": "docs/checklist-corrections/ROW_09_CATEGORY_METRICS.txt",
+      "remaining_action": "Annotate benchmark rows with categories."
+    },
+    {
+      "row": 10,
+      "reviewer_request": "Measure runtime, CPU, RAM and scalability.",
+      "status": "Corrected and verified",
+      "implementation": "Completed 283-APK benchmark records response runtime, resource sampling, throughput, concurrency and report bytes.",
+      "evidence_file": "docs/checklist-corrections/ROW_10_SCALABILITY_METRICS.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 11,
+      "reviewer_request": "Provide reproducibility material.",
+      "status": "Corrected",
+      "implementation": "A reproducibility document identifies services, datasets and evaluation flow.",
+      "evidence_file": "docs/checklist-corrections/ROW_11_REPRODUCIBILITY.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 12,
+      "reviewer_request": "Provide test commands.",
+      "status": "Corrected",
+      "implementation": "Runnable evaluation and verification commands are documented.",
+      "evidence_file": "docs/checklist-corrections/ROW_12_TEST_COMMANDS.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 13,
+      "reviewer_request": "Provide sample APK paths and scripts.",
+      "status": "Corrected",
+      "implementation": "Benchmark scripts accept DroidBench/Ghera paths and are documented.",
+      "evidence_file": "docs/checklist-corrections/ROW_13_SAMPLE_APKS.txt",
+      "remaining_action": "APK binaries remain locally supplied due licensing."
+    },
+    {
+      "row": 14,
+      "reviewer_request": "Add developer documentation.",
+      "status": "Corrected",
+      "implementation": "Developer documentation covers configuration, APIs and service extension.",
+      "evidence_file": "docs/checklist-corrections/ROW_14_DEVELOPER_DOCUMENTATION.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 15,
+      "reviewer_request": "Justify security-score weights.",
+      "status": "Corrected limitation",
+      "implementation": "Documentation identifies heuristic weights and exposes sensitivity analysis.",
+      "evidence_file": "docs/checklist-corrections/ROW_15_SCORE_JUSTIFICATION.txt",
+      "remaining_action": "Do not claim expert validation until evidence exists."
+    },
+    {
+      "row": 16,
+      "reviewer_request": "Validate security-score weights.",
+      "status": "Requires expert evidence",
+      "implementation": "A correlation evaluator workflow was added for expert-review labels.",
+      "evidence_file": "docs/checklist-corrections/ROW_16_SCORE_VALIDATION.txt",
+      "remaining_action": "Collect expert-reviewed scoring labels."
+    },
+    {
+      "row": 17,
+      "reviewer_request": "Evaluate FixSuggest recommendations.",
+      "status": "Requires evidence",
+      "implementation": "A manual-review template and metrics evaluator were added.",
+      "evidence_file": "docs/checklist-corrections/ROW_17_FIXSUGGEST_EVALUATION.txt",
+      "remaining_action": "Perform and import manual suggestion reviews."
+    },
+    {
+      "row": 18,
+      "reviewer_request": "Revise the MobSF guidance claim.",
+      "status": "Manuscript edit required",
+      "implementation": "This claim is outside executable source-code correction.",
+      "evidence_file": "docs/checklist-corrections/00_ROW_BY_ROW_AUDIT.txt",
+      "remaining_action": "Edit article wording."
+    },
+    {
+      "row": 19,
+      "reviewer_request": "Limit overly strong claims.",
+      "status": "Manuscript edit required",
+      "implementation": "Architecture documentation supplies technically accurate replacement language.",
+      "evidence_file": "docs/checklist-corrections/00_ROW_BY_ROW_AUDIT.txt",
+      "remaining_action": "Edit article wording."
+    },
+    {
+      "row": 20,
+      "reviewer_request": "Discuss microservice costs.",
+      "status": "Corrected documentation",
+      "implementation": "Architecture trade-offs document records overhead and operational cost.",
+      "evidence_file": "docs/checklist-corrections/ROW_20_21_23_ARCHITECTURE_TRADEOFFS.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 21,
+      "reviewer_request": "Discuss Kafka complexity.",
+      "status": "Corrected documentation",
+      "implementation": "Architecture trade-offs document explains messaging complexity.",
+      "evidence_file": "docs/checklist-corrections/ROW_20_21_23_ARCHITECTURE_TRADEOFFS.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 22,
+      "reviewer_request": "Handle inter-service failures.",
+      "status": "Partially corrected",
+      "implementation": "Scanner retries notifications, stores partial status and provides manual replay.",
+      "evidence_file": "docs/checklist-corrections/ROW_22_FAILURE_MANAGEMENT.txt",
+      "remaining_action": "Implement a durable dead-letter queue if required."
+    },
+    {
+      "row": 23,
+      "reviewer_request": "Compare microservice and monolith performance.",
+      "status": "Requires experiment",
+      "implementation": "Architecture trade-offs and the absence of a measured monolith baseline are documented.",
+      "evidence_file": "docs/checklist-corrections/ROW_20_21_23_ARCHITECTURE_TRADEOFFS.txt",
+      "remaining_action": "Implement and measure a monolithic baseline."
+    },
+    {
+      "row": 24,
+      "reviewer_request": "Prove parallel processing advantage.",
+      "status": "Requires experiment",
+      "implementation": "Benchmark captures concurrency and throughput; concurrent service behavior was tested.",
+      "evidence_file": "docs/checklist-corrections/ROW_24_PARALLEL_MEASUREMENT.txt",
+      "remaining_action": "Resolve analyzer concurrency failures before claiming an advantage."
+    },
+    {
+      "row": 25,
+      "reviewer_request": "Resolve SARIF contradiction.",
+      "status": "Corrected and verified",
+      "implementation": "ReportGen generates SARIF and benchmark requests measured SARIF exports.",
+      "evidence_file": "docs/checklist-corrections/ROW_25_SARIF.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 26,
+      "reviewer_request": "Resolve PDF-report contradiction.",
+      "status": "Corrected and verified",
+      "implementation": "Benchmark invokes ReportGen PDF and stores measured PDF success.",
+      "evidence_file": "docs/checklist-corrections/ROW_26_PDF_REPORT_RATE.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 27,
+      "reviewer_request": "Resolve real-APK wording contradiction.",
+      "status": "Corrected",
+      "implementation": "Tables separate comparative benchmark APK results from unlabelled historical records.",
+      "evidence_file": "docs/checklist-corrections/ROW_27_REAL_APK_WORDING.txt",
+      "remaining_action": ""
+    },
+    {
+      "row": 28,
+      "reviewer_request": "Improve figures and readability.",
+      "status": "Manuscript edit required",
+      "implementation": "Visual article layout is not controlled by application source code.",
+      "evidence_file": "docs/checklist-corrections/00_ROW_BY_ROW_AUDIT.txt",
+      "remaining_action": "Revise manuscript figures."
+    },
+    {
+      "row": 29,
+      "reviewer_request": "Strengthen conclusion limitations.",
+      "status": "Manuscript edit required",
+      "implementation": "Known limitations are recorded in documentation and generated statuses.",
+      "evidence_file": "docs/checklist-corrections/00_ROW_BY_ROW_AUDIT.txt",
+      "remaining_action": "Edit conclusion text."
+    },
+    {
+      "row": 30,
+      "reviewer_request": "Prepare a reviewer-response artifact.",
+      "status": "Corrected artifact",
+      "implementation": "The row-by-row audit and individual correction records provide the response basis.",
+      "evidence_file": "docs/checklist-corrections/ROW_30_RESPONSE_ARTIFACT.txt",
+      "remaining_action": ""
+    }
+  ]
+}

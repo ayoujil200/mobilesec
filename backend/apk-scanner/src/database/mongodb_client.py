@@ -112,7 +112,7 @@ class MongoDBClient:
         try:
             document = {
                 "scan_id": scan_id,
-                "status": "completed",
+                "status": results.get("status", "completed"),
                 "created_at": datetime.utcnow(),
                 "updated_at": datetime.utcnow(),
                 "results": results

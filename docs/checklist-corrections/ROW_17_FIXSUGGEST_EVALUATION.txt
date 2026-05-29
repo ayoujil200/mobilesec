@@ -1,0 +1,11 @@
+Checklist row 17 - Evaluate FixSuggest/LLM
+Status: corrected workflow; expert review still required.
+
+Where:
+- scripts/evaluate-fixsuggest-review.js
+- backend/ml-model/experiments/fixsuggest_expert_review_template.csv
+- docs/reproducibility.md
+
+Correction:
+Added a manual expert-review data contract and script computing correctness,
+acceptable-fix and modification rates. No LLM quality metric is fabricated.

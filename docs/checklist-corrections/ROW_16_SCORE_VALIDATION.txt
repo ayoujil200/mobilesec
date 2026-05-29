@@ -1,0 +1,12 @@
+Checklist row 16 - Validate security-score weights
+Status: corrected workflow; expert data still required.
+
+Where:
+- scripts/evaluate-security-score-review.js
+- backend/ml-model/experiments/security_score_expert_review_template.csv
+- docs/reproducibility.md
+
+Correction:
+Added a manual-review input format and an evaluator that computes Pearson and
+Spearman correlations between MobileSec risk, expert severity and CVSS values.
+It refuses to calculate results without actual completed rows.

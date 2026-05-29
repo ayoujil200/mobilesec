@@ -1,0 +1,55 @@
+Full DroidBench and Ghera evaluation evidence - 2026-05-25
+
+Scope:
+- DroidBench APKs analyzed: 118
+- Ghera APKs analyzed: 165
+- Total APKs analyzed: 283
+- Execution mode: sequential, concurrency=1, selected after concurrency-4
+  attempts produced partial analyzer results.
+
+Measured artifact sources:
+- backend/ml-model/experiments/benchmark_scan_details.csv
+- backend/ml-model/experiments/runtime_results.csv
+- backend/ml-model/experiments/ground_truth.csv
+- backend/ml-model/experiments/paper_evaluation_status.json
+
+Measured completion/export verification:
+- completed scans: 283/283
+- PDF report exports: 283/283 successful
+- JSON report exports: 283/283 successful
+- SARIF report exports: 283/283 successful
+
+Generated Table 6 values from GET /api/v1/paper/tables:
+
+Metric                              DroidBench          Ghera
+Number of APKs                      118                 165
+Detected findings                   484                 901
+True positives                      118                 44
+False positives                     0                   121
+False negatives                     0                   0
+Precision                           1.0000              0.2667
+Recall                              1.0000              1.0000
+F1-score                            1.0000              0.4211
+Mean scan time                      4.29 s              8.40 s
+Mean CPU usage                      102.4%              70.5%
+Mean RAM usage                      276.8 MB            555.2 MB
+Throughput                          6.71 apk/min        6.71 apk/min
+Concurrent APK scans                1                   1
+Mean generated export bytes         77165 bytes         80304 bytes
+Mean report export time             2.28 s              2.24 s
+Report-generation success rate      100.0%              100.0%
+SARIF export success rate           100.0%              100.0%
+
+Frontend verification:
+- The dashboard Generate Values action calls /api/v1/paper/tables.
+- The endpoint returns the finalized evaluation tables and all 30 reviewer
+  checklist rows.
+- The optimized endpoint completed in 8.26 seconds during verification.
+- Frontend URL: http://localhost:3006
+
+Interpretation:
+- These are measured values for the supplied DroidBench and Ghera APK sets.
+- Historical MobileSec records are displayed separately without ground truth
+  and are not used to claim real-world accuracy.
+- External-tool comparison values remain unavailable until the same APK set is
+  executed with the corresponding tools and results are imported.

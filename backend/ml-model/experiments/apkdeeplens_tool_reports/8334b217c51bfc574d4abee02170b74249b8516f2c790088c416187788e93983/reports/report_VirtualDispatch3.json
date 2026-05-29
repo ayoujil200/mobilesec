@@ -1,0 +1,250 @@
+{
+    "apk_name": "VirtualDispatch3.apk",
+    "package_name": "de.ecspride",
+    "permission": [
+        "android.permission.SEND_SMS",
+        "android.permission.READ_PHONE_STATE"
+    ],
+    "dangerous_permission": [
+        "android.permission.SEND_SMS",
+        "android.permission.READ_PHONE_STATE"
+    ],
+    "manifest_analysis": {
+        "activities": {
+            "all": [
+                "de.ecspride.MainActivity"
+            ],
+            "exported": []
+        },
+        "services": {
+            "all": [],
+            "exported": []
+        },
+        "receivers": {
+            "all": [],
+            "exported": []
+        },
+        "providers": {
+            "all": [],
+            "exported": []
+        }
+    },
+    "manifest_security": [
+        {
+            "id": "MANIFEST_DEBUGGABLE",
+            "title": "Application is Debuggable",
+            "severity": "CRITICAL",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "android:debuggable=\"true\" allows attackers to attach a debugger to the running app via adb, inspect memory, bypass certificate pinning, and extract sensitive data at runtime. Must be false in release builds.",
+            "evidence": "android:debuggable=\"true\""
+        },
+        {
+            "id": "MANIFEST_ALLOW_BACKUP",
+            "title": "Application Data Backup Allowed",
+            "severity": "HIGH",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "android:allowBackup is true (or not set, defaulting to true). Any user or attacker with USB access can extract the full app data directory using 'adb backup' without root. Set to false or use android:fullBackupOnly with a proper backup rule.",
+            "evidence": "android:allowBackup=\"true\""
+        },
+        {
+            "id": "MANIFEST_MIN_SDK_LOW",
+            "title": "Low Minimum SDK Version (8)",
+            "severity": "MEDIUM",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "minSdkVersion=8 targets Android versions that lack modern security controls (full-disk encryption, SELinux enforcement, runtime permissions). Minimum recommended is 21 (Android 5.0).",
+            "evidence": "android:minSdkVersion=\"8\""
+        },
+        {
+            "id": "MANIFEST_TARGET_SDK_LOW",
+            "title": "Low Target SDK Version (19)",
+            "severity": "MEDIUM",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "targetSdkVersion=19 opts out of security improvements introduced in Android 9+ (Pie), including default HTTPS enforcement, restricted access to device identifiers, and background restrictions. Target SDK 28 or higher is strongly recommended.",
+            "evidence": "android:targetSdkVersion=\"19\""
+        }
+    ],
+    "hardcoded_secrets": [],
+    "insecure_requests": [],
+    "code_findings": [
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/view/ViewPager.java",
+            "line": 428,
+            "evidence": "this.mSetChildrenDrawingOrderEnabled = ViewGroup.class.getDeclaredMethod(\"setChildrenDrawingOrderEnabled\", Boolean.TYPE);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/widget/SlidingPaneLayout.java",
+            "line": 955,
+            "evidence": "this.mGetDisplayList = View.class.getDeclaredMethod(\"getDisplayList\", null);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/widget/SlidingPaneLayout.java",
+            "line": 960,
+            "evidence": "this.mRecreateDisplayList = View.class.getDeclaredField(\"mRecreateDisplayList\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/app/ActionBarDrawerToggleHoneycomb.java",
+            "line": 75,
+            "evidence": "this.setHomeAsUpIndicator = ActionBar.class.getDeclaredMethod(\"setHomeAsUpIndicator\", Drawable.class);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/app/ActionBarDrawerToggleHoneycomb.java",
+            "line": 76,
+            "evidence": "this.setHomeActionContentDescription = ActionBar.class.getDeclaredMethod(\"setHomeActionContentDescription\", Integer.TYPE);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/SearchView.java",
+            "line": 1177,
+            "evidence": "this.doBeforeTextChanged = AutoCompleteTextView.class.getDeclaredMethod(\"doBeforeTextChanged\", new Class[0]);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/SearchView.java",
+            "line": 1182,
+            "evidence": "this.doAfterTextChanged = AutoCompleteTextView.class.getDeclaredMethod(\"doAfterTextChanged\", new Class[0]);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/internal/view/menu/MenuItemWrapperICS.java",
+            "line": 307,
+            "evidence": "this.mSetExclusiveCheckableMethod = ((MenuItem) this.mWrappedObject).getClass().getDeclaredMethod(\"setExclusiveCheckable\", Boolean.TYPE);"
+        },
+        {
+            "id": "STORAGE_EXTERNAL",
+            "title": "Sensitive Data on External Storage",
+            "severity": "MEDIUM",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "Data written to external storage is readable by any app with READ_EXTERNAL_STORAGE permission. Do not store sensitive data on SD card or external volumes.",
+            "file": "sources/android/support/v4/content/ContextCompat.java",
+            "line": 42,
+            "evidence": "single = buildPath(Environment.getExternalStorageDirectory(), DIR_ANDROID, DIR_OBB, context.getPackageName());"
+        },
+        {
+            "id": "STORAGE_EXTERNAL",
+            "title": "Sensitive Data on External Storage",
+            "severity": "MEDIUM",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "Data written to external storage is readable by any app with READ_EXTERNAL_STORAGE permission. Do not store sensitive data on SD card or external volumes.",
+            "file": "sources/android/support/v4/content/ContextCompat.java",
+            "line": 54,
+            "evidence": "single = ContextCompatFroyo.getExternalFilesDir(context, type);"
+        },
+        {
+            "id": "STORAGE_EXTERNAL",
+            "title": "Sensitive Data on External Storage",
+            "severity": "MEDIUM",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "Data written to external storage is readable by any app with READ_EXTERNAL_STORAGE permission. Do not store sensitive data on SD card or external volumes.",
+            "file": "sources/android/support/v4/content/ContextCompat.java",
+            "line": 56,
+            "evidence": "single = buildPath(Environment.getExternalStorageDirectory(), DIR_ANDROID, DIR_DATA, context.getPackageName(), DIR_FILES, type);"
+        },
+        {
+            "id": "STORAGE_EXTERNAL",
+            "title": "Sensitive Data on External Storage",
+            "severity": "MEDIUM",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "Data written to external storage is readable by any app with READ_EXTERNAL_STORAGE permission. Do not store sensitive data on SD card or external volumes.",
+            "file": "sources/android/support/v4/content/ContextCompat.java",
+            "line": 70,
+            "evidence": "single = buildPath(Environment.getExternalStorageDirectory(), DIR_ANDROID, DIR_DATA, context.getPackageName(), DIR_CACHE);"
+        },
+        {
+            "id": "STORAGE_EXTERNAL",
+            "title": "Sensitive Data on External Storage",
+            "severity": "MEDIUM",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "Data written to external storage is readable by any app with READ_EXTERNAL_STORAGE permission. Do not store sensitive data on SD card or external volumes.",
+            "file": "sources/android/support/v4/content/ContextCompatFroyo.java",
+            "line": 13,
+            "evidence": "public static File getExternalFilesDir(Context context, String type) {"
+        },
+        {
+            "id": "STORAGE_EXTERNAL",
+            "title": "Sensitive Data on External Storage",
+            "severity": "MEDIUM",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "Data written to external storage is readable by any app with READ_EXTERNAL_STORAGE permission. Do not store sensitive data on SD card or external volumes.",
+            "file": "sources/android/support/v4/content/ContextCompatFroyo.java",
+            "line": 14,
+            "evidence": "return context.getExternalFilesDir(type);"
+        },
+        {
+            "id": "STORAGE_EXTERNAL",
+            "title": "Sensitive Data on External Storage",
+            "severity": "MEDIUM",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "Data written to external storage is readable by any app with READ_EXTERNAL_STORAGE permission. Do not store sensitive data on SD card or external volumes.",
+            "file": "sources/android/support/v4/content/FileProvider.java",
+            "line": 166,
+            "evidence": "target = buildPath(Environment.getExternalStorageDirectory(), path);"
+        },
+        {
+            "id": "STORAGE_EXTERNAL",
+            "title": "Sensitive Data on External Storage",
+            "severity": "MEDIUM",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "Data written to external storage is readable by any app with READ_EXTERNAL_STORAGE permission. Do not store sensitive data on SD card or external volumes.",
+            "file": "sources/android/support/v4/os/EnvironmentCompat.java",
+            "line": 17,
+            "evidence": "if (path.getCanonicalPath().startsWith(Environment.getExternalStorageDirectory().getCanonicalPath())) {"
+        },
+        {
+            "id": "LOG_SENSITIVE",
+            "title": "Sensitive Data in Log Statement",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Log.d/e/i/v/w() call contains keywords suggesting sensitive data (password, token, key, secret, auth, credential). Log output is accessible to other apps via logcat on unpatched or rooted devices.",
+            "file": "sources/android/support/v7/internal/view/SupportMenuInflater.java",
+            "line": 354,
+            "evidence": "Log.w(SupportMenuInflater.LOG_TAG, \"Cannot instantiate class: \" + className, e);"
+        },
+        {
+            "id": "LOG_SYSOUT",
+            "title": "System.out.println in Production Code",
+            "severity": "LOW",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "System.out.println() output appears in logcat on debug builds and is a common source of accidental data leakage. Remove or guard with BuildConfig.DEBUG.",
+            "file": "sources/de/ecspride/MainActivity.java",
+            "line": 33,
+            "evidence": "System.out.println(createOtherImplementation());"
+        }
+    ]
+}

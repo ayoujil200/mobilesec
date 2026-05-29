@@ -262,6 +262,9 @@ services:
       - SECRET_HUNTER_URL=http://secret-hunter:5002
       - CRYPTO_CHECK_URL=http://crypto-check:8080
       - KAFKA_BROKERS=kafka:9092
+      - NOTIFICATION_MAX_ATTEMPTS=3
+      - NOTIFICATION_TIMEOUT_SECONDS=120
+      - NOTIFICATION_RETRY_DELAY_SECONDS=1
     volumes:
       - apk-scanner-uploads:/app/uploads
       - apk-scanner-output:/app/output
@@ -453,9 +456,13 @@ services:
       - MONGODB_URI=mongodb://admin:securityplatform2024@mongodb:27017/security_platform?authSource=admin
       - MONGODB_DATABASE=security_platform
       - MODEL_PATH=/app/models/lightgbm_model.txt
+      - LIGHTGBM_NUM_BOOST_ROUND=3000
+      - LIGHTGBM_EARLY_STOPPING_ROUNDS=150
+      - LIGHTGBM_VERBOSE_EVAL=100
     volumes:
       - ml-model-data:/app/models
       - ml-model-data:/app/data
+      - ./ml-model/experiments:/app/experiments:ro
     networks:
       - security-network
     restart: unless-stopped

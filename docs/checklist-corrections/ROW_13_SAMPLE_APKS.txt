@@ -1,0 +1,10 @@
+Checklist row 13 - Sample APK paths
+Status: corrected as a reproducible local input convention.
+
+Where:
+- docs/reproducibility.md
+
+Correction:
+Specified the required DroidBench/Ghera directory layout and commands that
+consume those APK folders. APK binaries are not bundled because licensing and
+benchmark acquisition must be handled by the evaluator.

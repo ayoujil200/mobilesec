@@ -1,0 +1,16 @@
+Checklist row 01 - Detail LightGBM model
+Status: corrected in project output.
+
+Where:
+- backend/ml-model/src/evaluation/paper_tables.py
+- frontend/src/pages/Dashboard.jsx
+
+Correction:
+The paper-table endpoint now exposes all feature names, selected/base
+hyperparameters, and training configuration. The dashboard renders a Model
+Configuration table alongside existing class distribution and confusion
+matrix evidence.
+
+Verification:
+Generate paper tables from the dashboard or call GET /api/v1/paper/tables and
+inspect tables.model_configuration and dataset.feature_names.

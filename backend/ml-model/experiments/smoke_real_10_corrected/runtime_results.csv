@@ -1,0 +1,11 @@
+dataset,apk,scan_id,runtime_seconds,export_time_seconds,cpu_percent,ram_mb,apk_size_bytes,export_bytes_total,concurrency,throughput_apks_per_minute,report_success,pdf_success,json_success,sarif_success
+DroidBench,Merge1.apk,42f7f517-b76c-4aaa-ab98-42eee6fc7318,10.444,2.203,65.57,149.11,801366,76641,1,2.6641209510911796,true,true,true,true
+DroidBench,ApplicationModeling1.apk,30a60ca8-b853-488f-9f4e-e62ad084e85c,10.131,2.201,1.05,150.30,36869,76919,1,2.6641209510911796,true,true,true,true
+DroidBench,DirectLeak1.apk,636a2a7a-ac12-43b8-b52a-e9f5ee187e24,10.130,2.18,19.84,148.23,178577,76928,1,2.6641209510911796,true,true,true,true
+DroidBench,InactiveActivity.apk,85038f31-7344-41c0-b6d6-fbf246311d84,10.161,2.192,26.04,149.23,178495,77248,1,2.6641209510911796,true,true,true,true
+DroidBench,Library2.apk,5fdc6b9c-9b97-4380-884f-c4640c1612df,10.526,2.201,5.07,150.23,196636,77207,1,2.6641209510911796,true,true,true,true
+Ghera,BlockCipher-ECB-InformationExposure-Lean-benign-v2.apk,9fcd0e59-5ff3-4bdb-befe-ff1652d9cf59,10.127,2.17,75.31,154.03,971371,83102,1,2.6641209510911796,true,true,true,true
+Ghera,BlockCipher-ECB-InformationExposure-Lean-benign.apk,7f7c43b0-15b9-48bb-b855-a28fc56f9559,10.151,2.167,71.95,159.39,971340,82668,1,2.6641209510911796,true,true,true,true
+Ghera,BlockCipher-ECB-InformationExposure-Lean-malicious.apk,fb77817b-63dd-4457-8b1c-8dfc74888089,10.156,2.16,70.59,162.52,967745,79202,1,2.6641209510911796,true,true,true,true
+Ghera,BlockCipher-ECB-InformationExposure-Lean-secure.apk,f62012d6-cb67-47cb-aadc-8700c5a262de,10.614,2.202,39.51,164.57,971205,82384,1,2.6641209510911796,true,true,true,true
+Ghera,BlockCipher-NonRandomIV-InformationExposure-Lean-benign.apk,7f1dbae3-3244-49a7-be41-cd0e245bd3ee,10.131,2.168,73.19,167.92,972006,82514,1,2.6641209510911796,true,true,true,true

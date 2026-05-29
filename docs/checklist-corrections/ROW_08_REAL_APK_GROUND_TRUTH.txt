@@ -1,0 +1,11 @@
+Checklist row 08 - Evaluation on real APKs
+Status: corrected against unsupported claim; manual annotation still required.
+
+Where:
+- backend/ml-model/src/evaluation/paper_tables.py
+- docs/reproducibility.md
+
+Correction:
+Table output labels MongoDB scans as historical MobileSec records without
+ground truth. They can report coverage, not precision or accuracy, until a
+manually reviewed subset is supplied.

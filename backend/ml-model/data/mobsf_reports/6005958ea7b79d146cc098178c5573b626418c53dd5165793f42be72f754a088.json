@@ -1,0 +1,370 @@
+{
+  "title": "Static Analysis",
+  "version": "v4.5.0",
+  "file_name": "insecure_http_0003.apk",
+  "app_name": "insecure_http",
+  "app_type": "apk",
+  "size": "0.0MB",
+  "md5": "4495179a27e5969ab3e156b3de2ba8d7",
+  "sha1": "583cd5cf4a95015ee75351d25d3e81ee044f9f1d",
+  "sha256": "6005958ea7b79d146cc098178c5573b626418c53dd5165793f42be72f754a088",
+  "package_name": "com.mobilesec.controlled.insecure_http0003",
+  "main_activity": ".MainActivity",
+  "exported_activities": [],
+  "browsable_activities": {},
+  "activities": [
+    ".MainActivity"
+  ],
+  "receivers": [],
+  "providers": [],
+  "services": [],
+  "libraries": [],
+  "target_sdk": "35",
+  "max_sdk": "",
+  "min_sdk": "23",
+  "version_name": "1.0",
+  "version_code": "1",
+  "icon_path": "",
+  "certificate_analysis": {
+    "certificate_info": "Binary is not signed\nMissing certificate\nv1 signature: False\nv2 signature: False\nv3 signature: False\nv4 signature: False",
+    "certificate_findings": [
+      [
+        "high",
+        "Code signing certificate not found",
+        "Missing Code Signing certificate"
+      ]
+    ],
+    "certificate_summary": {
+      "high": 1,
+      "warning": 0,
+      "info": 0
+    }
+  },
+  "permissions": {
+    "android.permission.INTERNET": {
+      "status": "normal",
+      "info": "full Internet access",
+      "description": "Allows an application to create network sockets."
+    }
+  },
+  "malware_permissions": {
+    "top_malware_permissions": [
+      "android.permission.INTERNET"
+    ],
+    "other_abused_permissions": [],
+    "total_malware_permissions": 25,
+    "total_other_permissions": 44
+  },
+  "manifest_analysis": {
+    "manifest_findings": [
+      {
+        "rule": "vulnerable_os_version",
+        "title": "App can be installed on a vulnerable unpatched Android version 6.0-6.0.1, [minSdk=23]",
+        "severity": "high",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "name": "App can be installed on a vulnerable unpatched Android version 6.0-6.0.1, [minSdk=23]",
+        "component": [
+          "6.0-6.0.1",
+          "23"
+        ]
+      },
+      {
+        "rule": "clear_text_traffic",
+        "title": "Clear text traffic is Enabled For App[android:usesCleartextTraffic=true]",
+        "severity": "high",
+        "description": "The app intends to use cleartext network traffic, such as cleartext HTTP, FTP stacks, DownloadManager, and MediaPlayer. The default value for apps that target API level 27 or lower is \"true\". Apps that target API level 28 or higher default to \"false\". The key reason for avoiding cleartext traffic is the lack of confidentiality, authenticity, and protections against tampering; a network attacker can eavesdrop on transmitted data and also modify it without being detected.",
+        "name": "Clear text traffic is Enabled For App [android:usesCleartextTraffic=true]",
+        "component": []
+      },
+      {
+        "rule": "allowbackup_not_set",
+        "title": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+        "severity": "warning",
+        "description": "The flag [android:allowBackup] should be set to false. By default it is set to true and allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "name": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+        "component": []
+      }
+    ],
+    "manifest_summary": {
+      "high": 2,
+      "warning": 1,
+      "info": 0,
+      "suppressed": 0
+    }
+  },
+  "network_security": {
+    "network_findings": [],
+    "network_summary": {}
+  },
+  "binary_analysis": [],
+  "file_analysis": [],
+  "android_api": {},
+  "code_analysis": {
+    "findings": {},
+    "summary": {}
+  },
+  "niap_analysis": {},
+  "permission_mapping": {},
+  "urls": [],
+  "domains": {},
+  "emails": [],
+  "strings": {
+    "strings_apk_res": {},
+    "strings_so": [],
+    "strings_code": [
+      "networkSecurityConfig",
+      "cleartextTrafficPermitted=true"
+    ]
+  },
+  "firebase_urls": [],
+  "files": [
+    "classes.dex",
+    "AndroidManifest.xml"
+  ],
+  "exported_count": {
+    "exported_activities": 0,
+    "exported_services": 0,
+    "exported_receivers": 0,
+    "exported_providers": 0
+  },
+  "apkid": {
+    "classes.dex": {
+      "compiler": [
+        "dexlib 2.x"
+      ]
+    }
+  },
+  "behaviour": {},
+  "trackers": {
+    "detected_trackers": 0,
+    "total_trackers": 432,
+    "trackers": []
+  },
+  "playstore_details": {
+    "error": true
+  },
+  "secrets": [],
+  "logs": [
+    {
+      "timestamp": "2026-05-18 22:24:50",
+      "status": "Generating Hashes",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:50",
+      "status": "Extracting APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:50",
+      "status": "Unzipping",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:50",
+      "status": "Parsing APK with androguard",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:50",
+      "status": "Extracting APK features using aapt/aapt2",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:50",
+      "status": "Getting Hardcoded Certificates/Keystores",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:52",
+      "status": "Parsing AndroidManifest.xml",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:52",
+      "status": "Extracting Manifest Data",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:52",
+      "status": "Manifest Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:52",
+      "status": "Performing Static Analysis on: insecure_http (com.mobilesec.controlled.insecure_http0003)",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:53",
+      "status": "Fetching Details from Play Store: com.mobilesec.controlled.insecure_http0003",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:54",
+      "status": "Checking for Malware Permissions",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:54",
+      "status": "Fetching icon path",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:54",
+      "status": "Library Binary Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:54",
+      "status": "Reading Code Signing Certificate",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:54",
+      "status": "Running APKiD 3.0.0",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:55",
+      "status": "Detecting Trackers",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:56",
+      "status": "Decompiling APK to Java with JADX",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:58",
+      "status": "Converting DEX to Smali",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:58",
+      "status": "Code Analysis Started on - java_source",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:58",
+      "status": "Android SBOM Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:58",
+      "status": "Android SAST Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:58",
+      "status": "Android API Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:59",
+      "status": "Android API Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:59",
+      "status": "Android Permission Mapping Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:59",
+      "status": "Android Permission Mapping Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:24:59",
+      "status": "Android Behaviour Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:25:00",
+      "status": "Android Behaviour Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:25:00",
+      "status": "Extracting Emails and URLs from Source Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:25:00",
+      "status": "Email and URL Extraction Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:25:00",
+      "status": "Extracting String data from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:25:00",
+      "status": "Extracting String values and entropies from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:25:00",
+      "status": "Performing Malware check on extracted domains",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:25:00",
+      "status": "Saving to Database",
+      "exception": null
+    }
+  ],
+  "sbom": {
+    "sbom_versioned": [],
+    "sbom_packages": [
+      "com.mobilesec.controlled"
+    ]
+  },
+  "appsec": {
+    "high": [
+      {
+        "title": "Missing Code Signing certificate",
+        "description": "Code signing certificate not found",
+        "section": "certificate"
+      },
+      {
+        "title": "App can be installed on a vulnerable unpatched Android version 6.0-6.0.1, [minSdk=23]",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "section": "manifest"
+      },
+      {
+        "title": "Clear text traffic is Enabled For App[android:usesCleartextTraffic=true]",
+        "description": "The app intends to use cleartext network traffic, such as cleartext HTTP, FTP stacks, DownloadManager, and MediaPlayer. The default value for apps that target API level 27 or lower is \"true\". Apps that target API level 28 or higher default to \"false\". The key reason for avoiding cleartext traffic is the lack of confidentiality, authenticity, and protections against tampering; a network attacker can eavesdrop on transmitted data and also modify it without being detected.",
+        "section": "manifest"
+      }
+    ],
+    "warning": [
+      {
+        "title": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+        "description": "The flag [android:allowBackup] should be set to false. By default it is set to true and allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "section": "manifest"
+      }
+    ],
+    "info": [],
+    "secure": [
+      {
+        "title": "This application has no privacy trackers",
+        "description": "This application does not include any user or device trackers. Unable to find trackers during static analysis.",
+        "section": "trackers"
+      }
+    ],
+    "hotspot": [],
+    "total_trackers": 432,
+    "trackers": 0,
+    "security_score": 34,
+    "app_name": "insecure_http",
+    "file_name": "insecure_http_0003.apk",
+    "hash": "4495179a27e5969ab3e156b3de2ba8d7",
+    "version_name": "1.0"
+  },
+  "average_cvss": null,
+  "dynamic_analysis_done": false,
+  "virus_total": null
+}

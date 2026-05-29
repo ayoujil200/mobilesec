@@ -1,0 +1,14 @@
+Checklist row 22 - Inter-service failure management
+Status: substantially corrected; a Kafka dead-letter queue remains unimplemented.
+
+Where:
+- backend/apk-scanner/src/main.py
+- backend/apk-scanner/src/database/mongodb_client.py
+- backend/docker-compose.yml
+
+Correction:
+Downstream service notification now has configurable timeout/retry/backoff.
+Failed downstream stages are recorded as unavailable and the APK result becomes
+partial rather than completed. The persisted result includes unavailable
+service names and attempt counts. POST /api/retry-notifications/{scan_id}
+replays downstream delivery without rerunning APK extraction.

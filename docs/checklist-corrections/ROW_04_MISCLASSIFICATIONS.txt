@@ -1,0 +1,11 @@
+Checklist row 04 - Show cases where the model is wrong
+Status: corrected.
+
+Where:
+- backend/ml-model/src/evaluation/paper_tables.py
+- frontend/src/pages/Dashboard.jsx
+
+Correction:
+The API extracts up to three concrete incorrect hold-out predictions from the
+saved training metrics and displays expected/predicted categories and priority
+delta in the dashboard.

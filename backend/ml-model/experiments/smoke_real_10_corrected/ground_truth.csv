@@ -1,0 +1,11 @@
+dataset,apk,scan_id,expected,detected,detected_findings,category,status,note
+DroidBench,Merge1.apk,42f7f517-b76c-4aaa-ab98-42eee6fc7318,true,true,4,,completed,
+DroidBench,ApplicationModeling1.apk,30a60ca8-b853-488f-9f4e-e62ad084e85c,true,true,4,,completed,
+DroidBench,DirectLeak1.apk,636a2a7a-ac12-43b8-b52a-e9f5ee187e24,true,true,4,,completed,
+DroidBench,InactiveActivity.apk,85038f31-7344-41c0-b6d6-fbf246311d84,true,true,4,,completed,
+DroidBench,Library2.apk,5fdc6b9c-9b97-4380-884f-c4640c1612df,true,true,4,,completed,
+Ghera,BlockCipher-ECB-InformationExposure-Lean-benign-v2.apk,9fcd0e59-5ff3-4bdb-befe-ff1652d9cf59,false,true,6,,completed,
+Ghera,BlockCipher-ECB-InformationExposure-Lean-benign.apk,7f7c43b0-15b9-48bb-b855-a28fc56f9559,false,true,6,,completed,
+Ghera,BlockCipher-ECB-InformationExposure-Lean-malicious.apk,fb77817b-63dd-4457-8b1c-8dfc74888089,true,true,5,,completed,
+Ghera,BlockCipher-ECB-InformationExposure-Lean-secure.apk,f62012d6-cb67-47cb-aadc-8700c5a262de,false,true,6,,completed,
+Ghera,BlockCipher-NonRandomIV-InformationExposure-Lean-benign.apk,7f1dbae3-3244-49a7-be41-cd0e245bd3ee,false,true,6,,completed,

@@ -1,0 +1,67 @@
+{
+    "apk_name": "AsynchronousEventOrdering1.apk",
+    "package_name": "edu.mit.activity_asynchronous_event_ordering",
+    "permission": [
+        "android.permission.READ_PHONE_STATE"
+    ],
+    "dangerous_permission": [
+        "android.permission.READ_PHONE_STATE"
+    ],
+    "manifest_analysis": {
+        "activities": {
+            "all": [
+                ".MainActivity"
+            ],
+            "exported": []
+        },
+        "services": {
+            "all": [],
+            "exported": []
+        },
+        "receivers": {
+            "all": [],
+            "exported": []
+        },
+        "providers": {
+            "all": [],
+            "exported": []
+        }
+    },
+    "manifest_security": [
+        {
+            "id": "MANIFEST_DEBUGGABLE",
+            "title": "Application is Debuggable",
+            "severity": "CRITICAL",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "android:debuggable=\"true\" allows attackers to attach a debugger to the running app via adb, inspect memory, bypass certificate pinning, and extract sensitive data at runtime. Must be false in release builds.",
+            "evidence": "android:debuggable=\"true\""
+        },
+        {
+            "id": "MANIFEST_ALLOW_BACKUP",
+            "title": "Application Data Backup Allowed",
+            "severity": "HIGH",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "android:allowBackup is true (or not set, defaulting to true). Any user or attacker with USB access can extract the full app data directory using 'adb backup' without root. Set to false or use android:fullBackupOnly with a proper backup rule.",
+            "evidence": "android:allowBackup=\"true\""
+        },
+        {
+            "id": "MANIFEST_MIN_SDK_LOW",
+            "title": "Low Minimum SDK Version (19)",
+            "severity": "MEDIUM",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "minSdkVersion=19 targets Android versions that lack modern security controls (full-disk encryption, SELinux enforcement, runtime permissions). Minimum recommended is 21 (Android 5.0).",
+            "evidence": "android:minSdkVersion=\"19\""
+        },
+        {
+            "id": "MANIFEST_TARGET_SDK_LOW",
+            "title": "Low Target SDK Version (19)",
+            "severity": "MEDIUM",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "targetSdkVersion=19 opts out of security improvements introduced in Android 9+ (Pie), including default HTTPS enforcement, restricted access to device identifiers, and background restrictions. Target SDK 28 or higher is strongly recommended.",
+            "evidence": "android:targetSdkVersion=\"19\""
+        }
+    ],
+    "hardcoded_secrets": [],
+    "insecure_requests": [],
+    "code_findings": []
+}

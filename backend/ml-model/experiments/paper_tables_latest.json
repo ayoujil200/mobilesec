@@ -1,0 +1,775 @@
+﻿{
+    "warnings":  [
+
+                 ],
+    "dataset":  {
+                    "path":  "data/extracted_data.csv",
+                    "exists":  true,
+                    "rows":  1559,
+                    "classes":  8,
+                    "class_distribution":  {
+                                               "FIX_CERTIFICATE_ISSUE":  40,
+                                               "FIX_EXPOSED_API_KEY":  810,
+                                               "FIX_EXPOSED_SECRET":  110,
+                                               "FIX_HARDCODED_PASSWORD":  31,
+                                               "FIX_INSECURE_HTTP":  448,
+                                               "FIX_INSECURE_RANDOM":  30,
+                                               "FIX_WEAK_CIPHER":  50,
+                                               "FIX_WEAK_HASH":  40
+                                           },
+                    "feature_count":  24,
+                    "appears_bootstrap":  false,
+                    "training_rows":  1475,
+                    "training_classes":  7,
+                    "training_class_distribution":  {
+                                                        "FIX_EXPOSED_API_KEY":  810,
+                                                        "FIX_INSECURE_HTTP":  444,
+                                                        "FIX_EXPOSED_SECRET":  80,
+                                                        "FIX_WEAK_CIPHER":  50,
+                                                        "FIX_CERTIFICATE_ISSUE":  40,
+                                                        "FIX_INSECURE_RANDOM":  30,
+                                                        "FIX_HARDCODED_PASSWORD":  21
+                                                    },
+                    "feature_collision_summary":  {
+                                                      "unique_feature_vectors":  217,
+                                                      "ambiguous_feature_vectors":  2,
+                                                      "rows_in_ambiguous_feature_vectors":  53,
+                                                      "majority_label_accuracy_upper_bound":  0.9864406779661017
+                                                  }
+                },
+    "mongodb":  {
+                    "total_scans":  2125,
+                    "coverage":  {
+                                     "crypto_results":  2125,
+                                     "secret_results":  2125,
+                                     "network_results":  2125,
+                                     "fix_suggestions":  143
+                                 },
+                    "finding_totals":  {
+                                           "crypto_findings":  966,
+                                           "secret_findings":  914153,
+                                           "network_findings":  112835,
+                                           "total_findings":  1027954,
+                                           "avg_findings_per_apk":  483.7430588235294
+                                       }
+                },
+    "tables":  {
+                   "evaluation_datasets":  [
+                                               {
+                                                   "dataset":  "MongoDB scan results",
+                                                   "apks":  2125,
+                                                   "ground_truth":  "No / manual",
+                                                   "purpose":  "Real platform scan results used for extraction and training"
+                                               },
+                                               {
+                                                   "dataset":  "Training CSV",
+                                                   "apks":  1475,
+                                                   "ground_truth":  "Derived labels",
+                                                   "purpose":  "7 fix_category classes, 24 features"
+                                               }
+                                           ],
+                   "ml_results":  [
+                                      {
+                                          "model":  "Rule-based baseline",
+                                          "accuracy":  0.6983050847457627,
+                                          "macro_f1":  0.4960717148271924,
+                                          "weighted_f1":  0.6920395722724932,
+                                          "top_3_accuracy":  null,
+                                          "classes":  7
+                                      },
+                                      {
+                                          "model":  "Logistic Regression",
+                                          "accuracy":  0.9457627118644067,
+                                          "macro_f1":  0.9502879000149246,
+                                          "weighted_f1":  0.9457116753403053,
+                                          "top_3_accuracy":  0.9661016949152542,
+                                          "classes":  7
+                                      },
+                                      {
+                                          "model":  "Random Forest",
+                                          "accuracy":  0.9830508474576272,
+                                          "macro_f1":  0.9765661615372598,
+                                          "weighted_f1":  0.9839511305172126,
+                                          "top_3_accuracy":  1.0,
+                                          "classes":  7
+                                      },
+                                      {
+                                          "model":  "LightGBM",
+                                          "accuracy":  0.9830508474576272,
+                                          "macro_f1":  0.9696417729204614,
+                                          "weighted_f1":  0.9817130272812408,
+                                          "top_3_accuracy":  1.0,
+                                          "classes":  7
+                                      }
+                                  ],
+                   "confusion_matrices":  [
+                                              {
+                                                  "model":  "Rule-based baseline",
+                                                  "labels":  [
+                                                                 "FIX_CERTIFICATE_ISSUE",
+                                                                 "FIX_EXPOSED_API_KEY",
+                                                                 "FIX_EXPOSED_SECRET",
+                                                                 "FIX_HARDCODED_PASSWORD",
+                                                                 "FIX_INSECURE_HTTP",
+                                                                 "FIX_INSECURE_RANDOM",
+                                                                 "FIX_WEAK_CIPHER"
+                                                             ],
+                                                  "matrix":  [
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     8,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     154,
+                                                                     3,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     5
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     16,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     4,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     9,
+                                                                     10,
+                                                                     48,
+                                                                     0,
+                                                                     22,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     6,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     10
+                                                                 ]
+                                                             ]
+                                              },
+                                              {
+                                                  "model":  "Logistic Regression",
+                                                  "labels":  [
+                                                                 "FIX_CERTIFICATE_ISSUE",
+                                                                 "FIX_EXPOSED_API_KEY",
+                                                                 "FIX_EXPOSED_SECRET",
+                                                                 "FIX_HARDCODED_PASSWORD",
+                                                                 "FIX_INSECURE_HTTP",
+                                                                 "FIX_INSECURE_RANDOM",
+                                                                 "FIX_WEAK_CIPHER"
+                                                             ],
+                                                  "matrix":  [
+                                                                 [
+                                                                     8,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     152,
+                                                                     0,
+                                                                     0,
+                                                                     10,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     11,
+                                                                     0,
+                                                                     5,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     4,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     88,
+                                                                     0,
+                                                                     1
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     6,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     10
+                                                                 ]
+                                                             ]
+                                              },
+                                              {
+                                                  "model":  "Random Forest",
+                                                  "labels":  [
+                                                                 "FIX_CERTIFICATE_ISSUE",
+                                                                 "FIX_EXPOSED_API_KEY",
+                                                                 "FIX_EXPOSED_SECRET",
+                                                                 "FIX_HARDCODED_PASSWORD",
+                                                                 "FIX_INSECURE_HTTP",
+                                                                 "FIX_INSECURE_RANDOM",
+                                                                 "FIX_WEAK_CIPHER"
+                                                             ],
+                                                  "matrix":  [
+                                                                 [
+                                                                     8,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     162,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     16,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     4,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     5,
+                                                                     0,
+                                                                     84,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     6,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     10
+                                                                 ]
+                                                             ]
+                                              },
+                                              {
+                                                  "model":  "LightGBM",
+                                                  "labels":  [
+                                                                 "FIX_CERTIFICATE_ISSUE",
+                                                                 "FIX_EXPOSED_API_KEY",
+                                                                 "FIX_EXPOSED_SECRET",
+                                                                 "FIX_HARDCODED_PASSWORD",
+                                                                 "FIX_INSECURE_HTTP",
+                                                                 "FIX_INSECURE_RANDOM",
+                                                                 "FIX_WEAK_CIPHER"
+                                                             ],
+                                                  "matrix":  [
+                                                                 [
+                                                                     8,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     162,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     11,
+                                                                     0,
+                                                                     5,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     4,
+                                                                     0,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     89,
+                                                                     0,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     6,
+                                                                     0
+                                                                 ],
+                                                                 [
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     0,
+                                                                     10
+                                                                 ]
+                                                             ]
+                                              }
+                                          ],
+                   "feature_importance":  [
+                                              {
+                                                  "feature":  "secrets_api_keys",
+                                                  "importance":  7747.564318392285
+                                              },
+                                              {
+                                                  "feature":  "secrets_passwords",
+                                                  "importance":  7252.7196289725725
+                                              },
+                                              {
+                                                  "feature":  "network_cert_issues",
+                                                  "importance":  6949.101765258343
+                                              },
+                                              {
+                                                  "feature":  "crypto_weak_cipher",
+                                                  "importance":  6354.157818385254
+                                              },
+                                              {
+                                                  "feature":  "crypto_medium",
+                                                  "importance":  5930.1577050601945
+                                              },
+                                              {
+                                                  "feature":  "secrets_tokens",
+                                                  "importance":  5775.795368351042
+                                              },
+                                              {
+                                                  "feature":  "severity_score",
+                                                  "importance":  4032.637953306671
+                                              },
+                                              {
+                                                  "feature":  "total_vulnerabilities",
+                                                  "importance":  3169.11196578298
+                                              },
+                                              {
+                                                  "feature":  "secrets_count",
+                                                  "importance":  1952.7541586652496
+                                              },
+                                              {
+                                                  "feature":  "crypto_insecure_random",
+                                                  "importance":  1848.6638847687736
+                                              }
+                                          ],
+                   "failure_analysis":  [
+                                            {
+                                                "failure_type":  "Missing CryptoCheck result",
+                                                "count":  0,
+                                                "rate":  0.0,
+                                                "mitigation":  "Inspect crypto-check logs; use timeout and partial-report fallback."
+                                            },
+                                            {
+                                                "failure_type":  "Missing SecretHunter result",
+                                                "count":  0,
+                                                "rate":  0.0,
+                                                "mitigation":  "Inspect secret-hunter logs; keep scan result with unavailable-service marker."
+                                            },
+                                            {
+                                                "failure_type":  "Missing NetworkInspector result",
+                                                "count":  0,
+                                                "rate":  0.0,
+                                                "mitigation":  "Inspect network-inspector logs; continue with static-only findings."
+                                            },
+                                            {
+                                                "failure_type":  "Missing FixSuggest output",
+                                                "count":  1982,
+                                                "rate":  0.9327058823529412,
+                                                "mitigation":  "Use MASVS rule fallback or regenerate suggestions."
+                                            }
+                                        ],
+                   "quantitative_comparison":  [
+                                                   {
+                                                       "tool":  "MobileSec",
+                                                       "apks":  2125,
+                                                       "avg_runtime":  9.394908127208481,
+                                                       "findings_per_apk":  483.7430588235294,
+                                                       "precision":  null,
+                                                       "recall":  null,
+                                                       "f1":  null,
+                                                       "note":  "Precision/recall require benchmark ground truth."
+                                                   },
+                                                   {
+                                                       "tool":  "MobSF",
+                                                       "number_of_apks_analyzed":  283,
+                                                       "benchmark_apks":  "DroidBench, Ghera",
+                                                       "real_world_apks":  0,
+                                                       "mean_scan_time_per_apk":  "9.94 s",
+                                                       "detected_vulnerability_categories":  3,
+                                                       "hardcoded_secrets_detected":  100,
+                                                       "network_issues_detected":  1997,
+                                                       "cryptographic_issues_detected":  349,
+                                                       "pdf_export":  "Yes",
+                                                       "json_export":  "Yes",
+                                                       "sarif_export":  "No",
+                                                       "ci_cd_integration":  "Yes",
+                                                       "ml_based_prioritization":  "No",
+                                                       "ai_assisted_remediation":  "No",
+                                                       "reproducible_docker_deployment":  "Yes"
+                                                   },
+                                                   {
+                                                       "tool":  "APKDeepLens",
+                                                       "number_of_apks_analyzed":  283,
+                                                       "benchmark_apks":  "DroidBench, Ghera",
+                                                       "real_world_apks":  0,
+                                                       "mean_scan_time_per_apk":  "7.41 s",
+                                                       "detected_vulnerability_categories":  2,
+                                                       "hardcoded_secrets_detected":  0,
+                                                       "network_issues_detected":  683,
+                                                       "cryptographic_issues_detected":  7238,
+                                                       "pdf_export":  "Yes",
+                                                       "json_export":  "Yes",
+                                                       "sarif_export":  "No",
+                                                       "ci_cd_integration":  "Yes",
+                                                       "ml_based_prioritization":  "No",
+                                                       "ai_assisted_remediation":  "No",
+                                                       "reproducible_docker_deployment":  "Yes"
+                                                   }
+                                               ],
+                   "weight_sensitivity":  [
+                                              {
+                                                  "weighting_scheme":  "Expert-defined weights",
+                                                  "top_10_overlap":  1.0,
+                                                  "kendall_tau":  1.0,
+                                                  "macro_f1":  null
+                                              },
+                                              {
+                                                  "weighting_scheme":  "Equal weights",
+                                                  "top_10_overlap":  0.9,
+                                                  "kendall_tau":  0.9213945679920889,
+                                                  "macro_f1":  null
+                                              },
+                                              {
+                                                  "weighting_scheme":  "CVSS-inspired weights",
+                                                  "top_10_overlap":  1.0,
+                                                  "kendall_tau":  0.9609484166225881,
+                                                  "macro_f1":  null
+                                              },
+                                              {
+                                                  "weighting_scheme":  "Secrets-heavy weights",
+                                                  "top_10_overlap":  0.7,
+                                                  "kendall_tau":  0.8770829979532231,
+                                                  "macro_f1":  null
+                                              }
+                                          ],
+                   "lightgbm_prioritization":  [
+                                                   {
+                                                       "metric":  "Accuracy",
+                                                       "value":  "0.9910"
+                                                   },
+                                                   {
+                                                       "metric":  "Macro-precision",
+                                                       "value":  "0.9796"
+                                                   },
+                                                   {
+                                                       "metric":  "Macro-recall",
+                                                       "value":  "0.9957"
+                                                   },
+                                                   {
+                                                       "metric":  "Macro-F1",
+                                                       "value":  "0.9868"
+                                                   },
+                                                   {
+                                                       "metric":  "AUC",
+                                                       "value":  "0.9999"
+                                                   },
+                                                   {
+                                                       "metric":  "False prioritization rate",
+                                                       "value":  "0.0090"
+                                                   },
+                                                   {
+                                                       "metric":  "Under-prioritization rate",
+                                                       "value":  "0.0000"
+                                                   },
+                                                   {
+                                                       "metric":  "Over-prioritization rate",
+                                                       "value":  "0.0000"
+                                                   }
+                                               ],
+                   "tool_comparison":  [
+                                           {
+                                               "criterion":  "Number of APKs analyzed",
+                                               "MobileSec":  "283",
+                                               "MobSF":  "283",
+                                               "APKDeepLens":  "283"
+                                           },
+                                           {
+                                               "criterion":  "Benchmark APKs",
+                                               "MobileSec":  "DroidBench, Ghera",
+                                               "MobSF":  "DroidBench, Ghera",
+                                               "APKDeepLens":  "DroidBench, Ghera"
+                                           },
+                                           {
+                                               "criterion":  "Real-world APKs",
+                                               "MobileSec":  "0",
+                                               "MobSF":  "0",
+                                               "APKDeepLens":  "0"
+                                           },
+                                           {
+                                               "criterion":  "Mean scan time per APK",
+                                               "MobileSec":  "9.39 s",
+                                               "MobSF":  "9.94 s",
+                                               "APKDeepLens":  "7.41 s"
+                                           },
+                                           {
+                                               "criterion":  "Detected vulnerability categories",
+                                               "MobileSec":  "3",
+                                               "MobSF":  "3",
+                                               "APKDeepLens":  "2"
+                                           },
+                                           {
+                                               "criterion":  "Hardcoded secrets detected",
+                                               "MobileSec":  "187779",
+                                               "MobSF":  "100",
+                                               "APKDeepLens":  "0"
+                                           },
+                                           {
+                                               "criterion":  "Network issues detected",
+                                               "MobileSec":  "24448",
+                                               "MobSF":  "1997",
+                                               "APKDeepLens":  "683"
+                                           },
+                                           {
+                                               "criterion":  "Cryptographic issues detected",
+                                               "MobileSec":  "71",
+                                               "MobSF":  "349",
+                                               "APKDeepLens":  "7238"
+                                           },
+                                           {
+                                               "criterion":  "PDF export",
+                                               "MobileSec":  "On demand",
+                                               "MobSF":  "Yes",
+                                               "APKDeepLens":  "Yes"
+                                           },
+                                           {
+                                               "criterion":  "JSON export",
+                                               "MobileSec":  "283/283",
+                                               "MobSF":  "Yes",
+                                               "APKDeepLens":  "Yes"
+                                           },
+                                           {
+                                               "criterion":  "SARIF export",
+                                               "MobileSec":  "0/283",
+                                               "MobSF":  "No",
+                                               "APKDeepLens":  "No"
+                                           },
+                                           {
+                                               "criterion":  "CI/CD integration",
+                                               "MobileSec":  "Yes",
+                                               "MobSF":  "Yes",
+                                               "APKDeepLens":  "Yes"
+                                           },
+                                           {
+                                               "criterion":  "ML-based prioritization",
+                                               "MobileSec":  "Yes",
+                                               "MobSF":  "No",
+                                               "APKDeepLens":  "No"
+                                           },
+                                           {
+                                               "criterion":  "AI-assisted remediation",
+                                               "MobileSec":  "Yes",
+                                               "MobSF":  "No",
+                                               "APKDeepLens":  "No"
+                                           },
+                                           {
+                                               "criterion":  "Reproducible Docker deployment",
+                                               "MobileSec":  "Yes",
+                                               "MobSF":  "Yes",
+                                               "APKDeepLens":  "Yes"
+                                           }
+                                       ],
+                   "benchmark_realworld":  [
+                                               {
+                                                   "metric":  "Number of APKs",
+                                                   "DroidBench":  "118",
+                                                   "Ghera":  "165",
+                                                   "Real-world APKs":  "2125"
+                                               },
+                                               {
+                                                   "metric":  "Detected findings",
+                                                   "DroidBench":  "483",
+                                                   "Ghera":  "733",
+                                                   "Real-world APKs":  "1027954"
+                                               },
+                                               {
+                                                   "metric":  "True positives",
+                                                   "DroidBench":  "118",
+                                                   "Ghera":  "44",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "False positives",
+                                                   "DroidBench":  "0",
+                                                   "Ghera":  "121",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "False negatives",
+                                                   "DroidBench":  "0",
+                                                   "Ghera":  "0",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "Precision",
+                                                   "DroidBench":  "1.0000",
+                                                   "Ghera":  "0.2667",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "Recall",
+                                                   "DroidBench":  "1.0000",
+                                                   "Ghera":  "1.0000",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "F1-score",
+                                                   "DroidBench":  "1.0000",
+                                                   "Ghera":  "0.4211",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "Mean scan time",
+                                                   "DroidBench":  "8.24 s",
+                                                   "Ghera":  "10.22 s",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "Mean CPU usage",
+                                                   "DroidBench":  "7.3%",
+                                                   "Ghera":  "55.6%",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "Mean RAM usage",
+                                                   "DroidBench":  "202.2 MB",
+                                                   "Ghera":  "486.6 MB",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "Report-generation success rate",
+                                                   "DroidBench":  "0.0%",
+                                                   "Ghera":  "0.0%",
+                                                   "Real-world APKs":  "N/A"
+                                               },
+                                               {
+                                                   "metric":  "SARIF export success rate",
+                                                   "DroidBench":  "0.0%",
+                                                   "Ghera":  "0.0%",
+                                                   "Real-world APKs":  "N/A"
+                                               }
+                                           ]
+               },
+    "latex":  {
+                  "table_3_lightgbm_prioritization":  "\\begin{table}[h]\n\\centering\n\\caption{Performance of the LightGBM prioritization model.}\n\\label{tab:lightgbm-prioritization-generated}\n\\begin{tabular}{lc}\n\\hline\n\\textbf{Metric} \u0026 \\textbf{Value} \\\\\n\\hline\nAccuracy \u0026 0.9910 \\\\\nMacro-precision \u0026 0.9796 \\\\\nMacro-recall \u0026 0.9957 \\\\\nMacro-F1 \u0026 0.9868 \\\\\nAUC \u0026 0.9999 \\\\\nFalse prioritization rate \u0026 0.0090 \\\\\nUnder-prioritization rate \u0026 0.0000 \\\\\nOver-prioritization rate \u0026 0.0000 \\\\\n\\hline\n\\end{tabular}\n\\end{table}",
+                  "table_5_tool_comparison":  "\\begin{table*}[t]\n\\centering\n\\caption{Quantitative comparison of MobileSec with representative Android security analysis tools on the same APK set.}\n\\label{tab:tool-comparison-generated}\n\\begin{tabular}{lccc}\n\\hline\n\\textbf{Criterion} \u0026 \\textbf{MobileSec} \u0026 \\textbf{MobSF} \u0026 \\textbf{APKDeepLens} \\\\\n\\hline\nNumber of APKs analyzed \u0026 283 \u0026 283 \u0026 283 \\\\\nBenchmark APKs \u0026 DroidBench, Ghera \u0026 DroidBench, Ghera \u0026 DroidBench, Ghera \\\\\nReal-world APKs \u0026 0 \u0026 0 \u0026 0 \\\\\nMean scan time per APK \u0026 9.39 s \u0026 9.94 s \u0026 7.41 s \\\\\nDetected vulnerability categories \u0026 3 \u0026 3 \u0026 2 \\\\\nHardcoded secrets detected \u0026 187779 \u0026 100 \u0026 0 \\\\\nNetwork issues detected \u0026 24448 \u0026 1997 \u0026 683 \\\\\nCryptographic issues detected \u0026 71 \u0026 349 \u0026 7238 \\\\\nPDF export \u0026 On demand \u0026 Yes \u0026 Yes \\\\\nJSON export \u0026 283/283 \u0026 Yes \u0026 Yes \\\\\nSARIF export \u0026 0/283 \u0026 No \u0026 No \\\\\nCI/CD integration \u0026 Yes \u0026 Yes \u0026 Yes \\\\\nML-based prioritization \u0026 Yes \u0026 No \u0026 No \\\\\nAI-assisted remediation \u0026 Yes \u0026 No \u0026 No \\\\\nReproducible Docker deployment \u0026 Yes \u0026 Yes \u0026 Yes \\\\\n\\hline\n\\end{tabular}\n\\end{table*}",
+                  "table_6_benchmark_realworld":  "\\begin{table*}[t]\n\\centering\n\\caption{Evaluation of MobileSec on benchmark and real-world APKs.}\n\\label{tab:mobilesec-benchmark-realworld-generated}\n\\begin{tabular}{lccc}\n\\hline\n\\textbf{Metric} \u0026 \\textbf{DroidBench} \u0026 \\textbf{Ghera} \u0026 \\textbf{Real-world APKs} \\\\\n\\hline\nNumber of APKs \u0026 118 \u0026 165 \u0026 2125 \\\\\nDetected findings \u0026 483 \u0026 733 \u0026 1027954 \\\\\nTrue positives \u0026 118 \u0026 44 \u0026 N/A \\\\\nFalse positives \u0026 0 \u0026 121 \u0026 N/A \\\\\nFalse negatives \u0026 0 \u0026 0 \u0026 N/A \\\\\nPrecision \u0026 1.0000 \u0026 0.2667 \u0026 N/A \\\\\nRecall \u0026 1.0000 \u0026 1.0000 \u0026 N/A \\\\\nF1-score \u0026 1.0000 \u0026 0.4211 \u0026 N/A \\\\\nMean scan time \u0026 8.24 s \u0026 10.22 s \u0026 N/A \\\\\nMean CPU usage \u0026 7.3\\% \u0026 55.6\\% \u0026 N/A \\\\\nMean RAM usage \u0026 202.2 MB \u0026 486.6 MB \u0026 N/A \\\\\nReport-generation success rate \u0026 0.0\\% \u0026 0.0\\% \u0026 N/A \\\\\nSARIF export success rate \u0026 0.0\\% \u0026 0.0\\% \u0026 N/A \\\\\n\\hline\n\\end{tabular}\n\\end{table*}",
+                  "evaluation_datasets":  "\\begin{table}[h]\n\\centering\n\\caption{Datasets available for MobileSec evaluation.}\n\\label{tab:evaluation-datasets-generated}\n\\begin{tabular}{lclp{0.35\\linewidth}}\n\\hline\n\\textbf{Dataset} \u0026 \\textbf{APKs/Rows} \u0026 \\textbf{Ground truth} \u0026 \\textbf{Purpose} \\\\\n\\hline\nMongoDB scan results \u0026 2125 \u0026 No / manual \u0026 Real platform scan results used for extraction and training \\\\\nTraining CSV \u0026 1475 \u0026 Derived labels \u0026 7 fix_category classes, 24 features \\\\\n\\hline\n\\end{tabular}\n\\end{table}",
+                  "ml_results":  "\\begin{table}[h]\n\\centering\n\\caption{Performance of the vulnerability remediation classifier.}\n\\label{tab:ml-results-generated}\n\\begin{tabular}{lccccc}\n\\hline\n\\textbf{Model} \u0026 \\textbf{Accuracy} \u0026 \\textbf{Macro-F1} \u0026 \\textbf{Weighted-F1} \u0026 \\textbf{Top-3 Acc.} \u0026 \\textbf{Classes} \\\\\n\\hline\nRule-based baseline \u0026 0.6983 \u0026 0.4961 \u0026 0.6920 \u0026 N/A \u0026 7 \\\\\nLogistic Regression \u0026 0.9458 \u0026 0.9503 \u0026 0.9457 \u0026 0.9661 \u0026 7 \\\\\nRandom Forest \u0026 0.9831 \u0026 0.9766 \u0026 0.9840 \u0026 1.0000 \u0026 7 \\\\\nLightGBM \u0026 0.9831 \u0026 0.9696 \u0026 0.9817 \u0026 1.0000 \u0026 7 \\\\\n\\hline\n\\end{tabular}\n\\end{table}",
+                  "feature_importance":  "\\begin{table}[h]\n\\centering\n\\caption{Top LightGBM feature importances.}\n\\label{tab:feature-importance-generated}\n\\begin{tabular}{lc}\n\\hline\n\\textbf{Feature} \u0026 \\textbf{Importance} \\\\\n\\hline\n\\texttt{secrets_api_keys} \u0026 7747.56 \\\\\n\\texttt{secrets_passwords} \u0026 7252.72 \\\\\n\\texttt{network_cert_issues} \u0026 6949.10 \\\\\n\\texttt{crypto_weak_cipher} \u0026 6354.16 \\\\\n\\texttt{crypto_medium} \u0026 5930.16 \\\\\n\\texttt{secrets_tokens} \u0026 5775.80 \\\\\n\\texttt{severity_score} \u0026 4032.64 \\\\\n\\texttt{total_vulnerabilities} \u0026 3169.11 \\\\\n\\texttt{secrets_count} \u0026 1952.75 \\\\\n\\texttt{crypto_insecure_random} \u0026 1848.66 \\\\\n\\hline\n\\end{tabular}\n\\end{table}",
+                  "failure_analysis":  "\\begin{table}[h]\n\\centering\n\\caption{Observed incomplete outputs in the MobileSec pipeline.}\n\\label{tab:failure-analysis-generated}\n\\begin{tabular}{lccp{0.35\\linewidth}}\n\\hline\n\\textbf{Failure type} \u0026 \\textbf{Count} \u0026 \\textbf{Rate} \u0026 \\textbf{Mitigation} \\\\\n\\hline\nMissing CryptoCheck result \u0026 0 \u0026 0.0000 \u0026 Inspect crypto-check logs; use timeout and partial-report fallback. \\\\\nMissing SecretHunter result \u0026 0 \u0026 0.0000 \u0026 Inspect secret-hunter logs; keep scan result with unavailable-service marker. \\\\\nMissing NetworkInspector result \u0026 0 \u0026 0.0000 \u0026 Inspect network-inspector logs; continue with static-only findings. \\\\\nMissing FixSuggest output \u0026 1982 \u0026 0.9327 \u0026 Use MASVS rule fallback or regenerate suggestions. \\\\\n\\hline\n\\end{tabular}\n\\end{table}",
+                  "quantitative_comparison":  "\\begin{table}[h]\n\\centering\n\\caption{Quantitative comparison values available from configured experiments.}\n\\label{tab:quantitative-comparison-generated}\n\\begin{tabular}{lcccccc}\n\\hline\n\\textbf{Tool} \u0026 \\textbf{APKs} \u0026 \\textbf{Avg. runtime} \u0026 \\textbf{Findings/APK} \u0026 \\textbf{Precision} \u0026 \\textbf{Recall} \u0026 \\textbf{F1} \\\\\n\\hline\nMobileSec \u0026 2125 \u0026 9.3949 \u0026 483.7431 \u0026 N/A \u0026 N/A \u0026 N/A \\\\\nMobSF \u0026 N/A \u0026 N/A \u0026 N/A \u0026 N/A \u0026 N/A \u0026 N/A \\\\\nAPKDeepLens \u0026 N/A \u0026 N/A \u0026 N/A \u0026 N/A \u0026 N/A \u0026 N/A \\\\\n\\hline\n\\end{tabular}\n\\end{table}",
+                  "weight_sensitivity":  "\\begin{table}[h]\n\\centering\n\\caption{Sensitivity analysis of severity-score weighting schemes.}\n\\label{tab:weight-sensitivity-generated}\n\\begin{tabular}{lccc}\n\\hline\n\\textbf{Weighting scheme} \u0026 \\textbf{Top-10 overlap} \u0026 \\textbf{Kendall\u0027s $\\tau$} \u0026 \\textbf{Macro-F1} \\\\\n\\hline\nExpert-defined weights \u0026 1.0000 \u0026 1.0000 \u0026 N/A \\\\\nEqual weights \u0026 0.9000 \u0026 0.9214 \u0026 N/A \\\\\nCVSS-inspired weights \u0026 1.0000 \u0026 0.9609 \u0026 N/A \\\\\nSecrets-heavy weights \u0026 0.7000 \u0026 0.8771 \u0026 N/A \\\\\n\\hline\n\\end{tabular}\n\\end{table}"
+              }
+}

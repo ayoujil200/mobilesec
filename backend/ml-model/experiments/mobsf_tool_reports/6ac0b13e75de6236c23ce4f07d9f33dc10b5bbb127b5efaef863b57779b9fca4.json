@@ -1,0 +1,430 @@
+{
+  "version": "v4.5.0",
+  "title": "Static Analysis",
+  "file_name": "ArrayToString1.apk",
+  "app_name": "ToString",
+  "app_type": "apk",
+  "size": "0.03MB",
+  "md5": "7ad80d56ef4679c3aa1d831324aeddc6",
+  "sha1": "021ea7365139397dcdd18e58950ae4417946b169",
+  "sha256": "6ac0b13e75de6236c23ce4f07d9f33dc10b5bbb127b5efaef863b57779b9fca4",
+  "package_name": "edu.mit.to_string",
+  "main_activity": ".MainActivity",
+  "exported_activities": "[]",
+  "browsable_activities": {},
+  "activities": [
+    ".MainActivity"
+  ],
+  "receivers": [],
+  "providers": [],
+  "services": [],
+  "libraries": [],
+  "target_sdk": "19",
+  "max_sdk": "",
+  "min_sdk": "19",
+  "version_name": "1.0",
+  "version_code": "1",
+  "icon_path": "7ad80d56ef4679c3aa1d831324aeddc6-icon.png",
+  "permissions": {
+    "android.permission.READ_PHONE_STATE": {
+      "status": "dangerous",
+      "info": "read phone state and identity",
+      "description": "Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on."
+    }
+  },
+  "malware_permissions": {
+    "top_malware_permissions": [
+      "android.permission.READ_PHONE_STATE"
+    ],
+    "other_abused_permissions": [],
+    "total_malware_permissions": 25,
+    "total_other_permissions": 44
+  },
+  "certificate_analysis": {
+    "certificate_info": "Binary is signed\nv1 signature: True\nv2 signature: False\nv3 signature: False\nv4 signature: False\nX.509 Subject: C=DE, L=Munich, O=Fraunhofer AISEC, CN=Julian Schütte\nSignature Algorithm: rsassa_pkcs1v15\nValid From: 2016-11-28 09:27:03+00:00\nValid To: 2041-11-22 09:27:03+00:00\nIssuer: C=DE, L=Munich, O=Fraunhofer AISEC, CN=Julian Schütte\nSerial Number: 0x74e8f017\nHash Algorithm: sha256\nmd5: 2fdd2cb21a1175da7dcbf92c510c04dc\nsha1: 39bee6a27551bda0c2837d71c2c87afa4b8a298d\nsha256: 7ff7723d85421b9b4d02cb7e93acc3eaf8aa4d63ac3062a9d5fd7a2db1f82517\nsha512: 99bd83ecb3f38556d7baffd11262b02ee39ce5bc229aa8f4b6ac4313029a933ccd773564feb88f0b00104585f364f1798402e1aebefcf64320fc8997273baa46\nFound 1 unique certificates",
+    "certificate_findings": [
+      [
+        "info",
+        "Application is signed with a code signing certificate",
+        "Signed Application"
+      ],
+      [
+        "high",
+        "Application is signed with v1 signature scheme, making it vulnerable to Janus vulnerability on Android 5.0-8.0, if signed only with v1 signature scheme. Applications running on Android 5.0-7.0 signed with v1, and v2/v3 scheme is also vulnerable.",
+        "Application vulnerable to Janus Vulnerability"
+      ]
+    ],
+    "certificate_summary": {
+      "high": 1,
+      "warning": 0,
+      "info": 1
+    }
+  },
+  "manifest_analysis": {
+    "manifest_findings": [
+      {
+        "rule": "vulnerable_os_version",
+        "title": "App can be installed on a vulnerable unpatched Android version 4.4-4.4.4, [minSdk=19]",
+        "severity": "high",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "name": "App can be installed on a vulnerable unpatched Android version 4.4-4.4.4, [minSdk=19]",
+        "component": [
+          "4.4-4.4.4",
+          "19"
+        ]
+      },
+      {
+        "rule": "app_allowbackup",
+        "title": "Application Data can be Backed up [android:allowBackup=true]",
+        "severity": "warning",
+        "description": "This flag allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "name": "Application Data can be Backed up [android:allowBackup=true]",
+        "component": []
+      }
+    ],
+    "manifest_summary": {
+      "high": 1,
+      "warning": 1,
+      "info": 0,
+      "suppressed": 0
+    }
+  },
+  "network_security": {
+    "network_findings": [],
+    "network_summary": {}
+  },
+  "binary_analysis": [],
+  "file_analysis": [],
+  "android_api": {
+    "api_get_system_service": {
+      "files": {
+        "edu/mit/to_string/MainActivity.java": "15"
+      },
+      "metadata": {
+        "description": "Get System Service",
+        "severity": "info"
+      }
+    }
+  },
+  "code_analysis": {
+    "findings": {
+      "android_logging": {
+        "files": {
+          "edu/mit/to_string/MainActivity.java": "19"
+        },
+        "metadata": {
+          "cvss": 7.5,
+          "cwe": "CWE-532: Insertion of Sensitive Information into Log File",
+          "owasp-mobile": "",
+          "masvs": "MSTG-STORAGE-3",
+          "ref": "https://github.com/MobSF/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#logs",
+          "description": "The App logs information. Sensitive information should never be logged.",
+          "severity": "info"
+        }
+      }
+    },
+    "summary": {
+      "high": 0,
+      "warning": 0,
+      "info": 1,
+      "secure": 0,
+      "suppressed": 0
+    }
+  },
+  "niap_analysis": {},
+  "permission_mapping": {
+    "android.permission.READ_PHONE_STATE": {
+      "edu/mit/to_string/MainActivity.java": "5,16"
+    }
+  },
+  "urls": [],
+  "domains": {},
+  "emails": [],
+  "strings": {
+    "strings_apk_res": [
+      "\"app_name\" : \"ToString\"",
+      "\"action_settings\" : \"Settings\"",
+      "\"hello_world\" : \"Hello world!\""
+    ],
+    "strings_so": [],
+    "strings_code": [
+      "phone",
+      "DroidBench"
+    ]
+  },
+  "firebase_urls": [],
+  "files": [
+    "AndroidManifest.xml",
+    "res/drawable-hdpi-v4/ic_launcher.png",
+    "res/drawable-mdpi-v4/ic_launcher.png",
+    "res/drawable-xhdpi-v4/ic_launcher.png",
+    "res/layout/activity_main.xml",
+    "res/menu/main.xml",
+    "resources.arsc",
+    "classes.dex",
+    "META-INF/MANIFEST.MF",
+    "META-INF/CERT.SF",
+    "META-INF/CERT.RSA"
+  ],
+  "exported_count": {
+    "exported_activities": 0,
+    "exported_services": 0,
+    "exported_receivers": 0,
+    "exported_providers": 0
+  },
+  "apkid": {
+    "classes.dex": {
+      "compiler": [
+        "dx"
+      ]
+    }
+  },
+  "behaviour": {},
+  "trackers": {
+    "detected_trackers": 0,
+    "total_trackers": 432,
+    "trackers": []
+  },
+  "playstore_details": {
+    "error": true
+  },
+  "secrets": [],
+  "logs": [
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Generating Hashes",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Extracting APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Unzipping",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Parsing APK with androguard",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Extracting APK features using aapt/aapt2",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Getting Hardcoded Certificates/Keystores",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Parsing AndroidManifest.xml",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Extracting Manifest Data",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Manifest Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:46",
+      "status": "Performing Static Analysis on: ToString (edu.mit.to_string)",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:48",
+      "status": "Fetching Details from Play Store: edu.mit.to_string",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:49",
+      "status": "Checking for Malware Permissions",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:49",
+      "status": "Fetching icon path",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:49",
+      "status": "Library Binary Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:49",
+      "status": "Reading Code Signing Certificate",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:49",
+      "status": "Running APKiD 3.0.0",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:50",
+      "status": "Detecting Trackers",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:50",
+      "status": "Decompiling APK to Java with JADX",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:51",
+      "status": "Converting DEX to Smali",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:51",
+      "status": "Code Analysis Started on - java_source",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:51",
+      "status": "Android SBOM Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:51",
+      "status": "Android SAST Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:51",
+      "status": "Android API Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Android API Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Android Permission Mapping Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Android Permission Mapping Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Android Behaviour Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Android Behaviour Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Extracting Emails and URLs from Source Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Email and URL Extraction Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Extracting String data from APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Extracting String data from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Extracting String values and entropies from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Performing Malware check on extracted domains",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:33:52",
+      "status": "Saving to Database",
+      "exception": null
+    }
+  ],
+  "sbom": {
+    "sbom_versioned": [],
+    "sbom_packages": [
+      "edu.mit.to_string"
+    ]
+  },
+  "average_cvss": null,
+  "appsec": {
+    "high": [
+      {
+        "title": "Application vulnerable to Janus Vulnerability",
+        "description": "Application is signed with v1 signature scheme, making it vulnerable to Janus vulnerability on Android 5.0-8.0, if signed only with v1 signature scheme. Applications running on Android 5.0-7.0 signed with v1, and v2/v3 scheme is also vulnerable.",
+        "section": "certificate"
+      },
+      {
+        "title": "App can be installed on a vulnerable unpatched Android version 4.4-4.4.4, [minSdk=19]",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "section": "manifest"
+      }
+    ],
+    "warning": [
+      {
+        "title": "Application Data can be Backed up [android:allowBackup=true]",
+        "description": "This flag allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "section": "manifest"
+      }
+    ],
+    "info": [
+      {
+        "title": "The App logs information. Sensitive information should never be logged.",
+        "description": "The App logs information. Sensitive information should never be logged.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#logs\n\nFiles:\nedu/mit/to_string/MainActivity.java, line(s) 19",
+        "section": "code"
+      }
+    ],
+    "secure": [
+      {
+        "title": "This application has no privacy trackers",
+        "description": "This application does not include any user or device trackers. Unable to find trackers during static analysis.",
+        "section": "trackers"
+      }
+    ],
+    "hotspot": [
+      {
+        "title": "Found 1 critical permission(s)",
+        "description": "Ensure that these permissions are required by the application.\n\nandroid.permission.READ_PHONE_STATE (dangerous): read phone state and identity - Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on.",
+        "section": "permissions"
+      }
+    ],
+    "total_trackers": 432,
+    "trackers": 0,
+    "security_score": 42,
+    "app_name": "ToString",
+    "file_name": "ArrayToString1.apk",
+    "hash": "7ad80d56ef4679c3aa1d831324aeddc6",
+    "version_name": "1.0"
+  },
+  "virus_total": null,
+  "base_url": "file:///home/mobsf/Mobile-Security-Framework-MobSF/mobsf",
+  "dwd_dir": "file:///home/mobsf/.MobSF/downloads/",
+  "host_os": "nix",
+  "timestamp": "2026-05-20T21:33:46.104Z"
+}

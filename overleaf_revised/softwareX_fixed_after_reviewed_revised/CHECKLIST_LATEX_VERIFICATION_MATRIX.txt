@@ -1,0 +1,336 @@
+MobileSec SoftwareX revision - checklist-to-LaTeX verification matrix
+Revised Overleaf package: softwareX_fixed_after_reviewed_REVISED_BLUE.zip
+Manuscript source: main.tex
+Revision date: 2026-05-25
+
+Verification method
+-------------------
+All manuscript additions or replacements are displayed in blue in main.tex
+using \textcolor{blue}{...} or {\color{blue} ...}. The line references below
+refer to the revised main.tex included in this ZIP. The status distinguishes
+between content inserted to answer the reviewer and experimental evidence that
+still requires future data collection.
+
+01. Reviewer item: Specify the LightGBM model in sufficient detail.
+Status: INSERTED AND DOCUMENTED.
+Equivalent LaTeX insertion:
+- Section "Machine Learning-Based Vulnerability Prioritization", lines 244-246.
+- Table "Configuration of the LightGBM remediation-prioritisation model",
+  lines 248-272, label tab:lightgbm-configuration.
+Verification content:
+- The manuscript now states the 24 scan-level attributes, multiclass task,
+  output interpretation, evaluation split rationale and selected
+  hyperparameters.
+
+02. Reviewer item: Explain and justify the labels used by LightGBM.
+Status: INSERTED WITH SCIENTIFIC SCOPE LIMITATION.
+Equivalent LaTeX insertion:
+- Lines 244-246 in the same machine-learning subsection.
+- Additional scope statement at line 765.
+Verification content:
+- Remediation categories are explicitly described as operational categories
+  used for triage and are not presented as official OWASP labels or direct
+  risk probabilities.
+
+03. Reviewer item: Provide complete machine-learning metrics.
+Status: INSERTED WITH GENERATED METRICS.
+Equivalent LaTeX insertion:
+- Section "LightGBM prioritisation evaluation", lines 533-590.
+- Held-out-results table, lines 537-556,
+  label tab:lightgbm-prioritization-generated.
+- Baseline-comparison table, lines 558-572,
+  label tab:ml-baseline-comparison.
+Verification content:
+- LightGBM held-out accuracy=0.6250, macro-precision=0.7815,
+  macro-recall=0.6250, macro-F1=0.6284 and AUC=0.9468.
+- A repeatable comparison reports rule-based, logistic-regression,
+  random-forest and LightGBM outcomes.
+
+04. Reviewer item: Include concrete examples of model errors.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Table "Examples of prioritisation errors observed in held-out predictions",
+  lines 574-587, label tab:lightgbm-errors.
+Verification content:
+- Three expected-versus-predicted remediation cases and priority shifts are
+  stated directly in the manuscript.
+
+05. Reviewer item: Provide a comparison with MobSF, BeVigil and
+Yaazhini/Vooki.
+Status: QUALITATIVE COMPARISON RETAINED; NUMERICAL CLAIMS SAFELY QUALIFIED.
+Equivalent LaTeX insertion/replacement:
+- Qualitative table remains at lines 607-710,
+  label tab:comparison_tools.
+- Scientific qualification inserted at line 720.
+- Quantitative-comparison status statement inserted at line 724.
+Verification content:
+- The manuscript explicitly states that documented functionality does not
+  establish comparative numerical superiority.
+- Numerical external-tool results are not claimed without equivalent runs.
+
+06. Reviewer item: Compare tools on the same dataset and using the same
+metrics.
+Status: REQUIREMENT STATED; EXTERNAL MEASUREMENTS STILL PENDING.
+Equivalent LaTeX insertion:
+- Line 724 under "Quantitative Comparison With Existing Tools".
+Verification content:
+- The manuscript identifies the required comparison protocol: identical
+  283-APK set and the same runtime, detection, precision, recall, F1 and
+  report-export measurements for each external tool.
+
+07. Reviewer item: Clarify the use and interpretation of DroidBench and
+Ghera.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Subsection "Benchmark evaluation on DroidBench and Ghera", lines 726-765.
+Verification content:
+- The manuscript states that 118 DroidBench and 165 Ghera APKs were analyzed
+  and explains why their measured outcomes are reported separately.
+
+08. Reviewer item: Avoid unsupported accuracy claims for other APK records.
+Status: INSERTED AS A LIMITATION.
+Equivalent LaTeX insertion:
+- Lines 728 and 761.
+- Conclusions, lines 796 and 801-802.
+Verification content:
+- Archived scan records without reference labels are excluded from
+  precision, recall and F1 claims.
+
+09. Reviewer item: Report metrics by vulnerability category.
+Status: LIMITATION INSERTED; MANUAL CATEGORY ANNOTATION STILL PENDING.
+Equivalent LaTeX insertion:
+- Line 763, after the benchmark table.
+Verification content:
+- The manuscript explains why per-category precision and recall are not yet
+  reported and identifies the required further annotation study.
+
+10. Reviewer item: Add runtime, CPU, RAM and scalability evidence.
+Status: INSERTED WITH VERIFIED FULL-RUN VALUES.
+Equivalent LaTeX insertion:
+- Table "Measured MobileSec results on the complete DroidBench and Ghera APK
+  sets", lines 730-759, label tab:mobilesec-benchmark-realworld-generated.
+Verification content:
+- Mean scan time: 4.29 s / 8.40 s.
+- Mean CPU use: 102.4% / 70.5%.
+- Mean RAM use: 276.8 MB / 555.2 MB.
+- Throughput: 6.71 APK/min for both suites.
+- Configured concurrency: 1.
+
+11. Reviewer item: Improve reproducibility.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Subsection "Reproducibility and developer documentation", lines 767-782.
+Verification content:
+- The manuscript identifies the benchmark workflow and stored measurement
+  outputs used to construct the result table.
+
+12. Reviewer item: Supply execution or testing commands.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Command block, lines 771-780.
+Verification content:
+- The exact evaluation invocation is included with DroidBench and Ghera path
+  parameters, service endpoints and sequential-concurrency setting.
+
+13. Reviewer item: State APK sources and scripts required for replication.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Lines 769-782.
+Verification content:
+- The manuscript specifies the two benchmark suites and states that these
+  third-party APK resources must be obtained under their distribution terms.
+
+14. Reviewer item: Provide developer documentation.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Metadata table C8, line 149.
+- Documentation statement, line 782.
+Verification content:
+- A direct developer-guide repository link is provided and the scope of the
+  documentation is described.
+
+15. Reviewer item: Explain the basis of the security score.
+Status: INSERTED WITH APPROPRIATE INTERPRETATION.
+Equivalent LaTeX insertion:
+- Paragraph "Interpretation of the security score", lines 495-496.
+- Sensitivity table, lines 498-514,
+  label tab:score-sensitivity.
+Verification content:
+- The score is identified as an interpretable triage indicator rather than a
+  calibrated probability of compromise.
+
+16. Reviewer item: Validate security-score weights.
+Status: SENSITIVITY ANALYSIS INSERTED; FORMAL CALIBRATION PENDING.
+Equivalent LaTeX insertion:
+- Sensitivity table, lines 498-514.
+- Calibration limitation, line 516.
+Verification content:
+- Top-10 overlap and Kendall's tau are shown for implemented, equal,
+  CVSS-inspired and secrets-emphasised weighting schemes.
+- The manuscript explicitly states that independent formal calibration remains
+  future work.
+
+17. Reviewer item: Evaluate the FixSuggest recommendations.
+Status: SCOPE LIMITATION INSERTED; MANUAL ASSESSMENT PENDING.
+Equivalent LaTeX insertion:
+- Paragraph "Assessment scope of generated remediation", lines 414-415.
+Verification content:
+- The manuscript limits its claim to implemented generation/presentation and
+  states that patch correctness, acceptance and remediation-time assessment
+  require a dedicated manual protocol.
+
+18. Reviewer item: Moderate the MobSF-related claim.
+Status: REPLACED WITH ACADEMICALLY QUALIFIED WORDING.
+Equivalent LaTeX insertion:
+- Line 720.
+Verification content:
+- The revised text characterizes the comparison as functional positioning and
+  requires same-condition measurement before comparative performance claims.
+
+19. Reviewer item: Limit overly strong or unsupported claims.
+Status: REPLACED IN MULTIPLE MANUSCRIPT LOCATIONS.
+Equivalent LaTeX insertion/replacement:
+- Abstract, lines 103-104.
+- Architecture description, line 203.
+- Impact discussion, line 531.
+- Conclusion engineering statement, line 790.
+Verification content:
+- Statements now concern reproducible deployment and evaluated behavior, not
+  unverified scalability or performance superiority.
+
+20. Reviewer item: Discuss the costs of the microservices architecture.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Paragraph "Architectural trade-offs and failure management", lines 235-240.
+Verification content:
+- Communication, deployment, monitoring and recovery overhead are explicitly
+  acknowledged.
+
+21. Reviewer item: Discuss the complexity introduced by Kafka.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Apache Kafka and Docker service description, line 230.
+- Architectural trade-offs paragraph, lines 235-240.
+Verification content:
+- The manuscript states that messaging and REST notifications require
+  treatment of service unavailability and partial outcomes.
+
+22. Reviewer item: Explain inter-service failure management.
+Status: INSERTED WITH IMPLEMENTED BEHAVIOR AND LIMITATION.
+Equivalent LaTeX insertion:
+- Line 238.
+Verification content:
+- Retry behavior, persisted partial/unavailable status and manual replay are
+  stated.
+- The manuscript also states that a durable dead-letter queue is not part of
+  the current implementation.
+
+23. Reviewer item: Compare microservices against a monolithic baseline.
+Status: LIMITATION INSERTED; EXPERIMENT NOT CLAIMED.
+Equivalent LaTeX insertion:
+- Line 240.
+Verification content:
+- The manuscript explicitly states that no measured monolithic baseline is
+  included in the present study.
+
+24. Reviewer item: Provide evidence for parallel-processing advantage.
+Status: CORRECTLY REPORTED AS NOT ESTABLISHED.
+Equivalent LaTeX insertion/replacement:
+- Architecture qualification, line 203.
+- APK workflow wording no longer claims parallel evaluation, lines 376-377.
+- Measured concurrency outcome, line 240.
+- Impact limitation, line 531.
+- Conclusion limitation, lines 801-802.
+Verification content:
+- Concurrency-4 exploration produced incomplete analyzer outcomes; final
+  measured benchmark used one APK scan at a time and claims no parallel
+  throughput advantage.
+
+25. Reviewer item: Resolve the SARIF support contradiction.
+Status: INSERTED WITH VERIFIED EVIDENCE.
+Equivalent LaTeX insertion:
+- Report-export verification statement, line 425.
+- Benchmark table, line 755.
+Verification content:
+- SARIF generation is stated as measured and successful for all 283 APKs;
+  the table reports 100.0% for both benchmark suites.
+
+26. Reviewer item: Resolve the PDF report-generation contradiction.
+Status: INSERTED WITH VERIFIED EVIDENCE.
+Equivalent LaTeX insertion:
+- Report-export verification statement, line 425.
+- Benchmark table, line 754.
+Verification content:
+- PDF generation is stated as measured and successful for all 283 APKs; the
+  table reports 100.0% for both benchmark suites.
+
+27. Reviewer item: Correct the interpretation of benchmark versus other APK
+records.
+Status: INSERTED AND CORRECTED.
+Equivalent LaTeX insertion:
+- Benchmark introduction and interpretation, lines 728 and 761.
+- Conclusion result statement, line 796.
+Verification content:
+- The manuscript restricts accuracy claims to benchmark APKs carrying
+  reference outcomes and treats archived scans as descriptive records.
+
+28. Reviewer item: Improve figures and readability.
+Status: EDITED IN THE LATEX SOURCE; FINAL VISUAL INSPECTION REQUIRED.
+Equivalent LaTeX insertion/replacement:
+- Architecture figure width/caption, lines 198-199.
+- Dashboard figure width/caption, lines 384-385.
+- Prioritisation figure width/caption, lines 396-397.
+- FixSuggest figure width/caption, lines 406-407.
+- Report figure width/caption, lines 520-521.
+Verification content:
+- Figures are expanded to full line width and revised captions are marked in
+  blue. Final readability must be confirmed in the compiled PDF.
+
+29. Reviewer item: Strengthen the limitations in the conclusion.
+Status: INSERTED.
+Equivalent LaTeX insertion:
+- Conclusions paragraph "Limitations", lines 801-802.
+Verification content:
+- The conclusion identifies four bounded limitations: benchmark
+  generalisation, absent same-protocol external-tool measurements, further
+  score/FixSuggest assessment, and the sequential execution used for the
+  stable benchmark.
+
+30. Reviewer item: Provide a clear response artifact for verification.
+Status: PROVIDED.
+Equivalent verification artifact:
+- This file, CHECKLIST_LATEX_VERIFICATION_MATRIX.txt, in the revised Overleaf
+  ZIP root.
+- All changed manuscript passages are visibly marked in blue in main.tex.
+Verification content:
+- The supervisor can verify each checklist row by opening this matrix and
+  navigating to the cited main.tex line and table/paragraph label.
+
+Measured benchmark values inserted in the manuscript
+-----------------------------------------------------
+Total APKs evaluated: 283 (118 DroidBench, 165 Ghera)
+PDF reports successfully exported: 283/283
+SARIF reports successfully exported: 283/283
+
+Metric                         DroidBench         Ghera
+Number of APKs                 118                165
+Detected findings              484                901
+Precision                      1.0000             0.2667
+Recall                         1.0000             1.0000
+F1-score                       1.0000             0.4211
+Mean scan time                 4.29 s             8.40 s
+Mean CPU usage                 102.4%             70.5%
+Mean RAM usage                 276.8 MB           555.2 MB
+Throughput                     6.71 APK/min       6.71 APK/min
+PDF report success rate        100.0%             100.0%
+SARIF export success rate      100.0%             100.0%
+
+Items intentionally reported as pending evidence
+-------------------------------------------------
+- Quantitative same-protocol comparison with MobSF, BeVigil and
+  Yaazhini/Vooki.
+- Per-category benchmark accuracy based on manually reviewed category labels.
+- Independent formal calibration of the security-score weights.
+- Manual correctness and acceptance evaluation of FixSuggest recommendations.
+- A measured monolithic baseline and a corrected, stable parallel-execution
+  experiment.

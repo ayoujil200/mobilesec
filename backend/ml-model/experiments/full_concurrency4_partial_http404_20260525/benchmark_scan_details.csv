@@ -1,0 +1,5 @@
+dataset,apk,file_path,scan_id,status,detected_findings,detected,expected,scan_time_seconds,cpu_percent,ram_mb,apk_size_bytes,export_bytes_total,export_time_seconds,pdf_success,json_success,report_success,sarif_success,error
+DroidBench,ApplicationModeling1.apk,C:\Users\HP\Desktop\phd\DroidBench apks\apk\AndroidSpecific\ApplicationModeling1.apk,2f538262-c013-499c-9bb3-973a7202531a,completed,4,true,true,10.828,1.61,201.37,36869,77140,62.854,true,true,true,true,
+DroidBench,DirectLeak1.apk,C:\Users\HP\Desktop\phd\DroidBench apks\apk\AndroidSpecific\DirectLeak1.apk,39f3ab28-c238-4559-bc95-152cafb92835,partial,0,false,true,71.349,11.07,203.35,178577,38659,2.364,true,true,true,true,
+DroidBench,InactiveActivity.apk,C:\Users\HP\Desktop\phd\DroidBench apks\apk\AndroidSpecific\InactiveActivity.apk,3459eea8-b8e4-4163-95c3-9ca49c7057e5,partial,0,false,true,61.283,1.10,203.62,178495,38549,12.445,true,true,true,true,
+DroidBench,Merge1.apk,C:\Users\HP\Desktop\phd\DroidBench apks\apk\Aliasing\Merge1.apk,81e10ca4-0695-4b7d-8df2-038de40586a7,completed,4,true,true,51.191,101.12,266.68,801366,76814,22.532,true,true,true,true,

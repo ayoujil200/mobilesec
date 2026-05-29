@@ -1,0 +1,11 @@
+Checklist row 03 - Evaluate LightGBM with metrics
+Status: corrected.
+
+Where:
+- backend/ml-model/src/model/trainer.py
+- backend/ml-model/src/evaluation/paper_tables.py
+
+Correction:
+The persisted hold-out output already includes AUC and a confusion matrix.
+Baseline table rows now additionally expose macro precision, macro recall and
+AUC when probabilities exist, allowing direct comparison with LightGBM.

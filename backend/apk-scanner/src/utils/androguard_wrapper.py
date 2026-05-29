@@ -25,6 +25,7 @@ class AndroguardWrapper:
         self.dalvik_vm = None
         self.analysis = None
         self.endpoints = []
+        self._dex_strings = None
     
     def load_apk(self):
         """
@@ -159,7 +160,7 @@ class AndroguardWrapper:
             ]
             
             # Rechercher dans toutes les chaînes de caractères
-            for string in self.apk.get_strings():
+            for string in self._get_dex_strings():
                 for pattern in url_patterns:
                     matches = re.findall(pattern, string)
                     for match in matches:
@@ -272,7 +273,7 @@ class AndroguardWrapper:
                 (r'password["\']?\s*[:=]\s*["\']([a-zA-Z0-9_\-]+)["\']', 'PASSWORD'),
             ]
             
-            for string in self.apk.get_strings():
+            for string in self._get_dex_strings():
                 for pattern, key_type in key_patterns:
                     matches = re.findall(pattern, string.lower())
                     for match in matches:
@@ -289,6 +290,20 @@ class AndroguardWrapper:
         except Exception as e:
             logger.error(f"Error searching for API keys: {e}")
             return []
+
+    def _get_dex_strings(self):
+        """Return string constants from all DEX files for Androguard 3.x."""
+        if self._dex_strings is not None:
+            return self._dex_strings
+
+        strings = []
+        for dex_bytes in self.apk.get_all_dex():
+            try:
+                strings.extend(str(value) for value in DalvikVMFormat(dex_bytes).get_strings())
+            except Exception as exc:
+                logger.warning(f"Unable to read DEX strings: {exc}")
+        self._dex_strings = strings
+        return strings
     
     def get_hardcoded_secrets(self):
         """
@@ -315,7 +330,7 @@ class AndroguardWrapper:
             logger.info("Analyzing DEX files...")
             
             # Obtenir les fichiers DEX
-            dex_files = self.apk.get_all_dex()
+            dex_files = list(self.apk.get_all_dex())
             
             stats = {
                 'dex_count': len(dex_files),
@@ -325,7 +340,7 @@ class AndroguardWrapper:
             }
             
             # Compter les strings
-            stats['total_strings'] = len(self.apk.get_strings())
+            stats['total_strings'] = len(self._get_dex_strings())
             
             logger.info(f"DEX analysis complete: {stats}")
             return stats

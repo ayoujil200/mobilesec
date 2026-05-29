@@ -1,0 +1,2 @@
+scan_id,mobile_risk_score,expert_severity_score,cvss_score,reviewer,notes
+scan-id-here,40,40,4.0,expert-name,Replace this example with actual independently reviewed values.

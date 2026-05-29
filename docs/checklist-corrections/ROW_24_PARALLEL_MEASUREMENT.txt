@@ -1,0 +1,19 @@
+Checklist row 24 - Experimental proof of parallelism
+Status: corrected measurement workflow; performance advantage is not established.
+
+Where:
+- scripts/run-benchmark-evaluation.js
+- docs/reproducibility.md
+- backend/ml-model/experiments/full_concurrency4_partial_timeout_20260525
+- backend/ml-model/experiments/full_concurrency4_partial_http404_20260525
+
+Correction:
+The benchmark now accepts --concurrency and records measured APK/minute. Run
+the same APK set at concurrency 1 and a fixed parallel value on the same host.
+
+Measured finding:
+A concurrency-4 execution was attempted on the full DroidBench/Ghera workflow.
+One run produced partial rows after analyzer timeouts, and a retry after
+increasing timeout produced analyzer HTTP 404 responses for parallel scans.
+The publication tables therefore use the reliable sequential execution and do
+not claim a demonstrated parallel throughput advantage.

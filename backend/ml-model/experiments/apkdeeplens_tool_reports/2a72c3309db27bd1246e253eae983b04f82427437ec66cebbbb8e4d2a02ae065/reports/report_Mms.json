@@ -1,0 +1,751 @@
+{
+    "apk_name": "Mms.apk",
+    "package_name": "com.android.mms",
+    "permission": [
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.CALL_PHONE",
+        "android.permission.READ_CONTACTS",
+        "android.permission.WRITE_CONTACTS",
+        "android.permission.READ_PROFILE",
+        "android.permission.RECEIVE_SMS",
+        "android.permission.RECEIVE_MMS",
+        "android.permission.SEND_SMS",
+        "android.permission.VIBRATE",
+        "android.permission.INTERNET",
+        "android.permission.READ_SMS",
+        "android.permission.WRITE_SMS",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.CHANGE_NETWORK_STATE",
+        "android.permission.READ_PHONE_STATE",
+        "android.permission.WAKE_LOCK",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INSTALL_DRM",
+        "android.permission.WRITE_APN_SETTINGS",
+        "android.permission.MMS_SEND_OUTBOX_MSG"
+    ],
+    "dangerous_permission": [
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.CALL_PHONE",
+        "android.permission.READ_CONTACTS",
+        "android.permission.WRITE_CONTACTS",
+        "android.permission.RECEIVE_SMS",
+        "android.permission.RECEIVE_MMS",
+        "android.permission.SEND_SMS",
+        "android.permission.READ_SMS",
+        "android.permission.CHANGE_NETWORK_STATE",
+        "android.permission.READ_PHONE_STATE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+    ],
+    "manifest_analysis": {
+        "activities": {
+            "all": [
+                ".ui.ConversationList",
+                ".ui.ComposeMessageActivity",
+                ".ui.ComposeMessageActivityNoLockScreen",
+                ".ui.DeliveryReportActivity",
+                ".ui.WarnOfStorageLimitsActivity",
+                ".ui.EditSlideDurationActivity",
+                ".ui.SlideshowEditActivity",
+                ".ui.RecipientListActivity",
+                ".ui.SlideEditorActivity",
+                ".ui.SlideshowActivity",
+                ".ui.ClassZeroActivity",
+                ".ui.MessagingPreferenceActivity",
+                ".ui.ManageSimMessages",
+                ".ui.ConfirmRateLimitActivity",
+                ".ui.SearchActivity",
+                ".ui.MiniPreferenceActivity"
+            ],
+            "exported": []
+        },
+        "services": {
+            "all": [
+                ".transaction.TransactionService",
+                ".transaction.SmsReceiverService",
+                ".transaction.MessageStatusService",
+                ".ui.NoConfirmationSendService",
+                ".widget.MmsWidgetService"
+            ],
+            "exported": [
+                ".ui.NoConfirmationSendService"
+            ]
+        },
+        "receivers": {
+            "all": [
+                ".transaction.PushReceiver",
+                ".transaction.MmsPushOutboxMessages",
+                ".transaction.MmsSystemEventReceiver",
+                ".transaction.PrivilegedSmsReceiver",
+                ".transaction.SmsReceiver",
+                ".transaction.MessageStatusReceiver",
+                ".transaction.SimFullReceiver",
+                ".transaction.SmsRejectedReceiver",
+                ".ui.SmsStorageMonitor",
+                ".widget.MmsWidgetProvider"
+            ],
+            "exported": []
+        },
+        "providers": {
+            "all": [
+                "SuggestionsProvider",
+                "TempFileProvider"
+            ],
+            "exported": [
+                "SuggestionsProvider",
+                "TempFileProvider"
+            ]
+        }
+    },
+    "manifest_security": [
+        {
+            "id": "MANIFEST_ALLOW_BACKUP",
+            "title": "Application Data Backup Allowed",
+            "severity": "HIGH",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "android:allowBackup is true (or not set, defaulting to true). Any user or attacker with USB access can extract the full app data directory using 'adb backup' without root. Set to false or use android:fullBackupOnly with a proper backup rule.",
+            "evidence": "android:allowBackup=\"true (default)\""
+        },
+        {
+            "id": "MANIFEST_EXPORTED_NO_PERM",
+            "title": "Exported Provider Without Permission",
+            "severity": "HIGH",
+            "owasp": "M4: Insufficient Input/Output Validation",
+            "description": "The provider 'SuggestionsProvider' is exported (accessible from other apps) but has no android:permission protection. Any app on the device can start, bind, or send data to it without restriction.",
+            "evidence": "<provider android:name=\"SuggestionsProvider\" android:exported=\"true\">"
+        },
+        {
+            "id": "MANIFEST_EXPORTED_NO_PERM",
+            "title": "Exported Provider Without Permission",
+            "severity": "HIGH",
+            "owasp": "M4: Insufficient Input/Output Validation",
+            "description": "The provider 'TempFileProvider' is exported (accessible from other apps) but has no android:permission protection. Any app on the device can start, bind, or send data to it without restriction.",
+            "evidence": "<provider android:name=\"TempFileProvider\" android:exported=\"true\">"
+        },
+        {
+            "id": "MANIFEST_MIN_SDK_LOW",
+            "title": "Low Minimum SDK Version (19)",
+            "severity": "MEDIUM",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "minSdkVersion=19 targets Android versions that lack modern security controls (full-disk encryption, SELinux enforcement, runtime permissions). Minimum recommended is 21 (Android 5.0).",
+            "evidence": "android:minSdkVersion=\"19\""
+        },
+        {
+            "id": "MANIFEST_TARGET_SDK_LOW",
+            "title": "Low Target SDK Version (19)",
+            "severity": "MEDIUM",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "targetSdkVersion=19 opts out of security improvements introduced in Android 9+ (Pie), including default HTTPS enforcement, restricted access to device identifiers, and background restrictions. Target SDK 28 or higher is strongly recommended.",
+            "evidence": "android:targetSdkVersion=\"19\""
+        },
+        {
+            "id": "MANIFEST_DEEP_LINK",
+            "title": "Deep Link Activity Without Permission",
+            "severity": "MEDIUM",
+            "owasp": "M4: Insufficient Input/Output Validation",
+            "description": "Activity '.ui.ComposeMessageActivity' handles custom deep link scheme 'sms://'. Any app or web page can launch this activity with arbitrary intent data. Validate all incoming URI parameters before use.",
+            "evidence": "<data android:scheme=\"sms\"> in .ui.ComposeMessageActivity"
+        },
+        {
+            "id": "MANIFEST_DEEP_LINK",
+            "title": "Deep Link Activity Without Permission",
+            "severity": "MEDIUM",
+            "owasp": "M4: Insufficient Input/Output Validation",
+            "description": "Activity '.ui.ComposeMessageActivity' handles custom deep link scheme 'smsto://'. Any app or web page can launch this activity with arbitrary intent data. Validate all incoming URI parameters before use.",
+            "evidence": "<data android:scheme=\"smsto\"> in .ui.ComposeMessageActivity"
+        },
+        {
+            "id": "MANIFEST_DEEP_LINK",
+            "title": "Deep Link Activity Without Permission",
+            "severity": "MEDIUM",
+            "owasp": "M4: Insufficient Input/Output Validation",
+            "description": "Activity '.ui.ComposeMessageActivity' handles custom deep link scheme 'mms://'. Any app or web page can launch this activity with arbitrary intent data. Validate all incoming URI parameters before use.",
+            "evidence": "<data android:scheme=\"mms\"> in .ui.ComposeMessageActivity"
+        },
+        {
+            "id": "MANIFEST_DEEP_LINK",
+            "title": "Deep Link Activity Without Permission",
+            "severity": "MEDIUM",
+            "owasp": "M4: Insufficient Input/Output Validation",
+            "description": "Activity '.ui.ComposeMessageActivity' handles custom deep link scheme 'mmsto://'. Any app or web page can launch this activity with arbitrary intent data. Validate all incoming URI parameters before use.",
+            "evidence": "<data android:scheme=\"mmsto\"> in .ui.ComposeMessageActivity"
+        }
+    ],
+    "hardcoded_secrets": [],
+    "insecure_requests": [
+        "http://go/droidanizer\u304b\u3089\u9001\u4fe1\u3057\u3066\u304f\u3060\u3055\u3044",
+        "http://go/droidanizer.",
+        "http://go/droidanizer"
+    ],
+    "code_findings": [
+        {
+            "id": "STORAGE_CLIPBOARD",
+            "title": "Data Written to Clipboard",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Data written to ClipboardManager is accessible to any app with FOREGROUND permission. Avoid storing sensitive data (passwords, tokens, PII) in the clipboard.",
+            "file": "sources/com/android/mms/ui/MessageListView.java",
+            "line": 4,
+            "evidence": "import android.text.ClipboardManager;"
+        },
+        {
+            "id": "STORAGE_CLIPBOARD",
+            "title": "Data Written to Clipboard",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Data written to ClipboardManager is accessible to any app with FOREGROUND permission. Avoid storing sensitive data (passwords, tokens, PII) in the clipboard.",
+            "file": "sources/com/android/mms/ui/MessageListView.java",
+            "line": 30,
+            "evidence": "((ClipboardManager) getContext().getSystemService(\"clipboard\")).setText(item.mBody);"
+        },
+        {
+            "id": "STORAGE_CLIPBOARD",
+            "title": "Data Written to Clipboard",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Data written to ClipboardManager is accessible to any app with FOREGROUND permission. Avoid storing sensitive data (passwords, tokens, PII) in the clipboard.",
+            "file": "sources/com/android/mms/ui/ComposeMessageActivity.java",
+            "line": 10,
+            "evidence": "import android.content.ClipboardManager;"
+        },
+        {
+            "id": "STORAGE_CLIPBOARD",
+            "title": "Data Written to Clipboard",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Data written to ClipboardManager is accessible to any app with FOREGROUND permission. Avoid storing sensitive data (passwords, tokens, PII) in the clipboard.",
+            "file": "sources/com/android/mms/ui/ComposeMessageActivity.java",
+            "line": 899,
+            "evidence": "((ClipboardManager) getSystemService(\"clipboard\")).setPrimaryClip(ClipData.newPlainText(null, str));"
+        },
+        {
+            "id": "STORAGE_CLIPBOARD",
+            "title": "Data Written to Clipboard",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Data written to ClipboardManager is accessible to any app with FOREGROUND permission. Avoid storing sensitive data (passwords, tokens, PII) in the clipboard.",
+            "file": "sources/com/android/ex/chips/RecipientEditTextView.java",
+            "line": 5,
+            "evidence": "import android.content.ClipboardManager;"
+        },
+        {
+            "id": "STORAGE_CLIPBOARD",
+            "title": "Data Written to Clipboard",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Data written to ClipboardManager is accessible to any app with FOREGROUND permission. Avoid storing sensitive data (passwords, tokens, PII) in the clipboard.",
+            "file": "sources/com/android/ex/chips/RecipientEditTextView.java",
+            "line": 1768,
+            "evidence": "handlePasteClip(((ClipboardManager) getContext().getSystemService(\"clipboard\")).getPrimaryClip());"
+        },
+        {
+            "id": "STORAGE_CLIPBOARD",
+            "title": "Data Written to Clipboard",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Data written to ClipboardManager is accessible to any app with FOREGROUND permission. Avoid storing sensitive data (passwords, tokens, PII) in the clipboard.",
+            "file": "sources/com/android/ex/chips/RecipientEditTextView.java",
+            "line": 2186,
+            "evidence": "((ClipboardManager) getContext().getSystemService(\"clipboard\")).setPrimaryClip(ClipData.newPlainText(\"\", this.mCopyAddress));"
+        },
+        {
+            "id": "LOG_SENSITIVE",
+            "title": "Sensitive Data in Log Statement",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Log.d/e/i/v/w() call contains keywords suggesting sensitive data (password, token, key, secret, auth, credential). Log output is accessible to other apps via logcat on unpatched or rooted devices.",
+            "file": "sources/com/android/mms/ui/ConversationList.java",
+            "line": 638,
+            "evidence": "Log.e(\"ConversationList\", \"onQueryComplete called with unknown token \" + token);"
+        },
+        {
+            "id": "LOG_SENSITIVE",
+            "title": "Sensitive Data in Log Statement",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Log.d/e/i/v/w() call contains keywords suggesting sensitive data (password, token, key, secret, auth, credential). Log output is accessible to other apps via logcat on unpatched or rooted devices.",
+            "file": "sources/com/android/ex/chips/RecipientEditTextView.java",
+            "line": 658,
+            "evidence": "Log.d(\"RecipientEditTextView\", \"There were extra characters after the last tokenizable entry.\" + ((Object) text));"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/MmsConfig.java",
+            "line": 62,
+            "evidence": "return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(\"sms_promo_dismissed_key\", false);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/CacheManager.java",
+            "line": 4,
+            "evidence": "import android.content.SharedPreferences;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/CacheManager.java",
+            "line": 48,
+            "evidence": "SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/DownloadManager.java",
+            "line": 8,
+            "evidence": "import android.content.SharedPreferences;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/DownloadManager.java",
+            "line": 28,
+            "evidence": "private final SharedPreferences mPreferences;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/DownloadManager.java",
+            "line": 29,
+            "evidence": "private final SharedPreferences.OnSharedPreferenceChangeListener mPreferencesChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() { // from class: com.android.mms.util.DownloadMan"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/DownloadManager.java",
+            "line": 30,
+            "evidence": "@Override // android.content.SharedPreferences.OnSharedPreferenceChangeListener"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/DownloadManager.java",
+            "line": 31,
+            "evidence": "public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/DownloadManager.java",
+            "line": 54,
+            "evidence": "this.mPreferences = PreferenceManager.getDefaultSharedPreferences(context);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/DownloadManager.java",
+            "line": 78,
+            "evidence": "static boolean getAutoDownloadState(SharedPreferences prefs) {"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/DownloadManager.java",
+            "line": 82,
+            "evidence": "static boolean getAutoDownloadState(SharedPreferences prefs, boolean roaming) {"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/Recycler.java",
+            "line": 6,
+            "evidence": "import android.content.SharedPreferences;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/Recycler.java",
+            "line": 53,
+            "evidence": "return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(\"pref_key_auto_delete\", false);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/Recycler.java",
+            "line": 71,
+            "evidence": "return PreferenceManager.getDefaultSharedPreferences(context).getInt(\"MaxSmsMessagesPerThread\", MmsConfig.getDefaultSMSMessagesPerThread());"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/Recycler.java",
+            "line": 76,
+            "evidence": "SharedPreferences.Editor editPrefs = PreferenceManager.getDefaultSharedPreferences(context).edit();"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/Recycler.java",
+            "line": 156,
+            "evidence": "return PreferenceManager.getDefaultSharedPreferences(context).getInt(\"MaxMmsMessagesPerThread\", MmsConfig.getDefaultMMSMessagesPerThread());"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/util/Recycler.java",
+            "line": 161,
+            "evidence": "SharedPreferences.Editor editPrefs = PreferenceManager.getDefaultSharedPreferences(context).edit();"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 8,
+            "evidence": "import android.content.SharedPreferences;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 128,
+            "evidence": "PreferenceManager.getDefaultSharedPreferences(this).edit().clear().apply();"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 159,
+            "evidence": "SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 160,
+            "evidence": "if (sharedPreferences.contains(\"pref_key_vibrateWhen\")) {"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 161,
+            "evidence": "boolean vibrate = \"always\".equals(sharedPreferences.getString(\"pref_key_vibrateWhen\", null));"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 162,
+            "evidence": "SharedPreferences.Editor prefsEditor = sharedPreferences.edit();"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 172,
+            "evidence": "setRingtoneSummary(sharedPreferences.getString(\"pref_key_ringtone\", null));"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 268,
+            "evidence": "return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(\"pref_key_enable_notifications\", true);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 272,
+            "evidence": "SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/MessagingPreferenceActivity.java",
+            "line": 291,
+            "evidence": "boolean groupMmsPrefOn = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(\"pref_key_mms_group_mms\", true);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/ConversationList.java",
+            "line": 14,
+            "evidence": "import android.content.SharedPreferences;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/ConversationList.java",
+            "line": 108,
+            "evidence": "private SharedPreferences mPrefs;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/ConversationList.java",
+            "line": 166,
+            "evidence": "this.mPrefs = PreferenceManager.getDefaultSharedPreferences(this);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/ConversationList.java",
+            "line": 287,
+            "evidence": "SharedPreferences.Editor editor = ConversationList.this.mPrefs.edit();"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/ui/ConversationList.java",
+            "line": 307,
+            "evidence": "SharedPreferences.Editor editor = this.mPrefs.edit();"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/SmsMessageSender.java",
+            "line": 47,
+            "evidence": "boolean z = PreferenceManager.getDefaultSharedPreferences(this.mContext).getBoolean(\"pref_key_sms_delivery_reports\", false);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 11,
+            "evidence": "import android.content.SharedPreferences;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 133,
+            "evidence": "String ringtoneStr = PreferenceManager.getDefaultSharedPreferences(context).getString(\"pref_key_ringtone\", null);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 516,
+            "evidence": "SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 518,
+            "evidence": "if (defaultSharedPreferences.contains(\"pref_key_vibrate\")) {"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 519,
+            "evidence": "z2 = defaultSharedPreferences.getBoolean(\"pref_key_vibrate\", false);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 520,
+            "evidence": "} else if (defaultSharedPreferences.contains(\"pref_key_vibrateWhen\")) {"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 521,
+            "evidence": "z2 = \"always\".equals(defaultSharedPreferences.getString(\"pref_key_vibrateWhen\", null));"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 526,
+            "evidence": "String string = defaultSharedPreferences.getString(\"pref_key_ringtone\", null);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 649,
+            "evidence": "SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 650,
+            "evidence": "if (defaultSharedPreferences.getBoolean(\"pref_key_vibrate\", false)) {"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MessagingNotification.java",
+            "line": 653,
+            "evidence": "String string3 = defaultSharedPreferences.getString(\"pref_key_ringtone\", null);"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MmsMessageSender.java",
+            "line": 7,
+            "evidence": "import android.content.SharedPreferences;"
+        },
+        {
+            "id": "STORAGE_SHARED_PREFS",
+            "title": "SharedPreferences Usage Detected",
+            "severity": "LOW",
+            "owasp": "M9: Insecure Data Storage",
+            "description": "SharedPreferences stores data in plaintext XML. Sensitive values (tokens, passwords, keys) should be encrypted using EncryptedSharedPreferences from the Jetpack Security library.",
+            "file": "sources/com/android/mms/transaction/MmsMessageSender.java",
+            "line": 76,
+            "evidence": "SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mContext);"
+        },
+        {
+            "id": "LOG_STACKTRACE",
+            "title": "printStackTrace() Leaks Stack Information",
+            "severity": "LOW",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "printStackTrace() prints internal class names, method names, and file paths to logcat, aiding reverse engineering and revealing architectural details to attackers.",
+            "file": "sources/com/android/mms/dom/smil/parser/SmilXmlSerializer.java",
+            "line": 21,
+            "evidence": "e.printStackTrace();"
+        },
+        {
+            "id": "LOG_STACKTRACE",
+            "title": "printStackTrace() Leaks Stack Information",
+            "severity": "LOW",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "printStackTrace() prints internal class names, method names, and file paths to logcat, aiding reverse engineering and revealing architectural details to attackers.",
+            "file": "sources/com/android/mms/dom/smil/parser/SmilXmlSerializer.java",
+            "line": 23,
+            "evidence": "e2.printStackTrace();"
+        }
+    ]
+}

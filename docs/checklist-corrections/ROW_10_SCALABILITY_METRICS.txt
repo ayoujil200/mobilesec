@@ -1,0 +1,10 @@
+Checklist row 10 - Runtime, resources and scalability
+Status: corrected.
+
+Where:
+- scripts/run-benchmark-evaluation.js
+- backend/ml-model/src/evaluation/paper_tables.py
+
+Correction:
+Benchmark runs accept --concurrency and now record concurrency, throughput in
+APKs/minute and generated export bytes alongside elapsed time, CPU and RAM.

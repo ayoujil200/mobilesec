@@ -1,0 +1,12 @@
+Checklist row 05 - MobSF, BeVigil and Yaazhini/Vooki comparison
+Status: corrected workflow; measured rows still required.
+
+Where:
+- backend/ml-model/src/evaluation/paper_tables.py
+- scripts/automate-paper-evaluation.js
+- docs/reproducibility.md
+
+Correction:
+Comparison columns now explicitly include BeVigil and Yaazhini/Vooki and
+accept imported measurements. The code renders N/A when comparable local
+measurements are absent instead of presenting unsupported numbers.

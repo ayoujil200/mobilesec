@@ -1,0 +1,11 @@
+Checklist row 30 - Point-by-point reviewer response
+Status: corrected as project artifact.
+
+Where:
+- docs/checklist-corrections/00_ROW_BY_ROW_AUDIT.txt
+- docs/checklist-corrections/ROW_*.txt
+
+Correction:
+Added a row-by-row code audit and a separate explanation file for every item
+corrected or made measurable in this pass. Article-only items remain expressly
+identified rather than claimed as completed.

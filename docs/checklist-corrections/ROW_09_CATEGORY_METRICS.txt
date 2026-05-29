@@ -1,0 +1,12 @@
+Checklist row 09 - Detection metrics per category
+Status: corrected workflow; annotations still required.
+
+Where:
+- scripts/run-benchmark-evaluation.js
+- backend/ml-model/src/evaluation/paper_tables.py
+- frontend/src/pages/Dashboard.jsx
+
+Correction:
+ground_truth.csv now provides a category column. When verified rows are marked
+secrets, crypto or network, the API/UI calculates TP, FP, FN, precision,
+recall and F1 for each category.

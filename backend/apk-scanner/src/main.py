@@ -21,6 +21,7 @@ import hashlib
 import requests
 import threading
 import json
+import time
 try:
     from confluent_kafka import Consumer, Producer
 except ImportError:
@@ -237,6 +238,49 @@ def notify_microservices(scan_id: str):
     return results
 
 
+def notify_microservices_resilient(scan_id: str):
+    """Notify downstream services with retry and persist unavailable stages."""
+    services = [
+        ('secret_hunter', os.getenv('SECRET_HUNTER_URL', 'http://secret-hunter:5002'), '/api/analyze'),
+        ('crypto_check', os.getenv('CRYPTO_CHECK_URL', 'http://crypto-check:8080'), '/api/analyze'),
+        ('network_inspector', os.getenv('NETWORK_INSPECTOR_URL', 'http://network-inspector:5001'), '/api/analyze')
+    ]
+    max_attempts = max(1, int(os.getenv('NOTIFICATION_MAX_ATTEMPTS', '3')))
+    timeout_seconds = float(os.getenv('NOTIFICATION_TIMEOUT_SECONDS', '10'))
+    retry_delay_seconds = float(os.getenv('NOTIFICATION_RETRY_DELAY_SECONDS', '1'))
+    results = {}
+
+    for stage_name, base_url, endpoint in services:
+        service_name = base_url.split('//')[1].split(':')[0]
+        for attempt in range(1, max_attempts + 1):
+            try:
+                response = requests.post(
+                    f"{base_url}{endpoint}",
+                    json={"scan_id": scan_id},
+                    timeout=timeout_seconds
+                )
+                if response.status_code in [200, 202]:
+                    results[service_name] = {
+                        "status": "notified",
+                        "http_code": response.status_code,
+                        "attempts": attempt
+                    }
+                    mongodb_client.update_scan_status(scan_id, stage_name, 'notified')
+                    break
+                error = f"HTTP {response.status_code}"
+            except Exception as exc:
+                error = str(exc)
+
+            if attempt < max_attempts:
+                logger.warning(f"Notification to {service_name} failed ({error}); retry {attempt + 1}/{max_attempts}")
+                time.sleep(retry_delay_seconds * attempt)
+            else:
+                results[service_name] = {"status": "failed", "error": error, "attempts": attempt}
+                mongodb_client.update_scan_status(scan_id, stage_name, 'unavailable')
+
+    return results
+
+
 def perform_complete_scan(scan_id: str, apk_path: str):
     """
     Effectue un scan complet d'un APK et stocke les résultats dans MongoDB.
@@ -375,21 +419,30 @@ def perform_complete_scan(scan_id: str, apk_path: str):
         
         # 10. Notifier les autres microservices (SecretHunter, CryptoCheck, NetworkInspector)
         logger.info("Step 10: Notifying other microservices...")
-        notification_results = notify_microservices(scan_id)
+        notification_results = notify_microservices_resilient(scan_id)
         results['notifications'] = notification_results
+        failed_notifications = [
+            service_name for service_name, details in notification_results.items()
+            if details.get('status') != 'notified'
+        ]
+        if failed_notifications:
+            results['status'] = 'partial'
+            results['unavailable_services'] = failed_notifications
+            results['notification_failures'] = [
+                {
+                    'service': service_name,
+                    'details': notification_results[service_name],
+                    'retryable': True
+                }
+                for service_name in failed_notifications
+            ]
+        mongodb_client.save_apk_results(scan_id, results)
         
         # 11. Kafka Event Production
         produce_scan_event(scan_id, apk_path)
         
         # NOTE: Ne PAS nettoyer les fichiers décompilés!
         # Les autres microservices (SecretHunter, CryptoCheck,        # Nettoyer le fichier uploadé
-        try:
-             print(f"Removing file {filepath}...", flush=True)
-             os.remove(filepath)
-        except Exception as e:
-             print(f"Error removing file: {e}", flush=True)
-             pass
-        
         return results
         
     except Exception as e:
@@ -685,6 +738,36 @@ def analyze_from_scan_id():
     except Exception as e:
         logger.error(f"Error in analyze endpoint: {e}", exc_info=True)
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/retry-notifications/<scan_id>', methods=['POST'])
+def retry_failed_notifications(scan_id):
+    """Replay downstream notifications for a partial scan without rescanning its APK."""
+    saved = mongodb_client.get_apk_results(scan_id)
+    if not saved:
+        return jsonify({'error': 'Scan not found'}), 404
+
+    saved_results = saved.get('results', {})
+    notification_results = notify_microservices_resilient(scan_id)
+    failed_notifications = [
+        service_name for service_name, details in notification_results.items()
+        if details.get('status') != 'notified'
+    ]
+    saved_results['notifications'] = notification_results
+    saved_results['unavailable_services'] = failed_notifications
+    saved_results['notification_failures'] = [
+        {'service': service_name, 'details': notification_results[service_name], 'retryable': True}
+        for service_name in failed_notifications
+    ]
+    saved_results['status'] = 'partial' if failed_notifications else 'completed'
+    mongodb_client.save_apk_results(scan_id, saved_results)
+
+    return jsonify({
+        'scan_id': scan_id,
+        'status': saved_results['status'],
+        'notifications': notification_results,
+        'unavailable_services': failed_notifications
+    }), (207 if failed_notifications else 200)
 
 
 @app.route('/api/results/<scan_id>', methods=['GET'])

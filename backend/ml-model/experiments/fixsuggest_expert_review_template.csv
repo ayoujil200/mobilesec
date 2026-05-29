@@ -1,0 +1,2 @@
+suggestion_id,scan_id,vulnerability_category,reviewer,acceptable,correct,requires_modification,notes
+example-001,scan-id-here,crypto,expert-name,true,true,false,Replace this example row with an actual blinded review.

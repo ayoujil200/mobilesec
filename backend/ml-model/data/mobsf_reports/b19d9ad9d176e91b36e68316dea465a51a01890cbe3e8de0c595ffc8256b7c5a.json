@@ -1,0 +1,357 @@
+{
+  "title": "Static Analysis",
+  "version": "v4.5.0",
+  "file_name": "exposed_api_key_0037.apk",
+  "app_name": "exposed_api_key",
+  "app_type": "apk",
+  "size": "0.0MB",
+  "md5": "7a37d2d5404b077c8c0612f82cf06f21",
+  "sha1": "a64067959cb234648819e925083cf00699597225",
+  "sha256": "b19d9ad9d176e91b36e68316dea465a51a01890cbe3e8de0c595ffc8256b7c5a",
+  "package_name": "com.mobilesec.controlled.exposed_api_key0037",
+  "main_activity": ".MainActivity",
+  "exported_activities": [],
+  "browsable_activities": {},
+  "activities": [
+    ".MainActivity"
+  ],
+  "receivers": [],
+  "providers": [],
+  "services": [],
+  "libraries": [],
+  "target_sdk": "35",
+  "max_sdk": "",
+  "min_sdk": "23",
+  "version_name": "1.0",
+  "version_code": "1",
+  "icon_path": "",
+  "certificate_analysis": {
+    "certificate_info": "Binary is not signed\nMissing certificate\nv1 signature: False\nv2 signature: False\nv3 signature: False\nv4 signature: False",
+    "certificate_findings": [
+      [
+        "high",
+        "Code signing certificate not found",
+        "Missing Code Signing certificate"
+      ]
+    ],
+    "certificate_summary": {
+      "high": 1,
+      "warning": 0,
+      "info": 0
+    }
+  },
+  "permissions": {
+    "android.permission.INTERNET": {
+      "status": "normal",
+      "info": "full Internet access",
+      "description": "Allows an application to create network sockets."
+    }
+  },
+  "malware_permissions": {
+    "top_malware_permissions": [
+      "android.permission.INTERNET"
+    ],
+    "other_abused_permissions": [],
+    "total_malware_permissions": 25,
+    "total_other_permissions": 44
+  },
+  "manifest_analysis": {
+    "manifest_findings": [
+      {
+        "rule": "vulnerable_os_version",
+        "title": "App can be installed on a vulnerable unpatched Android version 6.0-6.0.1, [minSdk=23]",
+        "severity": "high",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "name": "App can be installed on a vulnerable unpatched Android version 6.0-6.0.1, [minSdk=23]",
+        "component": [
+          "6.0-6.0.1",
+          "23"
+        ]
+      },
+      {
+        "rule": "allowbackup_not_set",
+        "title": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+        "severity": "warning",
+        "description": "The flag [android:allowBackup] should be set to false. By default it is set to true and allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "name": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+        "component": []
+      }
+    ],
+    "manifest_summary": {
+      "high": 1,
+      "warning": 1,
+      "info": 0,
+      "suppressed": 0
+    }
+  },
+  "network_security": {
+    "network_findings": [],
+    "network_summary": {}
+  },
+  "binary_analysis": [],
+  "file_analysis": [],
+  "android_api": {},
+  "code_analysis": {
+    "findings": {},
+    "summary": {}
+  },
+  "niap_analysis": {},
+  "permission_mapping": {},
+  "urls": [],
+  "domains": {},
+  "emails": [],
+  "strings": {
+    "strings_apk_res": {},
+    "strings_so": [],
+    "strings_code": [
+      "AKIATO6TCSRN4JNRD22G",
+      "aws_access_key_id"
+    ]
+  },
+  "firebase_urls": [],
+  "files": [
+    "classes.dex",
+    "AndroidManifest.xml"
+  ],
+  "exported_count": {
+    "exported_activities": 0,
+    "exported_services": 0,
+    "exported_receivers": 0,
+    "exported_providers": 0
+  },
+  "apkid": {
+    "classes.dex": {
+      "compiler": [
+        "dexlib 2.x"
+      ]
+    }
+  },
+  "behaviour": {},
+  "trackers": {
+    "detected_trackers": 0,
+    "total_trackers": 432,
+    "trackers": []
+  },
+  "playstore_details": {
+    "error": true
+  },
+  "secrets": [],
+  "logs": [
+    {
+      "timestamp": "2026-05-18 22:10:11",
+      "status": "Generating Hashes",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:11",
+      "status": "Extracting APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:11",
+      "status": "Unzipping",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:11",
+      "status": "Parsing APK with androguard",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:11",
+      "status": "Extracting APK features using aapt/aapt2",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:11",
+      "status": "Getting Hardcoded Certificates/Keystores",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:12",
+      "status": "Parsing AndroidManifest.xml",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:12",
+      "status": "Extracting Manifest Data",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:12",
+      "status": "Manifest Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:12",
+      "status": "Performing Static Analysis on: exposed_api_key (com.mobilesec.controlled.exposed_api_key0037)",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:14",
+      "status": "Fetching Details from Play Store: com.mobilesec.controlled.exposed_api_key0037",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:15",
+      "status": "Checking for Malware Permissions",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:15",
+      "status": "Fetching icon path",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:15",
+      "status": "Library Binary Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:15",
+      "status": "Reading Code Signing Certificate",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:15",
+      "status": "Running APKiD 3.0.0",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:16",
+      "status": "Detecting Trackers",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:16",
+      "status": "Decompiling APK to Java with JADX",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:18",
+      "status": "Converting DEX to Smali",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:18",
+      "status": "Code Analysis Started on - java_source",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:19",
+      "status": "Android SBOM Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:19",
+      "status": "Android SAST Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:19",
+      "status": "Android API Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:19",
+      "status": "Android API Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:20",
+      "status": "Android Permission Mapping Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:20",
+      "status": "Android Permission Mapping Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:20",
+      "status": "Android Behaviour Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:20",
+      "status": "Android Behaviour Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:20",
+      "status": "Extracting Emails and URLs from Source Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:21",
+      "status": "Email and URL Extraction Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:21",
+      "status": "Extracting String data from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:21",
+      "status": "Extracting String values and entropies from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:21",
+      "status": "Performing Malware check on extracted domains",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-18 22:10:21",
+      "status": "Saving to Database",
+      "exception": null
+    }
+  ],
+  "sbom": {
+    "sbom_versioned": [],
+    "sbom_packages": [
+      "com.mobilesec.controlled"
+    ]
+  },
+  "appsec": {
+    "high": [
+      {
+        "title": "Missing Code Signing certificate",
+        "description": "Code signing certificate not found",
+        "section": "certificate"
+      },
+      {
+        "title": "App can be installed on a vulnerable unpatched Android version 6.0-6.0.1, [minSdk=23]",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "section": "manifest"
+      }
+    ],
+    "warning": [
+      {
+        "title": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+        "description": "The flag [android:allowBackup] should be set to false. By default it is set to true and allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "section": "manifest"
+      }
+    ],
+    "info": [],
+    "secure": [
+      {
+        "title": "This application has no privacy trackers",
+        "description": "This application does not include any user or device trackers. Unable to find trackers during static analysis.",
+        "section": "trackers"
+      }
+    ],
+    "hotspot": [],
+    "total_trackers": 432,
+    "trackers": 0,
+    "security_score": 42,
+    "app_name": "exposed_api_key",
+    "file_name": "exposed_api_key_0037.apk",
+    "hash": "7a37d2d5404b077c8c0612f82cf06f21",
+    "version_name": "1.0"
+  },
+  "average_cvss": null,
+  "dynamic_analysis_done": false,
+  "virus_total": null
+}

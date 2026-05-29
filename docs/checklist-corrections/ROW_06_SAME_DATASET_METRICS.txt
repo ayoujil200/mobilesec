@@ -1,0 +1,11 @@
+Checklist row 06 - Same-dataset quantitative metrics
+Status: corrected input contract; external executions still required.
+
+Where:
+- scripts/automate-paper-evaluation.js
+- backend/ml-model/src/evaluation/paper_tables.py
+
+Correction:
+Imported external-tool rows now support true_positives, false_positives,
+false_negatives, precision, recall and f1_score for comparison on the same APK
+set. Metrics must be populated from actual tool runs.

@@ -1,0 +1,489 @@
+Updated LightGBM and Evaluation Text for the SoftwareX Article
+MobileSec project state: 24 May 2026
+
+This document updates the LightGBM description and the experimental tables so
+that they match the current MobileSec implementation and the values generated
+from the project artifacts. It is written as article-ready material that can be
+adapted into the SoftwareX manuscript.
+
+Important note: the PDF located at
+C:\Users\HP\Downloads\softwareX__fixed_after_reviewed_.pdf is a compiled
+document. The practical way to update the paper is to copy the text and LaTeX
+tables below into the Overleaf .tex source, then recompile the PDF.
+
+0. Where to Place the New Content in the Overleaf Article
+
+Use this section as the insertion map for the SoftwareX manuscript. The exact
+section names in your Overleaf project may differ slightly, but SoftwareX
+articles usually follow the same structure: Introduction or Motivation,
+Software description, Architecture, Functionalities, Illustrative examples,
+Impact, and Conclusions. Place the new material in the closest matching section.
+
+Placement A: Abstract
+
+Do not put the full LightGBM explanation in the abstract. Add only one short
+sentence if the current abstract does not mention machine-learning
+prioritisation.
+
+Suggested sentence:
+
+"MobileSec also integrates a LightGBM-based prioritisation module that converts
+heterogeneous scan findings into ranked remediation categories."
+
+Placement B: Introduction / Motivation and Significance
+
+Place one short paragraph here to explain why prioritisation is needed. Use this
+after the paragraph that explains the problem of analysing many mobile
+application vulnerabilities or after the paragraph that motivates MobileSec.
+
+Use this paragraph:
+
+"In addition to detecting vulnerabilities, MobileSec addresses the practical
+problem of deciding which remediation action should be handled first. Static
+analysis services can produce many heterogeneous findings for the same APK,
+including cryptographic misuse, exposed credentials, insecure HTTP endpoints,
+and TLS validation weaknesses. MobileSec therefore adds a prioritisation layer
+that summarises scan-level evidence and predicts the most relevant remediation
+category for the analysed application."
+
+Placement C: Software Description / Architecture
+
+Place the main LightGBM description in the section where the manuscript
+describes the MobileSec architecture or the platform components. If the article
+already has a subsection about "ML Model", "FixSuggest", "Recommendation
+engine", or "Remediation prioritisation", replace that subsection with the
+shorter version from Section 2 of this file. If no such subsection exists, add a
+new subsection titled:
+
+\subsection{LightGBM-based remediation prioritisation}
+
+Then paste Section 2 of this file under that subsection.
+
+Placement D: Data Processing / Methodology
+
+Place the exact training details in the methodology or data-processing part of
+the article. This belongs after the text that explains MongoDB result
+collections, feature extraction, or scan-result aggregation.
+
+Use Section 3, "Precise Experimental Values to Mention", but convert the bullet
+list into prose if the surrounding section is written as paragraphs. The most
+important values to include are: 1,559 extracted labelled rows, 1,475 retained
+accepted rows, seven retained classes, 24 features, and the 1,031 / 222 / 222
+train-validation-test split.
+
+Placement E: Evaluation / Results
+
+Table 3 belongs in the evaluation section immediately after the paragraph that
+introduces the LightGBM experiment. In Overleaf, place the paragraph from
+Section 8 first, then paste the LaTeX code from Section 5.
+
+Recommended order:
+
+1. Paragraph from Section 8: "Suggested Paragraph Before Table 3"
+2. LaTeX table from Section 5: "Table 3: LightGBM Prioritization Model"
+3. One short interpretation sentence:
+
+"The results indicate that the extracted MobileSec features are highly
+informative for scan-level remediation prioritisation, while macro-F1 confirms
+that the model is not only learning the majority classes."
+
+Placement F: Comparative Evaluation
+
+Table 5 belongs in the subsection where the article compares MobileSec with
+other Android security tools. If this subsection currently discusses MobSF,
+Vooki, Yaazhini, or another tool, update it so that the comparison is now
+MobileSec, MobSF, and APKDeepLens.
+
+Recommended order:
+
+1. Paragraph from Section 9: "Suggested Paragraph Before Table 5"
+2. LaTeX table from Section 6: "Table 5: Tool Comparison"
+3. One short interpretation sentence:
+
+"The comparison shows that MobileSec provides similar reproducibility and CI/CD
+integration to the external tools while adding machine-learning-based
+prioritisation and AI-assisted remediation support."
+
+Placement G: Benchmark and Real-World Evaluation
+
+Table 6 belongs after the text that introduces DroidBench, Ghera, and the
+real-world MobileSec scan collection. This should be in the results or
+evaluation section, not in the architecture section.
+
+Recommended order:
+
+1. Paragraph from Section 10: "Suggested Paragraph Before Table 6"
+2. LaTeX table from Section 7: "Table 6: Benchmark and Real-World APK Evaluation"
+3. One short interpretation sentence:
+
+"The benchmark results provide ground-truth-based precision and recall for
+DroidBench and Ghera, while the real-world column reports large-scale platform
+coverage without claiming manual ground truth."
+
+Placement H: Limitations / Discussion
+
+Place Section 11 in the discussion or limitations section. This is important
+for review because it explains that the LightGBM labels are MobileSec
+remediation labels and that the current model operates at scan level.
+
+Placement I: Conclusion
+
+Use Section 12 as the closing paragraph for the machine-learning part of the
+conclusion, or merge it into the existing conclusion if the paper already has a
+final paragraph about MobileSec's contribution.
+
+Placement J: What Not to Do
+
+Do not insert all long and short explanations at the same time. For the paper,
+use the shorter methodology text from Section 2, the exact values from Section
+3, the three LaTeX tables, and the short paragraphs before each table. Keep the
+long explanation in Section 1 as backup material for responding to reviewers or
+rewriting a longer methodology subsection.
+
+Placement K: Which LightGBM Metrics to Use
+
+Do not use the optimistic simple hold-out values as the main paper result. The
+simple split gives accuracy = 0.9910 and macro-F1 = 0.9868, but those values are
+too high for a journal article because the labels are strongly derived from
+rules and similar feature vectors can appear in both training and test sets.
+
+For the paper, use the stricter grouped evaluation reported in Table 3 below.
+In this evaluation, identical feature vectors are kept in the same split, so the
+test set is less similar to the training set. The reported values are averaged
+over 20 grouped splits. This is a more conservative and more defensible result.
+
+
+1. Updated Article Text: LightGBM-Based Remediation Prioritization
+
+MobileSec includes a machine-learning component that supports remediation
+prioritization after the static analysis services have completed their work.
+The role of this component is not to replace the vulnerability detectors. The
+platform still relies on its specialised analysis services to identify
+cryptographic misuse, exposed secrets, insecure network communication, and
+certificate-related weaknesses. The LightGBM model is used at the next stage of
+the pipeline, where the raw security evidence is summarised into a scan-level
+feature vector and mapped to the most appropriate remediation category.
+
+This design reflects the way security results are produced in the platform. A
+single APK scan may generate findings from several services, and these findings
+are not always directly comparable. For example, a scan can contain weak cipher
+evidence, exposed API keys, insecure HTTP endpoints, and TLS validation issues
+at the same time. Presenting these findings without prioritisation can make the
+remediation process difficult, especially when many APKs are analysed in a
+batch. The LightGBM module therefore acts as a decision-support layer: it learns
+the relationship between the observed scan profile and the fix category that
+should be prioritised first.
+
+In the current implementation, each scan is represented by 24 numeric features
+extracted from the MobileSec result collections. These features describe three
+main security dimensions: cryptographic findings, secret leakage findings, and
+network security findings. They include counts of weak ciphers, weak hashes,
+insecure randomness, weak RSA usage, exposed API keys, passwords, tokens,
+network endpoints, HTTP issues, certificate issues, total vulnerabilities, and
+an aggregated severity score. The model predicts a MobileSec-specific
+fix_category label, such as FIX_EXPOSED_API_KEY, FIX_INSECURE_HTTP,
+FIX_CERTIFICATE_ISSUE, FIX_WEAK_CIPHER, or FIX_HARDCODED_PASSWORD.
+
+LightGBM was selected because this learning problem is structured and tabular.
+The model does not receive images, raw bytecode, or natural-language input; it
+receives compact numeric descriptors derived from security analysis tools.
+Gradient-boosted decision trees are well suited to this type of data because
+they capture nonlinear interactions between sparse count-based features while
+remaining efficient to train and deploy. LightGBM also provides probability
+outputs and feature-importance values, which are useful for a software article
+because they make the prioritisation step easier to inspect and explain.
+
+The model is trained as a multiclass classifier. The objective is multiclass
+classification and the optimisation metric is multi-class log loss. Since the
+platform returns ranked remediation suggestions, the probability distribution
+over categories is more useful than a single hard label. At inference time, the
+highest-probability category is returned as the primary fix, while the top-k
+categories can be used to support the recommendation service.
+
+The training pipeline applies several safeguards before fitting the model.
+First, it validates that all required feature columns and the target
+fix_category column are present. Second, it filters the training data using the
+label quality metadata. In the current experiment, only labels with sufficient
+confidence and accepted review status were retained. Third, rare classes with
+too few samples for stratified splitting are excluded. Fourth, the labels are
+encoded, the numeric features are standardised, and the data is split into
+training, validation, and held-out test partitions using stratification.
+
+For the current model, the training data was obtained from the MobileSec
+MongoDB-derived extracted dataset. The extracted CSV contains 1,559 labelled
+rows before quality filtering. After removing low-confidence or unreviewed
+labels, 1,475 rows were retained for training and evaluation. The retained
+training set contains seven fix categories and 24 input features. The split used
+by the implemented trainer produced 1,031 training samples, 222 validation
+samples, and 222 held-out test samples.
+
+Several conservative LightGBM configurations are evaluated during training:
+balanced_regularized, minority_sensitive, simple_low_variance, and
+slow_deep_regularized. The selected model is chosen on the validation set using
+macro-F1 as the primary criterion, followed by balanced accuracy and ordinary
+accuracy. This is important because the fix-category distribution is imbalanced:
+classes such as FIX_EXPOSED_API_KEY and FIX_INSECURE_HTTP occur more often than
+classes such as FIX_HARDCODED_PASSWORD or FIX_INSECURE_RANDOM. The trainer also
+uses balanced sample weights so that minority categories have a stronger effect
+on the loss during training.
+
+The selected configuration for the current model is balanced_regularized. A
+standard stratified hold-out split produced very high diagnostic values
+(accuracy = 0.9910 and macro-F1 = 0.9868), but these values should not be used
+as the main paper claim because the dataset contains repeated scan patterns and
+rule-derived labels. For publication, a stricter grouped evaluation was also
+performed. In this protocol, identical feature vectors are kept in the same
+split, which avoids testing the model on feature patterns already seen during
+training. Across 20 grouped splits, the model obtained 0.8541 accuracy, 0.8488
+macro-precision, 0.8508 macro-recall, 0.8258 macro-F1, and 0.9922 top-3
+accuracy. These values are more conservative and better reflect expected
+generalisation on less redundant scan profiles.
+
+The feature-importance values are also consistent with the intended behaviour
+of the model. The strongest features include secrets_api_keys,
+secrets_passwords, network_cert_issues, crypto_weak_cipher, crypto_medium,
+secrets_tokens, severity_score, total_vulnerabilities, secrets_count, and
+crypto_insecure_random. This ranking is meaningful because the model assigns
+high importance to features that directly describe the remediation classes it
+predicts.
+
+The LightGBM categories should be described as MobileSec remediation categories,
+not as official OWASP categories. They represent operational fix labels used by
+the platform to guide remediation. These labels can be mapped to broader OWASP
+MASVS domains. For example, FIX_WEAK_CIPHER and FIX_INSECURE_RANDOM are related
+to cryptographic controls, FIX_INSECURE_HTTP and FIX_CERTIFICATE_ISSUE are
+related to network security controls, and FIX_EXPOSED_API_KEY or
+FIX_HARDCODED_PASSWORD are related to insecure credential handling and storage.
+This distinction avoids claiming that the classifier predicts official OWASP
+labels while still allowing the paper to connect the recommendations to
+recognised mobile security standards.
+
+
+2. Shorter Version for the Paper Methodology Section
+
+MobileSec uses a LightGBM-based multiclass classifier to prioritise remediation
+after the static analysis phase. The classifier consumes 24 scan-level features
+extracted from the cryptographic, secret-detection, and network-analysis
+services. These features encode vulnerability counts, issue types, severity
+distributions, and an aggregated severity score. The model predicts a
+MobileSec-specific fix category, such as exposed API key removal, HTTPS
+enforcement, certificate validation repair, hardcoded password removal, or weak
+cipher replacement.
+
+The classifier is trained on the MongoDB-derived extracted dataset generated by
+the MobileSec pipeline. The current extracted dataset contains 1,559 labelled
+rows. After label-quality filtering, 1,475 accepted rows were retained, covering
+seven remediation categories. The data was split into stratified training,
+validation, and test partitions. During training, several LightGBM
+configurations were compared, and the final model was selected using validation
+macro-F1 as the main criterion. Balanced sample weights were used to reduce the
+effect of class imbalance.
+
+Under a stricter grouped evaluation, the final LightGBM model achieved 0.8541
+accuracy, 0.8258 macro-F1, and 0.9922 top-3 accuracy on average across 20
+grouped splits. The model also produced interpretable feature
+importance values, with exposed-secret, certificate, cryptographic, and severity
+features among the most influential predictors. These results show that the
+model provides an efficient and explainable prioritisation layer for converting
+heterogeneous security findings into actionable remediation categories.
+
+
+3. Precise Experimental Values to Mention
+
+Use these values if the reviewer asks for exact experiment details:
+
+- Training data path: data/extracted_data.csv
+- Extracted labelled rows before quality filtering: 1,559
+- Rows retained after label-quality filtering: 1,475
+- Excluded low-confidence or unreviewed rows: 84
+- Retained fix categories: 7
+- Feature count: 24
+- Train / validation / test split: 1,031 / 222 / 222
+- Selected LightGBM candidate: balanced_regularized
+- Best boosting iteration: 500
+- Conservative grouped evaluation protocol: 20 grouped splits
+- Grouping rule: identical feature vectors kept in the same split
+- Mean accuracy: 0.8541
+- Mean balanced accuracy: 0.8775
+- Mean macro-precision: 0.8488
+- Mean macro-recall: 0.8508
+- Mean macro-F1: 0.8258
+- Mean weighted-F1: 0.8317
+- Mean top-3 accuracy: 0.9922
+- Mean false prioritisation rate: 0.1459
+- Mean under-prioritisation rate: 0.0151
+- Mean over-prioritisation rate: 0.1112
+- AUC: not reported for grouped evaluation because several grouped test splits
+  do not contain all seven classes, making multiclass AUC unstable.
+
+
+4. Notes for Transparent Reporting
+
+The article should explicitly distinguish between three different datasets or
+counts:
+
+1. The real platform scan database contains 2,125 scan records in MongoDB.
+2. The APK benchmark comparison uses 283 APKs: 118 DroidBench APKs and 165
+   Ghera APKs.
+3. The LightGBM model was trained on 1,475 accepted labelled rows extracted
+   from MobileSec scan results.
+
+These numbers describe different parts of the evaluation and should not be
+mixed. The 283 APK count belongs to the tool-comparison experiment. The 1,475
+row count belongs to the LightGBM training and test evaluation. The 2,125 scan
+count belongs to the broader MobileSec platform database used for real scan
+aggregation.
+
+The report-generation and SARIF rows in Table 6 also require careful wording.
+For the benchmark batch, JSON reports were generated automatically for the 283
+MobileSec scans. PDF generation is available on demand from the frontend, but
+it was not generated as part of the automated benchmark runner. SARIF export was
+not produced for the benchmark batch. Therefore, Table 5 reports MobileSec PDF
+export as "On demand", JSON export as "283/283", and SARIF export as "0/283".
+
+
+5. Table 3: LightGBM Prioritization Model
+
+Paste this LaTeX table into Overleaf.
+
+\begin{table}[h]
+\centering
+\caption{Performance of the LightGBM prioritization model under grouped evaluation.}
+\label{tab:lightgbm-prioritization-generated}
+\begin{tabular}{lc}
+\hline
+\textbf{Metric} & \textbf{Value} \\
+\hline
+Accuracy & 0.8541 \\
+Balanced accuracy & 0.8775 \\
+Macro-precision & 0.8488 \\
+Macro-recall & 0.8508 \\
+Macro-F1 & 0.8258 \\
+Weighted-F1 & 0.8317 \\
+Top-3 accuracy & 0.9922 \\
+False prioritization rate & 0.1459 \\
+Under-prioritization rate & 0.0151 \\
+Over-prioritization rate & 0.1112 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+6. Table 5: Tool Comparison
+
+Paste this LaTeX table into Overleaf.
+
+\begin{table*}[t]
+\centering
+\caption{Quantitative comparison of MobileSec with representative Android security analysis tools on the same APK set.}
+\label{tab:tool-comparison-generated}
+\begin{tabular}{lccc}
+\hline
+\textbf{Criterion} & \textbf{MobileSec} & \textbf{MobSF} & \textbf{APKDeepLens} \\
+\hline
+Number of APKs analyzed & 283 & 283 & 283 \\
+Benchmark APKs & DroidBench, Ghera & DroidBench, Ghera & DroidBench, Ghera \\
+Real-world APKs & 0 & 0 & 0 \\
+Mean scan time per APK & 9.39 s & 9.94 s & 7.41 s \\
+Detected vulnerability categories & 3 & 3 & 2 \\
+Hardcoded secrets detected & 187779 & 100 & 0 \\
+Network issues detected & 24448 & 1997 & 683 \\
+Cryptographic issues detected & 71 & 349 & 7238 \\
+PDF export & On demand & Yes & Yes \\
+JSON export & 283/283 & Yes & Yes \\
+SARIF export & 0/283 & No & No \\
+CI/CD integration & Yes & Yes & Yes \\
+ML-based prioritization & Yes & No & No \\
+AI-assisted remediation & Yes & No & No \\
+Reproducible Docker deployment & Yes & Yes & Yes \\
+\hline
+\end{tabular}
+\end{table*}
+
+
+7. Table 6: Benchmark and Real-World APK Evaluation
+
+Paste this LaTeX table into Overleaf.
+
+\begin{table*}[t]
+\centering
+\caption{Evaluation of MobileSec on benchmark and real-world APKs.}
+\label{tab:mobilesec-benchmark-realworld-generated}
+\begin{tabular}{lccc}
+\hline
+\textbf{Metric} & \textbf{DroidBench} & \textbf{Ghera} & \textbf{Real-world APKs} \\
+\hline
+Number of APKs & 118 & 165 & 2125 \\
+Detected findings & 483 & 733 & 1027954 \\
+True positives & 118 & 44 & N/A \\
+False positives & 0 & 121 & N/A \\
+False negatives & 0 & 0 & N/A \\
+Precision & 1.0000 & 0.2667 & N/A \\
+Recall & 1.0000 & 1.0000 & N/A \\
+F1-score & 1.0000 & 0.4211 & N/A \\
+Mean scan time & 8.24 s & 10.22 s & N/A \\
+Mean CPU usage & 7.3\% & 55.6\% & N/A \\
+Mean RAM usage & 202.2 MB & 486.6 MB & N/A \\
+Report-generation success rate & 0.0\% & 0.0\% & N/A \\
+SARIF export success rate & 0.0\% & 0.0\% & N/A \\
+\hline
+\end{tabular}
+\end{table*}
+
+
+8. Suggested Paragraph Before Table 3
+
+The prioritisation model was evaluated using a grouped protocol in which
+identical feature vectors were kept in the same split. This avoids an overly
+optimistic estimate caused by repeated scan patterns appearing in both training
+and test partitions. Table 3 reports the mean results over 20 grouped splits.
+The top-3 accuracy remains high, which is relevant for MobileSec because the
+system returns ranked remediation suggestions rather than only a single label.
+
+
+9. Suggested Paragraph Before Table 5
+
+To evaluate MobileSec against existing Android security analysis tools, the same
+set of 283 APKs was processed by MobileSec, MobSF, and APKDeepLens. The set
+contains DroidBench and Ghera benchmark applications. The comparison includes
+runtime, detected issue categories, finding counts, export capabilities,
+deployment reproducibility, and the availability of prioritisation and
+remediation support. Table 5 reports only values obtained from the current
+experiments and avoids reusing measurements from a different APK set.
+
+
+10. Suggested Paragraph Before Table 6
+
+The benchmark evaluation separates DroidBench, Ghera, and real MobileSec scan
+records because they serve different purposes. DroidBench and Ghera provide
+benchmark APKs for which expected behaviours can be compared with detector
+outputs. The real-world column describes the broader MobileSec scan database,
+where manual ground truth was not available. For this reason, precision, recall,
+and F1-score are reported for the benchmark subsets and marked as not available
+for the real-world scan collection.
+
+
+11. Wording for the Limitations Section
+
+The current evaluation has two limitations that should be stated explicitly.
+First, the LightGBM labels are MobileSec remediation categories derived from the
+platform's available fix-suggestion and rule-based labelling logic. They are not
+manual OWASP labels and should be interpreted as operational fix categories.
+Second, the current LightGBM model is scan-level rather than vulnerability-level.
+It predicts the dominant remediation category for an APK scan, while individual
+vulnerability ranking still combines the model output with severity-based
+signals. A future extension could train one instance per vulnerability and use
+local evidence such as file location, detector source, CWE, severity, and
+surrounding code context.
+
+
+12. Final Article-Style Conclusion for the ML Part
+
+The LightGBM module adds an explainable prioritisation layer to MobileSec. It
+turns heterogeneous outputs from several security services into ranked
+remediation categories, reducing the manual effort required to interpret large
+scan batches. The model is lightweight enough to run inside the Dockerised
+microservice architecture and produces feature-importance values that support
+inspection of its decisions. In the current evaluation, the model achieved
+strong held-out performance on accepted MobileSec training rows, indicating that
+the extracted security features are informative for remediation prioritisation.

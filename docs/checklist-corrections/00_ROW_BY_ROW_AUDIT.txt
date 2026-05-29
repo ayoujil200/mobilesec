@@ -1,0 +1,45 @@
+MobileSec reviewer checklist: audit against project code
+Date: 2026-05-25
+
+Status terms:
+- IMPLEMENTED: executable evidence is present in the project.
+- CORRECTED: missing/incorrect implementation was changed in this pass.
+- REQUIRES EVIDENCE: the project now accepts evidence but measured/manual data is still required.
+- ARTICLE ONLY: cannot be truthfully fixed in source code without editing the manuscript.
+
+01 Detail LightGBM model: CORRECTED. API table output now exposes feature names and hyperparameters.
+02 Justify LightGBM labels: IMPLEMENTED/CORRECTED EXPOSURE. Extractor stores source, evidence, confidence and review status; table output summarizes provenance.
+03 ML metrics: CORRECTED. Table model rows now expose macro precision/recall and AUC where predicted probabilities exist; existing confusion matrices and baseline remain available.
+04 Concrete model errors: CORRECTED. Up to three saved hold-out misclassifications are exported to the table API/UI.
+05 Compare MobSF/BeVigil/Yaazhini: REQUIRES EVIDENCE. Table schema now includes these tools; their measured outputs must be imported.
+06 Same dataset metrics for tools: REQUIRES EVIDENCE. Import schema now accepts TP/FP/FN/precision/recall/F1; external executions are still required.
+07 DroidBench/Ghera nuance: CORRECTED IN REPRODUCIBILITY DOCUMENTATION.
+08 Real APK accuracy: REQUIRES MANUAL EVIDENCE. Historical scans are explicitly marked no-ground-truth; accuracy is not claimed.
+09 Per-category accuracy: REQUIRES EVIDENCE. API supports categorized manual ground-truth rows and calculates per-category metrics.
+10 Runtime/CPU/RAM/scalability: CORRECTED AND VERIFIED. The completed 283-APK benchmark records throughput, concurrency and generated export bytes.
+11 Reproducibility: CORRECTED IN DOCUMENTATION.
+12 Test commands: CORRECTED IN DOCUMENTATION.
+13 Sample APK paths/scripts: CORRECTED IN DOCUMENTATION; APK binaries must be locally obtained/licensed.
+14 Developer documentation: CORRECTED. Added configuration, endpoints and microservice extension guidance.
+15 Score justification: CORRECTED LIMITATION. Documentation identifies heuristic weights and uses sensitivity analysis without claiming validation.
+16 Weight validation: REQUIRES EXPERT EVIDENCE/CORRECTED WORKFLOW. Added correlation evaluator; actual review labels are still required.
+17 FixSuggest evaluation: REQUIRES EVIDENCE/CORRECTED WORKFLOW. A manual-review template and metrics script were added.
+18 MobSF guidance claim: ARTICLE ONLY.
+19 Limit strong claims: ARTICLE ONLY; architecture-tradeoffs documentation supplies accurate replacement language.
+20 Microservice costs: CORRECTED IN DOCUMENTATION.
+21 Kafka complexity: CORRECTED IN DOCUMENTATION.
+22 Inter-service failures: SUBSTANTIALLY CORRECTED. APK Scanner retries notifications, stores partial/unavailable status and provides manual replay; a Kafka dead-letter queue is still not implemented.
+23 Microservice vs monolith: CORRECTED IN DOCUMENTATION; an experimental monolithic baseline is still not measured.
+24 Parallel proof: REQUIRES EXPERIMENTAL FIX. Benchmark accepts --concurrency and records throughput; concurrency-4 trials produced partial/time-out or analyzer HTTP 404 rows, so no advantage is claimed.
+25 SARIF contradiction: CORRECTED AND VERIFIED. ReportGen generates SARIF; the full benchmark measured 283/283 successful SARIF exports.
+26 PDF report contradiction: CORRECTED AND VERIFIED. The full benchmark measured 283/283 successful PDF exports.
+27 Real APK contradiction: CORRECTED OUTPUT LABELING. Tables distinguish comparative benchmark APKs from historical unlabelled records.
+28 Figures/readability: ARTICLE ONLY.
+29 Conclusion limitations: ARTICLE ONLY; limitations to state are recorded here and in documentation.
+30 Reviewer response: CORRECTED ARTIFACT. This row-by-row audit and individual correction files provide the response basis.
+
+Important remaining actions before article resubmission:
+- Completed: full corrected benchmark generation ran on 283 APKs; results are recorded in FULL_REAL_APK_EVALUATION_283.txt.
+- Obtain/import comparable BeVigil and Yaazhini/Vooki results or state non-executability.
+- Manually annotate category ground truth and FixSuggest reviews.
+- Edit manuscript language for rows 18, 19, 28 and 29.

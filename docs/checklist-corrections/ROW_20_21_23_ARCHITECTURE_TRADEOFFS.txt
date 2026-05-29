@@ -1,0 +1,10 @@
+Checklist rows 20, 21 and 23 - Microservice/Kafka trade-offs and monolith comparison
+Status: corrected in project documentation; measured comparison remains future work.
+
+Where:
+- docs/architecture-tradeoffs.md
+
+Correction:
+Documented latency, orchestration, maintenance, Kafka deployment and failure
+costs, and contrasted the platform with a simpler MobSF Docker deployment.
+The text explicitly avoids claiming an unmeasured architecture advantage.

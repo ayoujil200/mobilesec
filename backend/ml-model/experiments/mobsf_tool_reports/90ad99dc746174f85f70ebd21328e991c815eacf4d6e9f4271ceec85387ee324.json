@@ -1,0 +1,799 @@
+{
+  "version": "v4.5.0",
+  "title": "Static Analysis",
+  "file_name": "Library2.apk",
+  "app_name": "AndroidSpecific_Library2",
+  "app_type": "apk",
+  "size": "0.19MB",
+  "md5": "d485dab3cb2085061d5ae62bf1864f77",
+  "sha1": "86d1d8fe2b3293a3da19fadd7ff889c913ebbf92",
+  "sha256": "90ad99dc746174f85f70ebd21328e991c815eacf4d6e9f4271ceec85387ee324",
+  "package_name": "de.ecspride",
+  "main_activity": "de.ecspride.MainActivity",
+  "exported_activities": "[]",
+  "browsable_activities": {},
+  "activities": [
+    "de.ecspride.MainActivity"
+  ],
+  "receivers": [],
+  "providers": [],
+  "services": [],
+  "libraries": [],
+  "target_sdk": "17",
+  "max_sdk": "",
+  "min_sdk": "8",
+  "version_name": "1.0",
+  "version_code": "1",
+  "icon_path": "d485dab3cb2085061d5ae62bf1864f77-icon.png",
+  "permissions": {
+    "android.permission.READ_PHONE_STATE": {
+      "status": "dangerous",
+      "info": "read phone state and identity",
+      "description": "Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on."
+    },
+    "android.permission.SEND_SMS": {
+      "status": "dangerous",
+      "info": "send SMS messages",
+      "description": "Allows application to send SMS messages. Malicious applications may cost you money by sending messages without your confirmation."
+    }
+  },
+  "malware_permissions": {
+    "top_malware_permissions": [
+      "android.permission.READ_PHONE_STATE",
+      "android.permission.SEND_SMS"
+    ],
+    "other_abused_permissions": [],
+    "total_malware_permissions": 25,
+    "total_other_permissions": 44
+  },
+  "certificate_analysis": {
+    "certificate_info": "Binary is signed\nv1 signature: True\nv2 signature: False\nv3 signature: False\nv4 signature: False\nX.509 Subject: C=US, O=Android, CN=Android Debug\nSignature Algorithm: rsassa_pkcs1v15\nValid From: 2013-03-19 12:32:09+00:00\nValid To: 2043-03-12 12:32:09+00:00\nIssuer: C=US, O=Android, CN=Android Debug\nSerial Number: 0xebb737c\nHash Algorithm: sha256\nmd5: 85b3d44ff445d04060a78b4b27ab0f1b\nsha1: 68487bc7eda7a082c05675370ec77345e5af26c9\nsha256: 500d1cd3b6c2df98689451cbd2e61579922c1ff69d0ddbcf2ff55e8f8a3f9b56\nsha512: ec2b0e25ac4dc5779b7dee5ea7095638aa4fe737d405351c2daf6a37b3c408092476ea75986f84b9d1bf7e51bfd004ba182aac75c6ab82058cb5393454d183a5\nFound 1 unique certificates",
+    "certificate_findings": [
+      [
+        "info",
+        "Application is signed with a code signing certificate",
+        "Signed Application"
+      ],
+      [
+        "high",
+        "Application is signed with v1 signature scheme, making it vulnerable to Janus vulnerability on Android 5.0-8.0, if signed only with v1 signature scheme. Applications running on Android 5.0-7.0 signed with v1, and v2/v3 scheme is also vulnerable.",
+        "Application vulnerable to Janus Vulnerability"
+      ],
+      [
+        "high",
+        "Application signed with a debug certificate. Production application must not be shipped with a debug certificate.",
+        "Application signed with debug certificate"
+      ]
+    ],
+    "certificate_summary": {
+      "high": 2,
+      "warning": 0,
+      "info": 1
+    }
+  },
+  "manifest_analysis": {
+    "manifest_findings": [
+      {
+        "rule": "vulnerable_os_version",
+        "title": "App can be installed on a vulnerable unpatched Android version 2.2-2.2.3, [minSdk=8]",
+        "severity": "high",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "name": "App can be installed on a vulnerable unpatched Android version 2.2-2.2.3, [minSdk=8]",
+        "component": [
+          "2.2-2.2.3",
+          "8"
+        ]
+      },
+      {
+        "rule": "app_is_debuggable",
+        "title": "Debug Enabled For App [android:debuggable=true]",
+        "severity": "high",
+        "description": "Debugging was enabled on the app which makes it easier for reverse engineers to hook a debugger to it. This allows dumping a stack trace and accessing debugging helper classes.",
+        "name": "Debug Enabled For App [android:debuggable=true]",
+        "component": []
+      },
+      {
+        "rule": "app_allowbackup",
+        "title": "Application Data can be Backed up [android:allowBackup=true]",
+        "severity": "warning",
+        "description": "This flag allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "name": "Application Data can be Backed up [android:allowBackup=true]",
+        "component": []
+      }
+    ],
+    "manifest_summary": {
+      "high": 2,
+      "warning": 1,
+      "info": 0,
+      "suppressed": 0
+    }
+  },
+  "network_security": {
+    "network_findings": [],
+    "network_summary": {}
+  },
+  "binary_analysis": [],
+  "file_analysis": [],
+  "android_api": {
+    "api_get_system_service": {
+      "files": {
+        "de/ecspride/LibClass.java": "9"
+      },
+      "metadata": {
+        "description": "Get System Service",
+        "severity": "info"
+      }
+    },
+    "api_send_sms": {
+      "files": {
+        "de/ecspride/MainActivity.java": "17,5"
+      },
+      "metadata": {
+        "description": "Send SMS",
+        "severity": "info"
+      }
+    }
+  },
+  "code_analysis": {
+    "findings": {
+      "android_aar_jar_debug_enabled": {
+        "files": {
+          "de/ecspride/BuildConfig.java": "4,5"
+        },
+        "metadata": {
+          "cvss": 5.4,
+          "cwe": "CWE-919: Weaknesses in Mobile Applications",
+          "owasp-mobile": "M1: Improper Platform Usage",
+          "masvs": "MSTG-RESILIENCE-2",
+          "ref": "https://github.com/MobSF/owasp-mstg/blob/master/Document/0x04c-Tampering-and-Reverse-Engineering.md#debugging-and-tracing",
+          "description": "Debug configuration enabled. Production builds must not be debuggable.",
+          "severity": "high"
+        }
+      }
+    },
+    "summary": {
+      "high": 1,
+      "warning": 0,
+      "info": 0,
+      "secure": 0,
+      "suppressed": 0
+    }
+  },
+  "niap_analysis": {},
+  "permission_mapping": {
+    "android.permission.READ_PHONE_STATE": {
+      "de/ecspride/LibClass.java": "4,10"
+    },
+    "android.permission.SEND_SMS": {
+      "de/ecspride/MainActivity.java": "5,17"
+    }
+  },
+  "urls": [],
+  "domains": {},
+  "emails": [],
+  "strings": {
+    "strings_apk_res": [
+      "\"app_name\" : \"AndroidSpecific_Library2\"",
+      "\"action_settings\" : \"Settings\"",
+      "\"hello_world\" : \"Hello world!\""
+    ],
+    "strings_so": [],
+    "strings_code": [
+      "saveAllState: adding fragment #",
+      "Fragment already added: ",
+      "class",
+      "mData=",
+      "Instantiate ",
+      "Activity result fragment index out of range: 0x",
+      "Popping back stack state: ",
+      "null",
+      "android.support.v4.app.EXTRA_CALLING_PACKAGE",
+      "Error changing children drawing order",
+      "onCreateView: id=0x",
+      "Can only use lower 16 bits for requestCode",
+      "Called doStart when already started: ",
+      "SHOW",
+      "REPLACE",
+      "FEEDBACK_GENERIC",
+      "mSavedFragmentState=",
+      "key == null",
+      "mRetainInstance=",
+      "Activity result no fragment exists for index: 0x",
+      "An error occured while executing doInBackground()",
+      "REMOVE",
+      "IntentReader",
+      "fragment",
+      "AsyncTaskLoader",
+      "PagerTabStrip",
+      "mHidden=",
+      "Object returned from onCreateLoader must not be a non-static inner member class: ",
+      "mCreated=",
+      "mContentChanged=",
+      "Bump nesting in ",
+      "Called doRetain when not started: ",
+      "moveto ACTIVITY_CREATED: ",
+      "android:switcher:",
+      "mPopEnterAnim=#",
+      "android.intent.extra.EMAIL",
+      "cmd=",
+      "FragmentPager.SavedState{",
+      "phone",
+      "mContainer=",
+      "mCursor=",
+      "Called while creating a loader",
+      "ViewPager",
+      "Saved state of ",
+      "No activity",
+      "mCancellingTask=",
+      "Content view not yet created",
+      "Couldn't rename file ",
+      "Must call setup() that takes a Context and FragmentManager",
+      "mAnimatingAway=",
+      "mNextAnim=",
+      "onLoadFinished",
+      "mLoader=",
+      "mHaveData=",
+      "FragmentTabHost.SavedState{",
+      "Setting back stack index ",
+      "Bad ComponentName while traversing activity parent metadata",
+      "this should only be called when the cursor is valid",
+      "FEEDBACK_HAPTIC",
+      "LocalBroadcastManager",
+      "Cannot execute task: the task has already been executed (a task can be executed only once)",
+      "retainNonConfig: keeping retained ",
+      "Can't change container ID of fragment ",
+      "Already added!",
+      "android:target_req_state",
+      "Unable to instantiate fragment ",
+      "restoreAllState: re-attaching retained ",
+      "Removed: ",
+      "Child ",
+      "Cannot add pager decor view during layout",
+      "This FragmentTransaction is not allowed to be added to the back stack.",
+      "Could not retrieve icon for calling activity",
+      "android.intent.extra.SUBJECT",
+      "Must use non-zero containerViewId",
+      "Bump nesting of ",
+      "No view found for id 0x",
+      "Unknown cmd: ",
+      "saveAllState: no fragments!",
+      "LoaderInfo{",
+      "mBreadCrumbTitleRes=#",
+      "mResumed=",
+      "android.support.PARENT_ACTIVITY",
+      "Unknown message ",
+      "Pending Loader ",
+      "android:theme",
+      "hide: ",
+      "enterAnim=#",
+      "Attempting to unregister the wrong listener",
+      "Requested offscreen page limit ",
+      "unknown reason",
+      "failWrite: Got exception:",
+      "mView=",
+      "AsyncTask",
+      "FragmentActivity",
+      "Retaining in ",
+      "android.intent.extra.TEXT",
+      "Added Fragments:",
+      "popEnterAnim=#",
+      "HIDE",
+      "Freeing back stack index ",
+      "destroyLoader in ",
+      "android.intent.extra.HTML_TEXT",
+      "movefrom CREATED: ",
+      "No intents added to TaskStackBuilder; cannot startActivities",
+      "Failure saving state: active ",
+      "Destroying Inactive in ",
+      "mRetaining=",
+      "ATTACH",
+      "DialogFragment can not be attached to a container view",
+      "Failed dumping state",
+      "FragmentManager",
+      "mAdded=",
+      "android:target_state",
+      "android:user_visible_hint",
+      "Can not perform this action after onSaveInstanceState",
+      "Pending Actions:",
+      "mId=",
+      "attach: ",
+      "mState=",
+      "android.intent.extra.changed_uid_list",
+      "mLoadersStarted=",
+      "Run: ",
+      "movefrom STOPPED: ",
+      "android.support.v4.app.EXTRA_CALLING_ACTIVITY",
+      "maxSize <= 0",
+      "android.intent.action.SEND_MULTIPLE",
+      "No listener register",
+      "android:cancelable",
+      "mUpdateThrottle=",
+      "popFromBackStack: ",
+      "setChildrenDrawingOrderEnabled",
+      "android.intent.category.LAUNCHER",
+      "Couldn't create ",
+      "Can't change tag of fragment ",
+      "android:savedDialogState",
+      "PagerTitleStrip must be a direct child of a ViewPager.",
+      "android:showsDialog",
+      "restartLoader in ",
+      "FEEDBACK_AUDIBLE",
+      "Could not retrieve label for calling application",
+      "mActivity=",
+      "android.intent.extra.changed_package_list",
+      "Freeing fragment index ",
+      "Can not perform this action inside of ",
+      "mFragmentManager=",
+      "FragmentStatePagerAdapter",
+      "mSelectionArgs=",
+      "onPageScrolled did not call superclass implementation",
+      "mParentFragment=",
+      "here",
+      "Your content must have a ListView whose id attribute is 'android.R.id.list'",
+      "commit already called",
+      "Could not find menu item with id ",
+      "type",
+      "AtomicFile",
+      "SingleLineAllCapsTransform",
+      "action",
+      "Receiver{",
+      "ModernAsyncTask #",
+      "Called doStop when not started: ",
+      "saveAllState: adding back stack #",
+      "android.intent.extra.BCC",
+      "movefrom STARTED: ",
+      "networkInfo",
+      "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE",
+      "PagerTitleStrip",
+      "View Hierarchy:",
+      "FragmentManager{",
+      "Removed:",
+      "layout_inflater",
+      "Cannot execute task: the task is already running.",
+      "LoaderManager",
+      "onLoaderReset",
+      "add from attach: ",
+      "android:support:fragments",
+      "mSortOrder=",
+      "mSavedViewState=",
+      "Active Fragments in ",
+      "FEEDBACK_VISUAL",
+      "initLoader in ",
+      "FragmentManager misc state:",
+      "LoaderManager{",
+      "BackStackEntry{",
+      "No tab content FrameLayout found for id ",
+      "mProjection=",
+      "NavUtils",
+      "OP_REPLACE: adding=",
+      "Failure saving state: ",
+      "Can't retain fragements that are nested in other fragments",
+      "Adding available back stack index ",
+      "remove: ",
+      "Operations:",
+      "Back Stack:",
+      "Instantiated fragment ",
+      "Loader Manager:",
+      "Stopping in ",
+      "movefrom ACTIVITY_CREATED: ",
+      "show: ",
+      "Must be called from main thread of process",
+      "bad arguments",
+      "Fragement no longer exists for key ",
+      "DEFAULT",
+      "movefrom RESUMED: ",
+      "detach: ",
+      "Bad fragment at key ",
+      "android:style",
+      "addToBackStack() called after commit()",
+      "mTarget=",
+      "mName=",
+      "android:view_state",
+      "Inactive Loaders:",
+      "FEEDBACK_SPOKEN",
+      "Required method instantiateItem was not overridden",
+      "android:fragment:",
+      "No tab known for tag ",
+      "Pre-Eclair does not support multiple pointers",
+      "Fragment already active",
+      "Action list: ",
+      "No fake drag in progress. Call beginFakeDrag first.",
+      "onLoadComplete: ",
+      "Can't find setChildrenDrawingOrderEnabled",
+      "Activity state:",
+      "Recursive entry to executePendingTransactions",
+      "Context must not be null",
+      "key == null || value == null",
+      "moveto RESUMED: ",
+      "mInnerView=",
+      "Activity ",
+      "mSelection=",
+      "Not on back stack",
+      "Commit: ",
+      "restoreAllState: back stack #",
+      "mUri=",
+      "Couldn't create directory ",
+      "NULL",
+      "Fragments Created Menus:",
+      "android.intent.action.SEND",
+      "DETACH",
+      "android:backStackId",
+      "search",
+      "Content has view with id attribute 'android.R.id.list' that is not a ListView class",
+      "restoreAllState: active #",
+      "There is already a listener registered",
+      "FragmentPagerAdapter",
+      "Activity has been destroyed",
+      "Fragment ",
+      "Required method destroyItem was not overridden",
+      "Resolving type ",
+      "Bad id: ",
+      "No intents added to TaskStackBuilder; cannot getPendingIntent",
+      "category",
+      "Adding back stack index ",
+      "Finished Retaining in ",
+      "moveto CREATED: ",
+      "restoreAllState: avail #",
+      "getParentActivityIntent: bad parentActivityName '",
+      "states",
+      "Re-attaching retained fragment ",
+      "Stream items available: ",
+      "android.intent.action.MAIN",
+      "restoreAllState: added #",
+      "TaskStackBuilder",
+      "android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE",
+      "mBreadCrumbShortTitleRes=#",
+      "data",
+      "Back Stack Indices:",
+      "ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT",
+      "android.intent.extra.CC",
+      "No instantiated fragment for index #",
+      "Fragment does not have a view",
+      "remove from detach: ",
+      "Negative size: ",
+      "mStarted=",
+      "Local FragmentActivity ",
+      "Active Loaders:",
+      "Can't be used with a custom content view",
+      "android",
+      "add: ",
+      "mFragmentId=#",
+      "couldn't move cursor to position ",
+      "Allocated fragment index ",
+      "This transaction is already being added to the back stack",
+      "mAvailBackStackIndices: ",
+      "moveto STARTED: ",
+      "mTransition=#",
+      "OnGestureListener must not be null",
+      "Starting in ",
+      "mTask=",
+      "mEnterAnim=#",
+      "android.intent.extra.STREAM",
+      "Already attached",
+      "Matching against filter ",
+      "Could not retrieve icon for calling application",
+      "mArguments=",
+      "Destroying Active in ",
+      "mStateAfterAnimating=",
+      "ACTION_ARGUMENT_HTML_ELEMENT_STRING",
+      "finishWrite: Got exception:",
+      "mCallbacks=",
+      "Loader Manager ",
+      "LruCache[maxSize=%d,hits=%d,misses=%d,hitRate=%d%%]",
+      "Must measure with an exact width"
+    ]
+  },
+  "firebase_urls": [],
+  "files": [
+    "res/layout/activity_main.xml",
+    "res/menu/main.xml",
+    "AndroidManifest.xml",
+    "resources.arsc",
+    "res/drawable-hdpi/ic_launcher.png",
+    "res/drawable-mdpi/ic_launcher.png",
+    "res/drawable-xhdpi/ic_launcher.png",
+    "res/drawable-xxhdpi/ic_launcher.png",
+    "classes.dex",
+    "META-INF/MANIFEST.MF",
+    "META-INF/CERT.SF",
+    "META-INF/CERT.RSA"
+  ],
+  "exported_count": {
+    "exported_activities": 0,
+    "exported_services": 0,
+    "exported_receivers": 0,
+    "exported_providers": 0
+  },
+  "apkid": {
+    "classes.dex": {
+      "compiler": [
+        "dx (possible dexmerge)"
+      ],
+      "manipulator": [
+        "dexmerge"
+      ]
+    }
+  },
+  "behaviour": {
+    "00033": {
+      "files": {
+        "de/ecspride/LibClass.java": "10,9,3,4"
+      },
+      "metadata": {
+        "label": [
+          "collection"
+        ],
+        "description": "Query the IMEI number",
+        "severity": "info"
+      }
+    },
+    "00193": {
+      "files": {
+        "de/ecspride/MainActivity.java": "16,17,5"
+      },
+      "metadata": {
+        "label": [
+          "sms"
+        ],
+        "description": "Send a SMS message",
+        "severity": "info"
+      }
+    }
+  },
+  "trackers": {
+    "detected_trackers": 0,
+    "total_trackers": 432,
+    "trackers": []
+  },
+  "playstore_details": {
+    "error": true
+  },
+  "secrets": [],
+  "logs": [
+    {
+      "timestamp": "2026-05-20 21:32:07",
+      "status": "Generating Hashes",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:07",
+      "status": "Extracting APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:07",
+      "status": "Unzipping",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:07",
+      "status": "Parsing APK with androguard",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:08",
+      "status": "Extracting APK features using aapt/aapt2",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:08",
+      "status": "Getting Hardcoded Certificates/Keystores",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:09",
+      "status": "Parsing AndroidManifest.xml",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:09",
+      "status": "Extracting Manifest Data",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:09",
+      "status": "Manifest Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:09",
+      "status": "Performing Static Analysis on: AndroidSpecific_Library2 (de.ecspride)",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:11",
+      "status": "Fetching Details from Play Store: de.ecspride",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:12",
+      "status": "Checking for Malware Permissions",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:12",
+      "status": "Fetching icon path",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:12",
+      "status": "Library Binary Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:12",
+      "status": "Reading Code Signing Certificate",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:12",
+      "status": "Running APKiD 3.0.0",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:13",
+      "status": "Detecting Trackers",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:14",
+      "status": "Decompiling APK to Java with JADX",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:18",
+      "status": "Converting DEX to Smali",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:18",
+      "status": "Code Analysis Started on - java_source",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:18",
+      "status": "Android SBOM Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:19",
+      "status": "Android SAST Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:19",
+      "status": "Android API Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:19",
+      "status": "Android API Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:20",
+      "status": "Android Permission Mapping Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:20",
+      "status": "Android Permission Mapping Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:20",
+      "status": "Android Behaviour Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:21",
+      "status": "Android Behaviour Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:21",
+      "status": "Extracting Emails and URLs from Source Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:21",
+      "status": "Email and URL Extraction Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:21",
+      "status": "Extracting String data from APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:21",
+      "status": "Extracting String data from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:21",
+      "status": "Extracting String values and entropies from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:21",
+      "status": "Performing Malware check on extracted domains",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:32:21",
+      "status": "Saving to Database",
+      "exception": null
+    }
+  ],
+  "sbom": {
+    "sbom_versioned": [],
+    "sbom_packages": [
+      "de.ecspride"
+    ]
+  },
+  "average_cvss": null,
+  "appsec": {
+    "high": [
+      {
+        "title": "Application vulnerable to Janus Vulnerability",
+        "description": "Application is signed with v1 signature scheme, making it vulnerable to Janus vulnerability on Android 5.0-8.0, if signed only with v1 signature scheme. Applications running on Android 5.0-7.0 signed with v1, and v2/v3 scheme is also vulnerable.",
+        "section": "certificate"
+      },
+      {
+        "title": "Application signed with debug certificate",
+        "description": "Application signed with a debug certificate. Production application must not be shipped with a debug certificate.",
+        "section": "certificate"
+      },
+      {
+        "title": "App can be installed on a vulnerable unpatched Android version 2.2-2.2.3, [minSdk=8]",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "section": "manifest"
+      },
+      {
+        "title": "Debug Enabled For App [android:debuggable=true]",
+        "description": "Debugging was enabled on the app which makes it easier for reverse engineers to hook a debugger to it. This allows dumping a stack trace and accessing debugging helper classes.",
+        "section": "manifest"
+      },
+      {
+        "title": "Debug configuration enabled. Production builds must not be debuggable.",
+        "description": "Debug configuration enabled. Production builds must not be debuggable.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x04c-Tampering-and-Reverse-Engineering.md#debugging-and-tracing\n\nFiles:\nde/ecspride/BuildConfig.java, line(s) 4,5",
+        "section": "code"
+      }
+    ],
+    "warning": [
+      {
+        "title": "Application Data can be Backed up [android:allowBackup=true]",
+        "description": "This flag allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "section": "manifest"
+      }
+    ],
+    "info": [],
+    "secure": [
+      {
+        "title": "This application has no privacy trackers",
+        "description": "This application does not include any user or device trackers. Unable to find trackers during static analysis.",
+        "section": "trackers"
+      }
+    ],
+    "hotspot": [
+      {
+        "title": "Found 2 critical permission(s)",
+        "description": "Ensure that these permissions are required by the application.\n\nandroid.permission.READ_PHONE_STATE (dangerous): read phone state and identity - Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on.\n\nandroid.permission.SEND_SMS (dangerous): send SMS messages - Allows application to send SMS messages. Malicious applications may cost you money by sending messages without your confirmation.",
+        "section": "permissions"
+      }
+    ],
+    "total_trackers": 432,
+    "trackers": 0,
+    "security_score": 24,
+    "app_name": "AndroidSpecific_Library2",
+    "file_name": "Library2.apk",
+    "hash": "d485dab3cb2085061d5ae62bf1864f77",
+    "version_name": "1.0"
+  },
+  "virus_total": null,
+  "base_url": "file:///home/mobsf/Mobile-Security-Framework-MobSF/mobsf",
+  "dwd_dir": "file:///home/mobsf/.MobSF/downloads/",
+  "host_os": "nix",
+  "timestamp": "2026-05-20T21:32:07.898Z"
+}

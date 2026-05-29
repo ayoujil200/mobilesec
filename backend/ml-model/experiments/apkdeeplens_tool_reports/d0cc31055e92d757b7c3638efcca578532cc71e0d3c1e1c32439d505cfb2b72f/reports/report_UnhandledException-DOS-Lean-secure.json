@@ -1,0 +1,308 @@
+{
+    "apk_name": "UnhandledException-DOS-Lean-secure.apk",
+    "package_name": "edu.ksu.cs.benign",
+    "permission": [],
+    "dangerous_permission": "",
+    "manifest_analysis": {
+        "activities": {
+            "all": [
+                "edu.ksu.cs.benign.MainActivity"
+            ],
+            "exported": []
+        },
+        "services": {
+            "all": [],
+            "exported": []
+        },
+        "receivers": {
+            "all": [],
+            "exported": []
+        },
+        "providers": {
+            "all": [],
+            "exported": []
+        }
+    },
+    "manifest_security": [
+        {
+            "id": "MANIFEST_DEBUGGABLE",
+            "title": "Application is Debuggable",
+            "severity": "CRITICAL",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "android:debuggable=\"true\" allows attackers to attach a debugger to the running app via adb, inspect memory, bypass certificate pinning, and extract sensitive data at runtime. Must be false in release builds.",
+            "evidence": "android:debuggable=\"true\""
+        },
+        {
+            "id": "MANIFEST_TARGET_SDK_LOW",
+            "title": "Low Target SDK Version (27)",
+            "severity": "MEDIUM",
+            "owasp": "M8: Security Misconfiguration",
+            "description": "targetSdkVersion=27 opts out of security improvements introduced in Android 9+ (Pie), including default HTTPS enforcement, restricted access to device identifiers, and background restrictions. Target SDK 28 or higher is strongly recommended.",
+            "evidence": "android:targetSdkVersion=\"27\""
+        }
+    ],
+    "hardcoded_secrets": [],
+    "insecure_requests": [],
+    "code_findings": [
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/view/ViewCompatBase.java",
+            "line": 46,
+            "evidence": "sMinHeightField = View.class.getDeclaredField(\"mMinHeight\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/view/LayoutInflaterCompatHC.java",
+            "line": 42,
+            "evidence": "sLayoutInflaterFactory2Field = LayoutInflater.class.getDeclaredField(\"mFactory2\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/widget/PopupWindowCompatApi21.java",
+            "line": 13,
+            "evidence": "sOverlapAnchorField = PopupWindow.class.getDeclaredField(\"mOverlapAnchor\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/widget/PopupWindowCompat.java",
+            "line": 43,
+            "evidence": "sSetWindowLayoutTypeMethod = PopupWindow.class.getDeclaredMethod(\"setWindowLayoutType\", Integer.TYPE);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/widget/CompoundButtonCompatGingerbread.java",
+            "line": 30,
+            "evidence": "sButtonDrawableField = CompoundButton.class.getDeclaredField(\"mButtonDrawable\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/graphics/drawable/DrawableCompatJellybeanMr1.java",
+            "line": 15,
+            "evidence": "sSetLayoutDirectionMethod = Drawable.class.getDeclaredMethod(\"setLayoutDirection\", Integer.TYPE);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v4/app/FragmentManagerImpl.java",
+            "line": 461,
+            "evidence": "sAnimationListenerField = Animation.class.getDeclaredField(\"mListener\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/view/menu/MenuItemWrapperICS.java",
+            "line": 267,
+            "evidence": "this.mSetExclusiveCheckableMethod = ((SupportMenuItem) this.mWrappedObject).getClass().getDeclaredMethod(\"setExclusiveCheckable\", Boolean.TYPE);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/ListPopupWindow.java",
+            "line": 65,
+            "evidence": "sClipToWindowEnabledMethod = PopupWindow.class.getDeclaredMethod(\"setClipToScreenEnabled\", Boolean.TYPE);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/ListPopupWindow.java",
+            "line": 70,
+            "evidence": "sGetMaxAvailableHeightMethod = PopupWindow.class.getDeclaredMethod(\"getMaxAvailableHeight\", View.class, Integer.TYPE, Boolean.TYPE);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/ListPopupWindow.java",
+            "line": 75,
+            "evidence": "sSetEpicenterBoundsMethod = PopupWindow.class.getDeclaredMethod(\"setEpicenterBounds\", Rect.class);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/SearchView.java",
+            "line": 878,
+            "evidence": "this.doBeforeTextChanged = AutoCompleteTextView.class.getDeclaredMethod(\"doBeforeTextChanged\", new Class[0]);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/SearchView.java",
+            "line": 883,
+            "evidence": "this.doAfterTextChanged = AutoCompleteTextView.class.getDeclaredMethod(\"doAfterTextChanged\", new Class[0]);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/MenuPopupWindow.java",
+            "line": 25,
+            "evidence": "sSetTouchModalMethod = PopupWindow.class.getDeclaredMethod(\"setTouchModal\", Boolean.TYPE);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/ListViewCompat.java",
+            "line": 31,
+            "evidence": "this.mIsChildViewEnabled = AbsListView.class.getDeclaredField(\"mIsChildViewEnabled\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/AppCompatPopupWindow.java",
+            "line": 73,
+            "evidence": "final Field fieldAnchor = PopupWindow.class.getDeclaredField(\"mAnchor\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/AppCompatPopupWindow.java",
+            "line": 75,
+            "evidence": "Field fieldListener = PopupWindow.class.getDeclaredField(\"mOnScrollChangedListener\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/widget/ViewUtils.java",
+            "line": 16,
+            "evidence": "sComputeFitSystemWindowsMethod = View.class.getDeclaredMethod(\"computeFitSystemWindows\", Rect.class, Rect.class);"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/app/ResourcesFlusher.java",
+            "line": 37,
+            "evidence": "sDrawableCacheField = Resources.class.getDeclaredField(\"mDrawableCache\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/app/ResourcesFlusher.java",
+            "line": 63,
+            "evidence": "sDrawableCacheField = Resources.class.getDeclaredField(\"mDrawableCache\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/app/ResourcesFlusher.java",
+            "line": 91,
+            "evidence": "sResourcesImplField = Resources.class.getDeclaredField(\"mResourcesImpl\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/app/ResourcesFlusher.java",
+            "line": 112,
+            "evidence": "sDrawableCacheField = resourcesImpl.getClass().getDeclaredField(\"mDrawableCache\");"
+        },
+        {
+            "id": "DYN_REFLECTION",
+            "title": "Reflection-Based Method Invocation",
+            "severity": "MEDIUM",
+            "owasp": "M7: Insufficient Binary Protections",
+            "description": "getDeclaredMethod/getDeclaredField with invoke() can bypass access controls and is commonly used to evade static analysis. Also indicates potential for runtime code manipulation.",
+            "file": "sources/android/support/v7/app/ResourcesFlusher.java",
+            "line": 147,
+            "evidence": "sThemedResourceCache_mUnthemedEntriesField = sThemedResourceCacheClazz.getDeclaredField(\"mUnthemedEntries\");"
+        },
+        {
+            "id": "LOG_SENSITIVE",
+            "title": "Sensitive Data in Log Statement",
+            "severity": "MEDIUM",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "Log.d/e/i/v/w() call contains keywords suggesting sensitive data (password, token, key, secret, auth, credential). Log output is accessible to other apps via logcat on unpatched or rooted devices.",
+            "file": "sources/android/support/v7/view/SupportMenuInflater.java",
+            "line": 361,
+            "evidence": "Log.w(\"SupportMenuInflater\", \"Cannot instantiate class: \" + className, e);"
+        },
+        {
+            "id": "LOG_STACKTRACE",
+            "title": "printStackTrace() Leaks Stack Information",
+            "severity": "LOW",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "printStackTrace() prints internal class names, method names, and file paths to logcat, aiding reverse engineering and revealing architectural details to attackers.",
+            "file": "sources/android/support/v7/widget/ListViewCompat.java",
+            "line": 34,
+            "evidence": "e.printStackTrace();"
+        },
+        {
+            "id": "LOG_STACKTRACE",
+            "title": "printStackTrace() Leaks Stack Information",
+            "severity": "LOW",
+            "owasp": "M6: Inadequate Privacy Controls",
+            "description": "printStackTrace() prints internal class names, method names, and file paths to logcat, aiding reverse engineering and revealing architectural details to attackers.",
+            "file": "sources/android/support/v7/widget/ListViewCompat.java",
+            "line": 156,
+            "evidence": "e.printStackTrace();"
+        }
+    ]
+}

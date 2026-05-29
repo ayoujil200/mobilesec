@@ -1,0 +1,10 @@
+Checklist row 27 - Contradictory real APK counts
+Status: corrected in generated table output.
+
+Where:
+- backend/ml-model/src/evaluation/paper_tables.py
+
+Correction:
+The table column is now labelled Historical MobileSec records (no ground
+truth), while the comparison benchmark records real_world_apks=0. These are
+separate populations and no longer imply contradictory evaluation claims.

@@ -1,0 +1,5 @@
+dataset,apk,scan_id,runtime_seconds,export_time_seconds,cpu_percent,ram_mb,apk_size_bytes,export_bytes_total,concurrency,throughput_apks_per_minute,report_success,pdf_success,json_success,sarif_success
+DroidBench,ApplicationModeling1.apk,2f538262-c013-499c-9bb3-973a7202531a,10.828,62.854,1.61,201.37,36869,77140,4,2.862766147790303,true,true,true,true
+DroidBench,DirectLeak1.apk,39f3ab28-c238-4559-bc95-152cafb92835,71.349,2.364,11.07,203.35,178577,38659,4,2.862766147790303,true,true,true,true
+DroidBench,InactiveActivity.apk,3459eea8-b8e4-4163-95c3-9ca49c7057e5,61.283,12.445,1.10,203.62,178495,38549,4,2.862766147790303,true,true,true,true
+DroidBench,Merge1.apk,81e10ca4-0695-4b7d-8df2-038de40586a7,51.191,22.532,101.12,266.68,801366,76814,4,2.862766147790303,true,true,true,true

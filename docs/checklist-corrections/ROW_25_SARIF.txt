@@ -1,0 +1,11 @@
+Checklist row 25 - SARIF contradiction
+Status: corrected in code.
+
+Where:
+- backend/ReportGen/src/services/index.ts
+- scripts/run-benchmark-evaluation.js
+
+Correction:
+The previous SARIF exporter returned an empty path. It now writes SARIF 2.1.0
+with MobileSec tool metadata, rules, results and source locations. Benchmark
+runs call the SARIF endpoint and record measured success instead of assuming it.

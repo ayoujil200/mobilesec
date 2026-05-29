@@ -1,0 +1,47 @@
+Smoke validation on real benchmark APK files - 2026-05-25
+
+Scope:
+- 5 APKs from C:\Users\HP\Desktop\phd\DroidBench apks\apk
+- 5 APKs from C:\Users\HP\Desktop\phd\ghera apks
+- Sequential execution with measured PDF, JSON and SARIF ReportGen exports.
+
+Corrections required during execution:
+- scripts/run-benchmark-evaluation.js:
+  Added --output-dir so smoke runs do not replace existing paper experiment CSVs.
+  Added --limit-per-dataset so a single timed run can select an equal number
+  of DroidBench and Ghera APKs without using resume and overstating throughput.
+  Removed a stray top-level rawLine statement that caused a runtime ReferenceError.
+- backend/apk-scanner/src/utils/androguard_wrapper.py:
+  Replaced invalid APK.get_strings() calls with DEX string extraction through
+  DalvikVMFormat for Androguard 3.4.0a1, and converted get_all_dex() to a list
+  before calculating dex_count.
+- backend/apk-scanner/src/main.py:
+  Removed an invalid cleanup block referencing undefined filepath after a scan.
+
+Verified execution command:
+node scripts\run-benchmark-evaluation.js --droidbench "C:\Users\HP\Desktop\phd\DroidBench apks\apk" --ghera "C:\Users\HP\Desktop\phd\ghera apks" --api "http://localhost:5000" --reportgen "http://localhost:3005" --limit-per-dataset 5 --concurrency 1 --output-dir "backend\ml-model\experiments\smoke_real_10_corrected"
+
+Measured result files:
+- backend/ml-model/experiments/smoke_real_10_corrected/benchmark_scan_details.csv
+- backend/ml-model/experiments/smoke_real_10_corrected/ground_truth.csv
+- backend/ml-model/experiments/smoke_real_10_corrected/runtime_results.csv
+
+Measured smoke results:
+- completed scans: 10/10
+- PDF report exports: 10/10 successful
+- JSON report exports: 10/10 successful
+- SARIF report exports: 10/10 successful
+- mean scanner response runtime: 10.2571 seconds
+- mean explicit report export time: 2.1844 seconds
+- batch throughput: 2.6641 APK/minute
+
+Detection result for this limited sample:
+- TP=6, FP=4, FN=0, TN=0
+- precision=0.60, recall=1.00, F1=0.75
+
+Interpretation:
+This validates that the corrected scan and export workflow executes on a small
+real DroidBench/Ghera sample. It is not a publication-quality effectiveness
+estimate: the selected Ghera subset is small and includes four benign/secure
+applications flagged as findings. Full tables require rerunning the complete
+datasets and reviewing the ground-truth/category labels.

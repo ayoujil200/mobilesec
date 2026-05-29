@@ -1,0 +1,472 @@
+{
+  "version": "v4.5.0",
+  "title": "Static Analysis",
+  "file_name": "AsynchronousEventOrdering1.apk",
+  "app_name": "Activity-Asynchronous-Event-Ordering",
+  "app_type": "apk",
+  "size": "0.04MB",
+  "md5": "5a67a60cf13038c5bdf64c32b192eb3a",
+  "sha1": "5da89f3de8cc1fabb9479f6f9d5408a661fc6dde",
+  "sha256": "90403d932856d10e8e0b5cd97413d8b966e24abd2fc60fb86202e0c483b6d290",
+  "package_name": "edu.mit.activity_asynchronous_event_ordering",
+  "main_activity": ".MainActivity",
+  "exported_activities": "[]",
+  "browsable_activities": {},
+  "activities": [
+    ".MainActivity"
+  ],
+  "receivers": [],
+  "providers": [],
+  "services": [],
+  "libraries": [],
+  "target_sdk": "19",
+  "max_sdk": "",
+  "min_sdk": "19",
+  "version_name": "1.0",
+  "version_code": "1",
+  "icon_path": "5a67a60cf13038c5bdf64c32b192eb3a-icon.png",
+  "permissions": {
+    "android.permission.READ_PHONE_STATE": {
+      "status": "dangerous",
+      "info": "read phone state and identity",
+      "description": "Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on."
+    }
+  },
+  "malware_permissions": {
+    "top_malware_permissions": [
+      "android.permission.READ_PHONE_STATE"
+    ],
+    "other_abused_permissions": [],
+    "total_malware_permissions": 25,
+    "total_other_permissions": 44
+  },
+  "certificate_analysis": {
+    "certificate_info": "Binary is signed\nv1 signature: True\nv2 signature: False\nv3 signature: False\nv4 signature: False\nX.509 Subject: C=US, O=Android, CN=Android Debug\nSignature Algorithm: rsassa_pkcs1v15\nValid From: 2014-09-29 16:23:47+00:00\nValid To: 2044-09-21 16:23:47+00:00\nIssuer: C=US, O=Android, CN=Android Debug\nSerial Number: 0x5a41876a\nHash Algorithm: sha256\nmd5: 2c75842ba1f56fb65b5265dc213370dd\nsha1: 6c95e1d54a51b3fd1cf975c268a24e9aa2b014a6\nsha256: 64cd722aea906dfd961a3bb9e3ea3899afb5cbb06eddebfcd0a673f68dfc6956\nsha512: 425e4868680f7a25bec80fc022188b7f4d8235f87ed68bd92de7c67bd998378496133c6bf73cee1ef690b62d5e94a3ffb9a10bc7030baa8866bf1d28f0603375\nFound 1 unique certificates",
+    "certificate_findings": [
+      [
+        "info",
+        "Application is signed with a code signing certificate",
+        "Signed Application"
+      ],
+      [
+        "high",
+        "Application is signed with v1 signature scheme, making it vulnerable to Janus vulnerability on Android 5.0-8.0, if signed only with v1 signature scheme. Applications running on Android 5.0-7.0 signed with v1, and v2/v3 scheme is also vulnerable.",
+        "Application vulnerable to Janus Vulnerability"
+      ],
+      [
+        "high",
+        "Application signed with a debug certificate. Production application must not be shipped with a debug certificate.",
+        "Application signed with debug certificate"
+      ]
+    ],
+    "certificate_summary": {
+      "high": 2,
+      "warning": 0,
+      "info": 1
+    }
+  },
+  "manifest_analysis": {
+    "manifest_findings": [
+      {
+        "rule": "vulnerable_os_version",
+        "title": "App can be installed on a vulnerable unpatched Android version 4.4-4.4.4, [minSdk=19]",
+        "severity": "high",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "name": "App can be installed on a vulnerable unpatched Android version 4.4-4.4.4, [minSdk=19]",
+        "component": [
+          "4.4-4.4.4",
+          "19"
+        ]
+      },
+      {
+        "rule": "app_is_debuggable",
+        "title": "Debug Enabled For App [android:debuggable=true]",
+        "severity": "high",
+        "description": "Debugging was enabled on the app which makes it easier for reverse engineers to hook a debugger to it. This allows dumping a stack trace and accessing debugging helper classes.",
+        "name": "Debug Enabled For App [android:debuggable=true]",
+        "component": []
+      },
+      {
+        "rule": "app_allowbackup",
+        "title": "Application Data can be Backed up [android:allowBackup=true]",
+        "severity": "warning",
+        "description": "This flag allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "name": "Application Data can be Backed up [android:allowBackup=true]",
+        "component": []
+      }
+    ],
+    "manifest_summary": {
+      "high": 2,
+      "warning": 1,
+      "info": 0,
+      "suppressed": 0
+    }
+  },
+  "network_security": {
+    "network_findings": [],
+    "network_summary": {}
+  },
+  "binary_analysis": [],
+  "file_analysis": [],
+  "android_api": {
+    "api_get_system_service": {
+      "files": {
+        "edu/mit/activity_asynchronous_event_ordering/MainActivity.java": "25"
+      },
+      "metadata": {
+        "description": "Get System Service",
+        "severity": "info"
+      }
+    }
+  },
+  "code_analysis": {
+    "findings": {
+      "android_aar_jar_debug_enabled": {
+        "files": {
+          "edu/mit/activity_asynchronous_event_ordering/BuildConfig.java": "4,5"
+        },
+        "metadata": {
+          "cvss": 5.4,
+          "cwe": "CWE-919: Weaknesses in Mobile Applications",
+          "owasp-mobile": "M1: Improper Platform Usage",
+          "masvs": "MSTG-RESILIENCE-2",
+          "ref": "https://github.com/MobSF/owasp-mstg/blob/master/Document/0x04c-Tampering-and-Reverse-Engineering.md#debugging-and-tracing",
+          "description": "Debug configuration enabled. Production builds must not be debuggable.",
+          "severity": "high"
+        }
+      },
+      "android_logging": {
+        "files": {
+          "edu/mit/activity_asynchronous_event_ordering/MainActivity.java": "20"
+        },
+        "metadata": {
+          "cvss": 7.5,
+          "cwe": "CWE-532: Insertion of Sensitive Information into Log File",
+          "owasp-mobile": "",
+          "masvs": "MSTG-STORAGE-3",
+          "ref": "https://github.com/MobSF/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#logs",
+          "description": "The App logs information. Sensitive information should never be logged.",
+          "severity": "info"
+        }
+      }
+    },
+    "summary": {
+      "high": 1,
+      "warning": 0,
+      "info": 1,
+      "secure": 0,
+      "suppressed": 0
+    }
+  },
+  "niap_analysis": {},
+  "permission_mapping": {
+    "android.permission.READ_PHONE_STATE": {
+      "edu/mit/activity_asynchronous_event_ordering/MainActivity.java": "5,26"
+    }
+  },
+  "urls": [],
+  "domains": {},
+  "emails": [],
+  "strings": {
+    "strings_apk_res": [
+      "\"action_settings\" : \"Settings\"",
+      "\"app_name\" : \"Activity-Asynchronous-Event-Ordering\"",
+      "\"hello_world\" : \"Hello world!\""
+    ],
+    "strings_so": [],
+    "strings_code": [
+      "phone",
+      "DroidBench"
+    ]
+  },
+  "firebase_urls": [],
+  "files": [
+    "res/layout/activity_main.xml",
+    "res/menu/main.xml",
+    "AndroidManifest.xml",
+    "resources.arsc",
+    "res/drawable-hdpi/ic_launcher.png",
+    "res/drawable-mdpi/ic_launcher.png",
+    "res/drawable-xhdpi/ic_launcher.png",
+    "classes.dex",
+    "META-INF/MANIFEST.MF",
+    "META-INF/CERT.SF",
+    "META-INF/CERT.RSA"
+  ],
+  "exported_count": {
+    "exported_activities": 0,
+    "exported_services": 0,
+    "exported_receivers": 0,
+    "exported_providers": 0
+  },
+  "apkid": {
+    "classes.dex": {
+      "compiler": [
+        "dx"
+      ]
+    }
+  },
+  "behaviour": {},
+  "trackers": {
+    "detected_trackers": 0,
+    "total_trackers": 432,
+    "trackers": []
+  },
+  "playstore_details": {
+    "error": true
+  },
+  "secrets": [],
+  "logs": [
+    {
+      "timestamp": "2026-05-20 21:45:39",
+      "status": "Generating Hashes",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:39",
+      "status": "Extracting APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:39",
+      "status": "Unzipping",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:39",
+      "status": "Parsing APK with androguard",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:39",
+      "status": "Extracting APK features using aapt/aapt2",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:39",
+      "status": "Getting Hardcoded Certificates/Keystores",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:40",
+      "status": "Parsing AndroidManifest.xml",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:40",
+      "status": "Extracting Manifest Data",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:40",
+      "status": "Manifest Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:40",
+      "status": "Performing Static Analysis on: Activity-Asynchronous-Event-Ordering (edu.mit.activity_asynchronous_event_ordering)",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:45",
+      "status": "Fetching Details from Play Store: edu.mit.activity_asynchronous_event_ordering",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:46",
+      "status": "Checking for Malware Permissions",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:46",
+      "status": "Fetching icon path",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:46",
+      "status": "Library Binary Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:46",
+      "status": "Reading Code Signing Certificate",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:46",
+      "status": "Running APKiD 3.0.0",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:47",
+      "status": "Detecting Trackers",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:47",
+      "status": "Decompiling APK to Java with JADX",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:49",
+      "status": "Converting DEX to Smali",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:49",
+      "status": "Code Analysis Started on - java_source",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:49",
+      "status": "Android SBOM Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:49",
+      "status": "Android SAST Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:49",
+      "status": "Android API Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:49",
+      "status": "Android API Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:49",
+      "status": "Android Permission Mapping Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Android Permission Mapping Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Android Behaviour Analysis Started",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Android Behaviour Analysis Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Extracting Emails and URLs from Source Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Email and URL Extraction Completed",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Extracting String data from APK",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Extracting String data from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Extracting String values and entropies from Code",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Performing Malware check on extracted domains",
+      "exception": null
+    },
+    {
+      "timestamp": "2026-05-20 21:45:50",
+      "status": "Saving to Database",
+      "exception": null
+    }
+  ],
+  "sbom": {
+    "sbom_versioned": [],
+    "sbom_packages": [
+      "edu.mit.activity_asynchronous_event_ordering"
+    ]
+  },
+  "average_cvss": null,
+  "appsec": {
+    "high": [
+      {
+        "title": "Application vulnerable to Janus Vulnerability",
+        "description": "Application is signed with v1 signature scheme, making it vulnerable to Janus vulnerability on Android 5.0-8.0, if signed only with v1 signature scheme. Applications running on Android 5.0-7.0 signed with v1, and v2/v3 scheme is also vulnerable.",
+        "section": "certificate"
+      },
+      {
+        "title": "Application signed with debug certificate",
+        "description": "Application signed with a debug certificate. Production application must not be shipped with a debug certificate.",
+        "section": "certificate"
+      },
+      {
+        "title": "App can be installed on a vulnerable unpatched Android version 4.4-4.4.4, [minSdk=19]",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "section": "manifest"
+      },
+      {
+        "title": "Debug Enabled For App [android:debuggable=true]",
+        "description": "Debugging was enabled on the app which makes it easier for reverse engineers to hook a debugger to it. This allows dumping a stack trace and accessing debugging helper classes.",
+        "section": "manifest"
+      },
+      {
+        "title": "Debug configuration enabled. Production builds must not be debuggable.",
+        "description": "Debug configuration enabled. Production builds must not be debuggable.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x04c-Tampering-and-Reverse-Engineering.md#debugging-and-tracing\n\nFiles:\nedu/mit/activity_asynchronous_event_ordering/BuildConfig.java, line(s) 4,5",
+        "section": "code"
+      }
+    ],
+    "warning": [
+      {
+        "title": "Application Data can be Backed up [android:allowBackup=true]",
+        "description": "This flag allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "section": "manifest"
+      }
+    ],
+    "info": [
+      {
+        "title": "The App logs information. Sensitive information should never be logged.",
+        "description": "The App logs information. Sensitive information should never be logged.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#logs\n\nFiles:\nedu/mit/activity_asynchronous_event_ordering/MainActivity.java, line(s) 20",
+        "section": "code"
+      }
+    ],
+    "secure": [
+      {
+        "title": "This application has no privacy trackers",
+        "description": "This application does not include any user or device trackers. Unable to find trackers during static analysis.",
+        "section": "trackers"
+      }
+    ],
+    "hotspot": [
+      {
+        "title": "Found 1 critical permission(s)",
+        "description": "Ensure that these permissions are required by the application.\n\nandroid.permission.READ_PHONE_STATE (dangerous): read phone state and identity - Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and so on.",
+        "section": "permissions"
+      }
+    ],
+    "total_trackers": 432,
+    "trackers": 0,
+    "security_score": 24,
+    "app_name": "Activity-Asynchronous-Event-Ordering",
+    "file_name": "AsynchronousEventOrdering1.apk",
+    "hash": "5a67a60cf13038c5bdf64c32b192eb3a",
+    "version_name": "1.0"
+  },
+  "virus_total": null,
+  "base_url": "file:///home/mobsf/Mobile-Security-Framework-MobSF/mobsf",
+  "dwd_dir": "file:///home/mobsf/.MobSF/downloads/",
+  "host_os": "nix",
+  "timestamp": "2026-05-20T21:45:39.816Z"
+}

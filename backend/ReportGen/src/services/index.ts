@@ -65,8 +65,67 @@ export const jsonExporterService = {
 };
 
 export const sarifExporterService = {
-  exportToSarif: async (_report: Report) => {
-    return '' as string;
+  exportToSarif: async (report: Report) => {
+    const dir = process.env.TEMP_DIR || './tmp';
+    await fs.mkdir(dir, { recursive: true });
+    const filePath = path.join(dir, `report-${report.reportId || uuidv4()}.sarif.json`);
+    const findings = report.vulnerabilities || [];
+    const rules = new Map<string, any>();
+
+    const results = findings.map((finding: any, index: number) => {
+      const ruleId = String(finding.ruleId || finding.rule_id || finding.category || `MOBILESEC-${index + 1}`);
+      const title = String(finding.title || finding.name || ruleId);
+      const severity = String(finding.severity || 'info').toLowerCase();
+      const level = severity === 'critical' || severity === 'high'
+        ? 'error'
+        : severity === 'medium'
+          ? 'warning'
+          : 'note';
+
+      if (!rules.has(ruleId)) {
+        rules.set(ruleId, {
+          id: ruleId,
+          name: title,
+          shortDescription: { text: title },
+          fullDescription: { text: String(finding.description || title) },
+          help: { text: String(finding.recommendation || 'Review and remediate this finding.') },
+        });
+      }
+
+      const result: any = {
+        ruleId,
+        level,
+        message: { text: String(finding.description || title) },
+      };
+      const sourceFile = finding.file || finding.filePath || finding.file_path;
+      if (sourceFile) {
+        result.locations = [{
+          physicalLocation: {
+            artifactLocation: { uri: String(sourceFile) },
+            region: { startLine: Number(finding.line || finding.lineNumber || finding.line_number || 1) },
+          },
+        }];
+      }
+      return result;
+    });
+
+    const sarif = {
+      version: '2.1.0',
+      $schema: 'https://json.schemastore.org/sarif-2.1.0.json',
+      runs: [{
+        tool: {
+          driver: {
+            name: 'MobileSec',
+            informationUri: 'https://github.com/Imadait01/MobileSec',
+            rules: Array.from(rules.values()),
+          },
+        },
+        results,
+      }],
+    };
+
+    await fs.writeFile(filePath, JSON.stringify(sarif, null, 2), 'utf8');
+    return filePath;
   }
 };
 

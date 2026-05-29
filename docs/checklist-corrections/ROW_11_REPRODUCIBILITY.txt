@@ -1,0 +1,9 @@
+Checklist row 11 - Reproducibility
+Status: corrected in project documentation.
+
+Where:
+- docs/reproducibility.md
+
+Correction:
+Added an executable protocol for service startup, health checks, scan runs,
+benchmark runs, tool import, manual review and table generation.

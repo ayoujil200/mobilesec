@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "generator": "generator.py",
+  "label_policy": "Labels are assigned from controlled template metadata, never scanner output.",
+  "samples": 480,
+  "categories": [
+    "FIX_CERTIFICATE_ISSUE",
+    "FIX_CRYPTO_GENERAL",
+    "FIX_CRYPTO_MEDIUM",
+    "FIX_EXPOSED_API_KEY",
+    "FIX_EXPOSED_SECRET",
+    "FIX_HARDCODED_PASSWORD",
+    "FIX_INSECURE_HTTP",
+    "FIX_INSECURE_RANDOM",
+    "FIX_WEAK_CIPHER",
+    "FIX_WEAK_HASH",
+    "FIX_WEAK_RSA_KEY",
+    "NO_CRITICAL_ISSUES"
+  ],
+  "variant_count": 48,
+  "build_failures": []
+}

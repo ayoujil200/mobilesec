@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED=1 \
 # Installer les dépendances système
 RUN apt-get update && apt-get install -y \
     openjdk-21-jre-headless \
+    aapt \
     wget \
     unzip \
     libmagic1 \

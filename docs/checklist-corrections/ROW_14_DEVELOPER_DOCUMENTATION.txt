@@ -1,0 +1,11 @@
+Checklist row 14 - Developer documentation
+Status: corrected.
+
+Where:
+- docs/developer-guide.md
+- docs/reproducibility.md
+
+Correction:
+Added service/endpoints, configuration variables, API contracts, setup
+references and the steps needed to extend a microservice without creating
+unsupported evaluation claims.

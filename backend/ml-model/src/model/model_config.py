@@ -2,6 +2,19 @@
 Model Configuration for LightGBM Classifier
 """
 
+import os
+
+
+def _env_int(name: str, default: int) -> int:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    try:
+        return int(value)
+    except ValueError:
+        return default
+
+
 # LightGBM Model Parameters
 LIGHTGBM_PARAMS = {
     'objective': 'multiclass',
@@ -21,12 +34,12 @@ LIGHTGBM_PARAMS = {
 
 # Training Parameters
 TRAINING_CONFIG = {
-    'num_boost_round': 1000,
-    'early_stopping_rounds': 50,
+    'num_boost_round': _env_int('LIGHTGBM_NUM_BOOST_ROUND', 3000),
+    'early_stopping_rounds': _env_int('LIGHTGBM_EARLY_STOPPING_ROUNDS', 150),
     'test_size': 0.15,
     'validation_size': 0.15,
     'random_state': 42,
-    'verbose_eval': 50,
+    'verbose_eval': _env_int('LIGHTGBM_VERBOSE_EVAL', 100),
 }
 
 # Feature Engineering

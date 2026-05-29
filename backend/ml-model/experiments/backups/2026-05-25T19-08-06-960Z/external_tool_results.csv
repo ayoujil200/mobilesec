@@ -1,0 +1,3 @@
+tool,number_of_apks_analyzed,benchmark_apks,real_world_apks,mean_scan_time_per_apk,detected_vulnerability_categories,hardcoded_secrets_detected,network_issues_detected,cryptographic_issues_detected,pdf_export,json_export,sarif_export,ci_cd_integration,ml_based_prioritization,ai_assisted_remediation,reproducible_docker_deployment
+MobSF,283,"DroidBench, Ghera",0,9.94 s,3,100,1997,349,Yes,Yes,No,Yes,No,No,Yes
+APKDeepLens,283,"DroidBench, Ghera",0,7.41 s,2,0,683,7238,Yes,Yes,No,Yes,No,No,Yes
